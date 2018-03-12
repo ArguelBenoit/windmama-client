@@ -94,7 +94,7 @@ class LeftPanelAroundUser extends Component {
     const { listId, list } = this.state;
     const { detail, idUpdate } = store;
     if (listId.indexOf(idUpdate) > -1) {
-      list.map( e => {
+      list.forEach( e => {
         const detailById = JSON.parse(detail[e.id][0]);
         const diff = moment().valueOf() - moment(detailById.date).valueOf();
         e.heading = detailById.heading;

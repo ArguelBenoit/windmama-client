@@ -1,7 +1,7 @@
 #color-legend {
   pointer-events: none;
   position: absolute;
-  transition-duration: @speed2;
+  transition-duration: 500ms;
   bottom: 10px;
   height: 14px;
   font-size: 12px;

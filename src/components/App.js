@@ -10,7 +10,7 @@ import Header from './header.jsx';
 import Tooltip from './tooltip.jsx';
 import ColorLegend from './colorLegend.jsx';
 import Loader from './loader.jsx';
-import ContainerMap from './containerMap.jsx';
+// import ContainerMap from './containerMap.jsx';
 import './css/app.css';
 
 
