@@ -1,0 +1,49 @@
+
+#left-panel {
+  border-right: 1px solid black;
+  left: 0px;
+}
+#left-panel.active { left: -260px; }
+#left-panel .child-panel {
+  transition-duration: 80ms;
+  background-color: rgba(0,0,0,0);
+  width: 100%;
+}
+#left-panel .child-panel .rawdata {
+  font-size: 12px;
+  color: #0099d1;
+}
+#left-panel .child-panel .container-city-info {
+  width: 100%;
+}
+#left-panel .child-panel div.info {
+  float: right;
+}
+#left-panel .child-panel div.info div { float: right; }
+#left-panel .child-panel div.info .max {
+  float: right;
+  margin-right: 8px;
+}
+#left-panel .child-panel:hover {
+  padding-left: 4px;
+}
+
+
+
+@media only screen and (max-device-width: 1100px) {
+  #left-panel {
+    left: 0px;
+    border-right: 1px solid black;
+  }
+  #left-panel.active { left: -260px; }
+  #left-panel .child-panel {
+    transition-duration: 0;
+  }
+  #left-panel .child-panel:hover {
+    padding-left: 0px;
+  }
+}
+@media only screen and (max-device-width: 480px) {
+  #left-panel { left: 0; }
+  #left-panel.active { left: -100%; }
+}

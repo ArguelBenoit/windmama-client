@@ -1,0 +1,22 @@
+#tooltip {
+  transition-duration: 500ms;
+  width: 240px;
+  position: absolute;
+  z-index: 1000;
+  right: 10px;
+  bottom: 10px;
+  pointer-events: none;
+}
+#tooltip .graph-tooltip {
+  float: left;
+  width: 100%;
+}
+#tooltip .info-tooltip {
+  float: left;
+  width: 100%;
+  background: rgba(0,0,0,0.85);
+  text-align: center;
+  color: #ddd;
+  margin: 0;
+  padding: 3px 0;
+}

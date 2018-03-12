@@ -1,0 +1,107 @@
+#cover-widgets {
+  transition-duration: 500ms;
+  opacity: 0;
+  color: #dcdcdc;
+  overflow: auto;
+  margin-top: 62px;
+}
+#cover-widgets.active {
+  opacity: 1;
+}
+#cover-widgets .container-widgets {
+  max-width: 1600px;
+  margin: auto;
+  transition-duration: 500ms;
+  padding: 15px;
+}
+#cover-widgets .container-widgets .info-widget {
+  padding: 10px 0;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  box-shadow: 0 0 4px rgba(0,0,0,0.5);
+}
+#cover-widgets .container-widgets .info-widget .location-time-info {
+  font-size: 14px;
+  text-shadow: 0 0 2px black;
+  padding: 0 10px;
+}
+#cover-widgets .container-widgets .info-widget .metar-info {
+  font-size: 14px;
+  color: red;
+  text-shadow: 1px 1px 0px #555;
+  padding: 0 10px;
+  font-weight: bold;
+}
+#cover-widgets .container-widgets .info-widget .buttons-container {
+  display: inline-block;
+  width: 100%;
+}
+#cover-widgets .container-widgets .info-widget .buttons-container .follow {
+  float: left;
+  margin-left: 10px;
+}
+#cover-widgets .container-widgets .info-widget .buttons-container .close {
+  float: right;
+  margin-right: 10px;
+}
+#cover-widgets .container-widgets .container-widget {
+  width: 100%;
+  margin-top: 15px;
+}
+#cover-widgets .container-widgets .widget-wind-array {
+  box-shadow: 0 0 4px rgba(0,0,0,0.5);
+  background: rgba(255,255,255,0.2);
+  width: 100%;
+  overflow: auto;
+  margin-top: 15px;
+}
+#cover-widgets .container-widgets .widget-wind-array .widget-wind-graph {
+  display: block;
+}
+#cover-widgets .container-widgets .widget-wind-array table {
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 14px;
+}
+#cover-widgets .container-widgets .widget-wind-array table td {
+  height: 30px;
+  padding: 0 0 0 0;
+}
+#cover-widgets .container-widgets .widget-wind-array table.main {
+  color: black;
+}
+#cover-widgets .container-widgets .widget-wind-array table.main .hour {
+  background: rgba(0,0,0,0.25);
+  color: #fff;
+  text-shadow: 0 0 2px black;
+}
+#cover-widgets .container-widgets .widget-wind-array .legend {
+  width: 45px;
+}
+#cover-widgets .container-widgets .widget-wind-array .legend .legend-graph-widget {
+  height: 200px;
+  width: 45px;
+}
+#cover-widgets .container-widgets .widget-wind-array .legend .legend-graph-widget .container-rec {
+  padding-top: 6px;
+}
+#cover-widgets .container-widgets .widget-wind-array .legend .legend-graph-widget .rec {
+  width: 33px;
+  text-align: center;
+  color: #fff;
+  height: 21px;
+  margin-left: 6px;
+  border-radius: 1.5px;
+  font-size: 13px;
+}
+#cover-widgets .container-widgets .widget-wind-array .legend .legend-graph-widget .rec1 {
+  background-color: rgba(255,10,210,0.55);
+}
+#cover-widgets .container-widgets .widget-wind-array .legend .legend-graph-widget .rec2 {
+  background-color: rgba(255,170,15,0.6);
+  margin-top: 6px;
+}
+#cover-widgets .container-widgets .widget-wind-array .legend .legend-array-widget td {
+  width: 45px;
+  color: #fff;
+}

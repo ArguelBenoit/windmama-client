@@ -1,0 +1,20 @@
+#color-legend {
+  pointer-events: none;
+  position: absolute;
+  transition-duration: @speed2;
+  bottom: 10px;
+  height: 14px;
+  font-size: 12px;
+  color: white;
+  text-shadow: 0 0 3px black;
+  overflow: hidden;
+}
+#color-legend .legend-block {
+  float: left;
+  width: 8px;
+  height: 14px;
+}
+
+@media only screen and (max-device-width: 480px) {
+  #color-legend .legend-block { width: 4px; }
+}

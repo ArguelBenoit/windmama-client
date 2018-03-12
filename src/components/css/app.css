@@ -1,0 +1,83 @@
+/*
+  @grey1: #202020; // dark
+  @grey2: #313131; // lighter
+  @grey3: #0a0a0a; // darker
+  @speed0: 180ms;
+  @speed1: 300ms;
+  @speed2: 500ms;
+
+  .map-marker {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+*/
+
+html, body, #app { height: 100%; }
+body {
+  margin: 0;
+  padding: 0;
+  background: #151515;
+  overflow: hidden;
+}
+* {
+  font-family: 'Roboto', sans-serif;
+}
+::selection { background: pink; }
+h1 { font-size: 22px; }
+h2 { font-size: 19px; }
+a {
+  color: #0099d1;
+  text-decoration: none;
+  text-shadow: 1px 1px 0px #333;
+}
+textarea,
+input.text,
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+.input-checkbox {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+input {
+  background: #000;
+  border-radius: 0;
+  width: 100%;
+  border: none;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  padding: 13px 0px;
+  border-bottom: 2px solid #ff4081;
+}
+.button { cursor: pointer; }
+.error { color: #f30000 !important; }
+button {
+  padding: 6px 11px;
+  border-radius: 2px;
+  background: black;
+  font-size: 19px;
+  color: white;
+  transition-duration: 180ms;
+  border: 0;
+  cursor: pointer;
+}
+.elements-ui-absolute {
+  position: fixed;
+  transition-duration: 500ms;
+  top: 0;
+}
+#ui {
+  width: 100%;
+  height: 100%;
+}
+#map {
+  position: absolute;
+  top: 0px;
+}
+/*--------MapBox--------->*/
+.mapboxgl-ctrl-attrib,
+.mapboxgl-control-container {
+  display: none !important;
+}

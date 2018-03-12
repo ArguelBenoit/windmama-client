@@ -1,0 +1,24 @@
+#right-panel a {
+  text-decoration: none;
+}
+#right-panel {
+  border-left: 1px solid black;
+  right: 0px;
+}
+#right-panel.active { right: -260px; }
+#right-panel h2 {
+  padding: 20px 0;
+  border-top: 1px solid #333;
+}
+#right-panel button.mail {
+  width: 100%;
+  padding: 10px;
+}
+
+@media only screen and (max-device-width: 480px) {
+  #right-panel { right: 0; }
+  #right-panel.active { right: -100%; }
+  #right-panel .link-container {
+    width: 100%;
+  }
+}

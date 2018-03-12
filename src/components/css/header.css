@@ -1,0 +1,58 @@
+#header {
+  width: 100%;
+  height: 59px;
+  background: #202020;
+  color: white;
+  border-bottom: 1px solid black;
+}
+#header .container-left-menu {
+  background: black;
+  float: left;
+}
+#header .container-left-menu i {
+  transform: rotateZ(-180deg);
+  transition-duration: 500ms;
+  font-size: xx-large;
+  padding: 14px 22px;
+}
+#header .container-left-menu.clicked i { transform: rotateZ(0deg); }
+#header h1 {
+  float: left;
+  padding: 13px 0;
+  width: 195px;
+  font-weight: 300;
+  margin: 0;
+  text-align: center;
+  font-size: 27px;
+  float: left;
+  cursor: pointer;
+}
+#header .container-right-menu {
+  float: right;
+  padding: 20px;
+  width: 25px;
+  height: 20px;
+}
+#header .container-right-menu div {
+  position: absolute;
+  transition-duration: 300ms;
+  width: 25px;
+  height: 5px;
+  background: white;
+  border-radius: 1.5px;
+}
+#header .container-right-menu div:last-child {
+  margin-top: 15px;
+}
+#header .container-right-menu.clicked div:first-child {
+  transform:
+    rotate(45deg)
+    translateX(5px)
+    translateY(5px);
+}
+#header .container-right-menu.clicked div:last-child {
+  transform:
+    rotate(-45deg)
+    translateX(5.5px)
+    translateY(-5.5px);
+}
