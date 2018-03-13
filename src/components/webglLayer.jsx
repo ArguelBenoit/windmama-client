@@ -83,7 +83,7 @@ class WebglLayer extends Component {
   markerGeneration() {
     const { allId } = this.state;
     const { width, zoom, height, latitude, longitude } = this.props.viewport;
-    const mercator = WebMercatorViewport({
+    const mercator = new WebMercatorViewport({
       longitude,
       latitude,
       zoom,
@@ -143,7 +143,7 @@ class WebglLayer extends Component {
   moveMarkers() {
     const { width, zoom, height, latitude, longitude } = this.props.viewport;
     const { locations } = this.state;
-    const mercator = WebMercatorViewport({
+    const mercator = new WebMercatorViewport({
       longitude,
       latitude,
       zoom,
@@ -183,7 +183,7 @@ class WebglLayer extends Component {
       }
       this.setState({ locations: tempState });
       const { width, zoom, height, latitude, longitude } = this.props.viewport;
-      const mercator = WebMercatorViewport({
+      const mercator = new WebMercatorViewport({
         longitude,
         latitude,
         zoom,

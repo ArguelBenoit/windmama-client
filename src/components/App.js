@@ -10,7 +10,7 @@ import Header from './header.jsx';
 import Tooltip from './tooltip.jsx';
 import ColorLegend from './colorLegend.jsx';
 import Loader from './loader.jsx';
-// import ContainerMap from './containerMap.jsx';
+import ContainerMap from './containerMap.jsx';
 import './css/app.css';
 
 
@@ -62,26 +62,19 @@ class App extends Component {
     const { displayDetail, leftActive, rightActive } = this.state;
     const propsWidget = { displayDetail, leftActive, rightActive };
     return <div id="ui" className="elements-ui-absolute">
-
       {!store.mobile
         ? <Tooltip displayDetail={displayDetail} rightActive={rightActive} />
         : ''
       }
-
-
-
-
+      <ContainerMap displayDetail={displayDetail} />
       { displayDetail ? <ContainerWidget {...propsWidget} /> : '' }
-
       <ColorLegend mobile={store.mobile} leftActive={leftActive} displayDetail={displayDetail} />
       <LeftPanel leftActive={leftActive} />
       <RightPanel rightActive={rightActive} />
       <Header leftActive={leftActive} rightActive={rightActive}/>
       <Loader />
-
     </div>;
   }
-  // <ContainerMap displayDetail={displayDetail} />
 }
 
 
