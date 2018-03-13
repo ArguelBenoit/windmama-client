@@ -53,18 +53,24 @@ class App extends Component {
     });
   }
   render() {
-    const { leftActive, rightActive } = this.state;
+    const {
+      leftActive,
+      rightActive
+    } = this.state;
 
     return <div id="ui" className="elements-ui-absolute">
+
       {/* common for / and /station/@id */}
-      <ContainerMap />
+      <Route path="/" render={routeProps => <ContainerMap {...routeProps}/>} />
       <LeftPanel leftActive={leftActive} />
       <RightPanel rightActive={rightActive} />
       <Header leftActive={leftActive} rightActive={rightActive}/>
       <Loader />
+
       {/* only for path /station/@id */}
       <Route path={'/station/:stationId'} component={ContainerWidget} />
       <Route exact path={'/station'} render={() => <Redirect to="/" />} />
+
       {/* only for exact path / */}
       <Route exact path="/" render={() => <ColorLegend mobile={store.mobile} leftActive={leftActive} />} />
       {!store.mobile

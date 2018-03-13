@@ -94,8 +94,7 @@ class WebglLayer extends Component {
       let marker = new PIXI.Sprite.fromImage(markerImage);
       const onHover = () => Actions.hoverId(id);
       const onClick = () => {
-        // this.props.router.push(`/station/${id}`);
-        window.history.pushState('page2', 'Title', `/station/${id}`);
+        this.props.history.push(`/station/${id}`);
         Actions.loadActivity();
       };
       marker.on('mouseover', onHover);
@@ -208,7 +207,8 @@ class WebglLayer extends Component {
 
 WebglLayer.propTypes = {
   locations: PropTypes.object,
-  viewport: PropTypes.object
+  viewport: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default WebglLayer;

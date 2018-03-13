@@ -8,10 +8,6 @@ AppDispatcher.register((action) => {
 
   switch (action.actionType) {
 
-    // case typeOfActions.MARKER_CLICKED:
-    //   store.emit(typeOfActions.MARKER_CLICKED);
-    //   break;
-
     case typeOfActions.LOAD_ACTIVITY:
       store.loading = action.value;
       store.emit(typeOfActions.LOAD_ACTIVITY);

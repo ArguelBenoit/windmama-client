@@ -20,13 +20,16 @@ class ContainerWidget extends Component {
     };
   }
   componentDidMount() {
-    this.request(this.props.match.params.stationId);
+    if(store.detail !== {}) {
+      this.request(this.props.match.params.stationId);
+    }
     store.on(typeOfActions.UPDATE_DETAIL, this.updateDetail);
     store.on(typeOfActions.LEFT_ACTIVATION, () => this.forceUpdate);
     store.on(typeOfActions.RIGHT_ACTIVATION, () => this.forceUpdate);
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.stationId !== nextProps.match.params.stationId)
+    if (this.props.match.params.stationId !== nextProps.match.params.stationId &&
+        store.detail !== {})
       this.request(nextProps.match.params.stationId);
     else
       Actions.loadActivity(false);
@@ -36,25 +39,27 @@ class ContainerWidget extends Component {
   }
   request(id) {
     let _this = this;
-    $.ajax({
-      url: store.environment === 'web'
+    if(Object.keys(store.place).length !== 0) {
+      $.ajax({
+        url: store.environment === 'web'
         ? window.location.protocol + '//' + window.location.hostname + '/spot/?' + id // if protocol http or https we are in web environement
         : 'http://windmama.fr/spot/?' + id, // else we are app environement
-      type: 'POST',
-      async: true,
-      success(a) {
-        a = JSON.parse(a);
-        var tempA = [];
-        a.forEach(e => {
-          tempA.push(e);
-        });
-        Actions.loadActivity(false);
-        _this.setState({
-          onePlace: store.place[id],
-          oneDetail: tempA.reverse()
-        });
-      }
-    });
+        type: 'POST',
+        async: true,
+        success(a) {
+          a = JSON.parse(a);
+          var tempA = [];
+          a.forEach(e => {
+            tempA.push(e);
+          });
+          Actions.loadActivity(false);
+          _this.setState({
+            onePlace: store.place[id],
+            oneDetail: tempA.reverse()
+          });
+        }
+      });
+    }
   }
   updateDetail() {
     const displayDetail = this.props.match.params.stationId;

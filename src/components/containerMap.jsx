@@ -53,19 +53,19 @@ class ContainerMap extends Component {
     this.setState({viewport});
   }
   render() {
-
     const displayDetail = window.location.pathname.search('station');
     const { viewport, mapboxDepend } = this.state;
     return <div id="map" style={{ filter: displayDetail > 0 ? 'blur(10px)' : 'blur(0px)'}}>
       <ReactMapGL style={{cursor: 'move'}}onViewportChange={this._onChangeViewport} {...viewport} {...mapboxDepend}>
-        <WebglLayer viewport={viewport} />
+        <WebglLayer history={this.props.history} viewport={viewport} />
       </ReactMapGL>
     </div>;
   }
 }
 
 ContainerMap.propTypes = {
-  displayDetail: PropTypes.any
+  displayDetail: PropTypes.any,
+  history: PropTypes.object
 };
 
 export default ContainerMap;
