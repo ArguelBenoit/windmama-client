@@ -20,12 +20,16 @@ class ContainerWidget extends Component {
     };
   }
   componentDidMount() {
-    this.request(this.props.displayDetail);
+    this.request(this.props.match.params.stationId);
     store.on(typeOfActions.UPDATE_DETAIL, this.updateDetail);
+    store.on(typeOfActions.LEFT_ACTIVATION, () => this.forceUpdate);
+    store.on(typeOfActions.RIGHT_ACTIVATION, () => this.forceUpdate);
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.displayDetail !== nextProps.displayDetail)
-      this.request(nextProps.displayDetail);
+    if (this.props.match.params.stationId !== nextProps.match.params.stationId)
+      this.request(nextProps.match.params.stationId);
+    else
+      Actions.loadActivity(false);
   }
   componentWillUnmount() {
     store.removeListener(typeOfActions.UPDATE_DETAIL, this.updateDetail);
@@ -44,7 +48,7 @@ class ContainerWidget extends Component {
         a.forEach(e => {
           tempA.push(e);
         });
-        Actions.loadActivity();
+        Actions.loadActivity(false);
         _this.setState({
           onePlace: store.place[id],
           oneDetail: tempA.reverse()
@@ -53,7 +57,7 @@ class ContainerWidget extends Component {
     });
   }
   updateDetail() {
-    const { displayDetail } = this.props;
+    const displayDetail = this.props.match.params.stationId;
     let { oneDetail } = this.state;
     let { idUpdate, detail } = store;
     if (idUpdate === displayDetail) {
@@ -62,12 +66,18 @@ class ContainerWidget extends Component {
     }
   }
   render() {
-    const { displayDetail, rightActive, leftActive } = this.props;
-    const { mobile, viewportWidth, viewportHeight } = store;
+    const displayDetail = this.props.match.params.stationId;
+    const {
+      rightActive,
+      leftActive,
+      mobile,
+      viewportWidth,
+      viewportHeight
+    } = store;
     const { oneDetail, onePlace } = this.state;
 
     let content = oneDetail ? <div>
-      <InfoWidget detail={oneDetail} place={onePlace} />
+      <InfoWidget detail={oneDetail} place={onePlace} displayDetail={displayDetail} />
       <ContainerGraphArrayWidget detail={oneDetail} displayDetail={displayDetail} />
     </div>: '';
 
@@ -103,7 +113,8 @@ class ContainerWidget extends Component {
 ContainerWidget.propTypes = {
   leftActive: PropTypes.bool,
   rightActive: PropTypes.bool,
-  displayDetail: PropTypes.any
+  displayDetail: PropTypes.any,
+  match: PropTypes.object
 };
 
 export default ContainerWidget;

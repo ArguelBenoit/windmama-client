@@ -5,12 +5,12 @@ import { Actions } from '../store/actions.js';
 import HeadingUnit from './headingUnit.jsx';
 import WindUnit from './windUnit.jsx';
 import store from '../store/store.js';
+import { Link } from 'react-router-dom';
 
 class PanelSpot extends Component {
   sumFunc(id) {
     if (id !== store.displayDetail)
-      Actions.loadActivity();
-      Actions.displayDetail(id);
+      Actions.loadActivity(true);
     if (store.mobile)
       Actions.leftActivation();
   }
@@ -18,7 +18,6 @@ class PanelSpot extends Component {
     const { spot } = this.props;
     const { viewportWidth, place } = store;
     const { idInsteadLoc } = store.settings;
-
     let id;
     if (idInsteadLoc) {
       id = spot.id;
@@ -56,31 +55,33 @@ class PanelSpot extends Component {
         : '8px'
     };
 
-    return <div {...spotProps} >
-      <div className="container-city-info" style={styleChildContainer}>
-        <span className="city">
-          {id}
-        </span>
-        <div className="info">
-          <div>
-            <HeadingUnit heading={spot.heading} max={spot.avg} />
+    return <Link to={`/station/${spot.id}`} style={{color: '#e8e8e8'}}>
+      <div {...spotProps} >
+        <div className="container-city-info" style={styleChildContainer}>
+          <span className="city">
+            {id}
+          </span>
+          <div className="info">
+            <div>
+              <HeadingUnit heading={spot.heading} max={spot.avg} />
+            </div>
+            {spot.avg === '--'
+              ? <span className="max">--</span>
+              : <span className="max" style={{color: getColor(spot.avg)}}>
+              <WindUnit value={spot.avg}/>
+              {' ' + store.settings.windUnit}
+            </span>
+          }
           </div>
-          {spot.avg === '--'
-            ? <span className="max">--</span>
-            : <span className="max" style={{color: getColor(spot.avg)}}>
-            <WindUnit value={spot.avg}/>
-            {' ' + store.settings.windUnit}
-          </span>
-        }
         </div>
+        {spot.raw && store.settings.metarRaw
+          ? <span className="rawdata">
+              {spot.raw}
+            </span>
+          : ''
+        }
       </div>
-      {spot.raw && store.settings.metarRaw
-        ? <span className="rawdata">
-            {spot.raw}
-          </span>
-        : ''
-      }
-    </div>;
+    </Link>;
   }
 }
 

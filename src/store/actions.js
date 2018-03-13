@@ -5,15 +5,20 @@ export var typeOfActions = {
   RIGHT_ACTIVATION: 'RIGHT_ACTIVATION',
   UPDATE_DETAIL: 'UPDATE_DETAIL',
   HOVER_ID: 'HOVER_ID',
-  DISPLAY_DETAIL: 'DISPLAY_DETAIL',
   CHANGE_VIEWPORT: 'CHANGE_VIEWPORT',
   DATA_RECEIVED: 'DATA_RECEIVED',
   LOAD_ACTIVITY: 'LOAD_ACTIVITY',
   ADD_BOOKMARK: 'ADD_BOOKMARK',
   CHANGE_SETTINGS: 'CHANGE_SETTINGS'
+  // MARKER_CLICKED: 'MARKER_CLICKED'
 };
 
 export var Actions = {
+  // markerClicked() {
+  //   AppDispatcher.dispatch({
+  //     actionType: typeOfActions.MARKER_CLICKED
+  //   });
+  // },
   updateDetail(update) {
     AppDispatcher.dispatch({
       actionType: typeOfActions.UPDATE_DETAIL,
@@ -21,9 +26,10 @@ export var Actions = {
       idUpdate: JSON.parse(update).id
     });
   },
-  loadActivity() {
+  loadActivity(value) {
     AppDispatcher.dispatch({
-      actionType: typeOfActions.LOAD_ACTIVITY
+      actionType: typeOfActions.LOAD_ACTIVITY,
+      value
     });
   },
   leftActivation() {
@@ -39,12 +45,6 @@ export var Actions = {
   hoverId(id) {
     AppDispatcher.dispatch({
       actionType: typeOfActions.HOVER_ID,
-      id
-    });
-  },
-  displayDetail(id) {
-    AppDispatcher.dispatch({
-      actionType: typeOfActions.DISPLAY_DETAIL,
       id
     });
   },

@@ -8,7 +8,12 @@ AppDispatcher.register((action) => {
 
   switch (action.actionType) {
 
+    // case typeOfActions.MARKER_CLICKED:
+    //   store.emit(typeOfActions.MARKER_CLICKED);
+    //   break;
+
     case typeOfActions.LOAD_ACTIVITY:
+      store.loading = action.value;
       store.emit(typeOfActions.LOAD_ACTIVITY);
       break;
 
@@ -27,11 +32,6 @@ AppDispatcher.register((action) => {
       store.rightActive = !store.rightActive;
       store.leftActive = false;
       store.emit(typeOfActions.RIGHT_ACTIVATION);
-      break;
-
-    case typeOfActions.DISPLAY_DETAIL:
-      store.displayDetail = action.id;
-      store.emit(typeOfActions.DISPLAY_DETAIL);
       break;
 
     case typeOfActions.HOVER_ID:

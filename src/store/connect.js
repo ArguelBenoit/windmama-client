@@ -12,8 +12,8 @@ const socket = io.connect(
 let init = {
     detail: {},
     place: {},
+    loading: true,
     mobile: false,
-    displayDetail: false,
     hoverId: false,
     idUpdate: false,
     bookmarks: localStorage.bookmarks
@@ -67,6 +67,7 @@ function reqDetail() {
     success(b) {
       init.detail = JSON.parse(b);
       Actions.DataReceived();
+      Actions.loadActivity(false);
     }
   });
 }

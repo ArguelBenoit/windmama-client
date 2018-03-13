@@ -11,6 +11,7 @@ import Tooltip from './tooltip.jsx';
 import ColorLegend from './colorLegend.jsx';
 import Loader from './loader.jsx';
 import ContainerMap from './containerMap.jsx';
+import { Route, Redirect } from 'react-router-dom';
 import './css/app.css';
 
 
@@ -19,17 +20,15 @@ class App extends Component {
     super(props);
     this.updatePanelActive = this.updatePanelActive.bind(this);
     this.mainUpdate = this.mainUpdate.bind(this);
-    this.updateDisplayDetail = this.updateDisplayDetail.bind(this);
     this.state = {
       leftActive: store.leftActive,
-      rightActive: store.rightActive,
-      displayDetail: store.displayDetail
+      rightActive: store.rightActive
     };
   }
   componentDidMount() {
+    store.on(typeOfActions.MARKER_CLICKED, this.mainUpdate);
     store.on(typeOfActions.LEFT_ACTIVATION, this.updatePanelActive);
     store.on(typeOfActions.RIGHT_ACTIVATION, this.updatePanelActive);
-    store.on(typeOfActions.DISPLAY_DETAIL, this.updateDisplayDetail);
     store.on(typeOfActions.CHANGE_VIEWPORT, this.mainUpdate);
     store.on(typeOfActions.CHANGE_SETTINGS, this.mainUpdate);
     var resize = debounce( () => {
@@ -38,19 +37,14 @@ class App extends Component {
     window.addEventListener('resize', resize);
   }
   componentWillUnmount() {
+    store.removeListener(typeOfActions.MARKER_CLICKED, this.mainUpdate);
     store.removeListener(typeOfActions.LEFT_ACTIVATION, this.updatePanelActive);
     store.removeListener(typeOfActions.RIGHT_ACTIVATION, this.updatePanelActive);
-    store.removeListener(typeOfActions.DISPLAY_DETAIL, this.updateDisplayDetail);
     store.removeListener(typeOfActions.CHANGE_VIEWPORT, this.mainUpdate);
     store.removeListener(typeOfActions.CHANGE_SETTINGS, this.mainUpdate);
   }
   mainUpdate() {
     this.forceUpdate();
-  }
-  updateDisplayDetail() {
-    this.setState({
-      displayDetail: store.displayDetail
-    });
   }
   updatePanelActive() {
     this.setState({
@@ -59,20 +53,24 @@ class App extends Component {
     });
   }
   render() {
-    const { displayDetail, leftActive, rightActive } = this.state;
-    const propsWidget = { displayDetail, leftActive, rightActive };
+    const { leftActive, rightActive } = this.state;
+
     return <div id="ui" className="elements-ui-absolute">
-      {!store.mobile
-        ? <Tooltip displayDetail={displayDetail} rightActive={rightActive} />
-        : ''
-      }
-      <ContainerMap displayDetail={displayDetail} />
-      { displayDetail ? <ContainerWidget {...propsWidget} /> : '' }
-      <ColorLegend mobile={store.mobile} leftActive={leftActive} displayDetail={displayDetail} />
+      {/* common for / and /station/@id */}
+      <ContainerMap />
       <LeftPanel leftActive={leftActive} />
       <RightPanel rightActive={rightActive} />
       <Header leftActive={leftActive} rightActive={rightActive}/>
       <Loader />
+      {/* only for path /station/@id */}
+      <Route path={'/station/:stationId'} component={ContainerWidget} />
+      <Route exact path={'/station'} render={() => <Redirect to="/" />} />
+      {/* only for exact path / */}
+      <Route exact path="/" render={() => <ColorLegend mobile={store.mobile} leftActive={leftActive} />} />
+      {!store.mobile
+        ? <Route exact path="/" render={() => <Tooltip rightActive={rightActive} />}/>
+        : ''
+      }
     </div>;
   }
 }

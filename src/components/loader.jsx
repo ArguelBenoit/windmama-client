@@ -8,7 +8,7 @@ class Loader extends Component {
   constructor(props) {
     super(props);
     this.updateLoadActivity = this.updateLoadActivity.bind(this);
-    this.state = { loadActivity: true };
+    this.state = { loadActivity: store.loading };
   }
   componentDidMount() {
     store.on(typeOfActions.LOAD_ACTIVITY, this.updateLoadActivity);
@@ -17,7 +17,7 @@ class Loader extends Component {
     store.removeListener(typeOfActions.LOAD_ACTIVITY, this.updateLoadActivity);
   }
   updateLoadActivity() {
-    this.setState({ loadActivity: !this.state.loadActivity });
+    this.setState({ loadActivity: store.loading });
   }
   render() {
     const { loadActivity } = this.state;

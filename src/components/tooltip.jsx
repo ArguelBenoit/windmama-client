@@ -108,7 +108,6 @@ class Tooltip extends Component {
     }
 
     const style = {
-      display: this.props.displayDetail ? 'none' : 'inherit',
       right: this.props.rightActive ? 270 : 10
     };
     return <div id="tooltip" style={style}>
@@ -121,7 +120,6 @@ class Tooltip extends Component {
 }
 
 Tooltip.propTypes = {
-  displayDetail: PropTypes.any,
   rightActive: PropTypes.bool
 };
 

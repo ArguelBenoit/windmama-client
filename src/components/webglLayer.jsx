@@ -94,7 +94,8 @@ class WebglLayer extends Component {
       let marker = new PIXI.Sprite.fromImage(markerImage);
       const onHover = () => Actions.hoverId(id);
       const onClick = () => {
-        Actions.displayDetail(id);
+        // this.props.router.push(`/station/${id}`);
+        window.history.pushState('page2', 'Title', `/station/${id}`);
         Actions.loadActivity();
       };
       marker.on('mouseover', onHover);
@@ -179,7 +180,6 @@ class WebglLayer extends Component {
           connected: diff < 3600000 ? true : false,
           webglRef: idMarker
         };
-        console.log();
       }
       this.setState({ locations: tempState });
       const { width, zoom, height, latitude, longitude } = this.props.viewport;
