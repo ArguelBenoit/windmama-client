@@ -20,9 +20,7 @@ class ContainerWidget extends Component {
     };
   }
   componentDidMount() {
-    if(store.detail !== {}) {
-      this.request(this.props.match.params.stationId);
-    }
+    this.request(this.props.match.params.stationId);
     store.on(typeOfActions.UPDATE_DETAIL, this.updateDetail);
     store.on(typeOfActions.LEFT_ACTIVATION, () => this.forceUpdate);
     store.on(typeOfActions.RIGHT_ACTIVATION, () => this.forceUpdate);
