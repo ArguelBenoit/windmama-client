@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 class PanelSpot extends Component {
   sumFunc(id) {
-    if (id !== store.displayDetail)
+    if (window.location.pathname.split('/')[2] !== id)
       Actions.loadActivity(true);
     if (store.mobile)
       Actions.leftActivation();

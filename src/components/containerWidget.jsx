@@ -27,11 +27,8 @@ class ContainerWidget extends Component {
     });
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.location.pathname !== nextProps.location.pathname) {
+    if (this.props.location.pathname !== nextProps.location.pathname)
       this.request(nextProps.match.params.stationId);
-    } else {
-      Actions.loadActivity(false);
-    }
   }
   componentWillUnmount() {
     store.removeListener(typeOfActions.UPDATE_DETAIL, this.updateDetail);
