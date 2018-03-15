@@ -14,7 +14,6 @@ AppDispatcher.register((action) => {
       break;
 
     case typeOfActions.DATA_RECEIVED:
-      store.emit(typeOfActions.LOAD_ACTIVITY);
       store.emit(typeOfActions.DATA_RECEIVED);
       break;
 

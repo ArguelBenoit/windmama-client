@@ -95,7 +95,7 @@ class WebglLayer extends Component {
       const onHover = () => Actions.hoverId(id);
       const onClick = () => {
         this.props.history.push(`/station/${id}`);
-        Actions.loadActivity();
+        Actions.loadActivity(true);
       };
       marker.on('mouseover', onHover);
       marker.on('click', onClick);

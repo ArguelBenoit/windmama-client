@@ -10,15 +10,9 @@ export var typeOfActions = {
   LOAD_ACTIVITY: 'LOAD_ACTIVITY',
   ADD_BOOKMARK: 'ADD_BOOKMARK',
   CHANGE_SETTINGS: 'CHANGE_SETTINGS'
-  // MARKER_CLICKED: 'MARKER_CLICKED'
 };
 
 export var Actions = {
-  // markerClicked() {
-  //   AppDispatcher.dispatch({
-  //     actionType: typeOfActions.MARKER_CLICKED
-  //   });
-  // },
   updateDetail(update) {
     AppDispatcher.dispatch({
       actionType: typeOfActions.UPDATE_DETAIL,

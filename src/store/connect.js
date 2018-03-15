@@ -4,8 +4,8 @@ import $ from 'jquery';
 
 const socket = io.connect(
   window.location.protocol === 'http:' || window.location.protocol === 'https:'
-    ? window.location.protocol + '//' + window.location.hostname // if protocol http or https we are in web environement
-    : 'http://windmama.fr', // else we are app environement
+    ? window.location.protocol + '//' + window.location.hostname + ':81'// if protocol http or https we are in web environement
+    : 'http://windmama.fr:81', // else we are app environement
   {secure: true}
 );
 
@@ -60,8 +60,8 @@ registerData('sendPubsubData', (data) => {
 function reqDetail() {
   $.ajax({
     url: window.location.protocol === 'http:' || window.location.protocol === 'https:'
-      ? window.location.protocol + '//' + window.location.hostname + '/detail/' // if protocol http or https we are in web environement
-      : 'http://windmama.fr/detail/', // else we are app environement
+      ? window.location.protocol + '//' + window.location.hostname + ':81/detail/' // if protocol http or https we are in web environement
+      : 'http://windmama.fr:81/detail/', // else we are app environement
     type: 'POST',
     async: true,
     success(b) {
@@ -74,8 +74,8 @@ function reqDetail() {
 
 $.ajax({
   url: window.location.protocol === 'http:' || window.location.protocol === 'https:'
-    ? window.location.protocol + '//' + window.location.hostname + '/location' // if protocol http or https we are in web environement
-    : 'http://windmama.fr/location', // else we are app environement
+    ? window.location.protocol + '//' + window.location.hostname + ':81/location' // if protocol http or https we are in web environement
+    : 'http://windmama.fr:81/location', // else we are app environement
   type: 'POST',
   async: true,
   success(a) {

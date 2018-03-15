@@ -22,26 +22,27 @@ class ContainerWidget extends Component {
   componentDidMount() {
     this.request(this.props.match.params.stationId);
     store.on(typeOfActions.UPDATE_DETAIL, this.updateDetail);
-    store.on(typeOfActions.LEFT_ACTIVATION, () => this.forceUpdate);
-    store.on(typeOfActions.RIGHT_ACTIVATION, () => this.forceUpdate);
+    store.on(typeOfActions.DATA_RECEIVED, () => {
+      this.request(this.props.match.params.stationId);
+    });
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.stationId !== nextProps.match.params.stationId &&
-        store.detail !== {})
+    if (this.props.location.pathname !== nextProps.location.pathname) {
       this.request(nextProps.match.params.stationId);
-    else
+    } else {
       Actions.loadActivity(false);
+    }
   }
   componentWillUnmount() {
     store.removeListener(typeOfActions.UPDATE_DETAIL, this.updateDetail);
   }
   request(id) {
-    let _this = this;
-    if(Object.keys(store.place).length !== 0) {
+    if (Object.keys(store.place).length !== 0) {
+      let _this = this;
       $.ajax({
         url: store.environment === 'web'
-        ? window.location.protocol + '//' + window.location.hostname + '/spot/?' + id // if protocol http or https we are in web environement
-        : 'http://windmama.fr/spot/?' + id, // else we are app environement
+        ? window.location.protocol + '//' + window.location.hostname + ':81/spot/?' + id // if protocol http or https we are in web environement
+        : 'http://windmama.fr:81/spot/?' + id, // else we are app environement
         type: 'POST',
         async: true,
         success(a) {
@@ -117,7 +118,8 @@ ContainerWidget.propTypes = {
   leftActive: PropTypes.bool,
   rightActive: PropTypes.bool,
   displayDetail: PropTypes.any,
-  match: PropTypes.object
+  match: PropTypes.object,
+  location: PropTypes.object
 };
 
 export default ContainerWidget;
