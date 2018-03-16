@@ -5,7 +5,7 @@ import ContainerGraphArrayWidget from './containerGraphArrayWidget.jsx';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Actions, typeOfActions } from '../store/actions.js';
 import store from '../store/store.js';
-import $ from 'jquery';
+import request from 'request';
 import './css/containerWidget.css';
 
 
@@ -14,6 +14,7 @@ class ContainerWidget extends Component {
     super(props);
     this.request = this.request.bind(this);
     this.updateDetail = this.updateDetail.bind(this);
+    this.loadPageAtStationLevel = this.loadPageAtStationLevel.bind(this);
     this.state = {
       onePlace: false,
       oneDetail: false
@@ -22,9 +23,7 @@ class ContainerWidget extends Component {
   componentDidMount() {
     this.request(this.props.match.params.stationId);
     store.on(typeOfActions.UPDATE_DETAIL, this.updateDetail);
-    store.on(typeOfActions.DATA_RECEIVED, () => {
-      this.request(this.props.match.params.stationId);
-    });
+    store.on(typeOfActions.DATA_RECEIVED, this.loadPageAtStationLevel);
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.location.pathname !== nextProps.location.pathname)
@@ -33,27 +32,25 @@ class ContainerWidget extends Component {
   componentWillUnmount() {
     store.removeListener(typeOfActions.UPDATE_DETAIL, this.updateDetail);
   }
+  loadPageAtStationLevel() {
+    this.request(this.props.match.params.stationId);
+  }
   request(id) {
     if (Object.keys(store.place).length !== 0) {
-      let _this = this;
-      $.ajax({
-        url: store.environment === 'web'
+      let url = store.environment === 'web'
         ? window.location.protocol + '//' + window.location.hostname + ':81/spot/?' + id // if protocol http or https we are in web environement
-        : 'http://windmama.fr:81/spot/?' + id, // else we are app environement
-        type: 'POST',
-        async: true,
-        success(a) {
-          a = JSON.parse(a);
-          var tempA = [];
-          a.forEach(e => {
-            tempA.push(e);
-          });
-          Actions.loadActivity(false);
-          _this.setState({
-            onePlace: store.place[id],
-            oneDetail: tempA.reverse()
-          });
-        }
+        : 'http://windmama.fr:81/spot/?' + id; // else we are app environement
+      request(url, (z, x, a) => {
+        a = JSON.parse(a);
+        var tempA = [];
+        a.forEach(e => {
+          tempA.push(e);
+        });
+        Actions.loadActivity(false);
+        this.setState({
+          onePlace: store.place[id],
+          oneDetail: tempA.reverse()
+        });
       });
     }
   }

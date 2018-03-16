@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import { Actions } from './actions.js';
-import $ from 'jquery';
+import request from 'request';
 
 const socket = io.connect(
   window.location.protocol === 'http:' || window.location.protocol === 'https:'
@@ -57,36 +57,29 @@ registerData('sendPubsubData', (data) => {
   Actions.updateDetail(data);
 });
 
+
+let urlDetails = window.location.protocol === 'http:' || window.location.protocol === 'https:'
+  ? window.location.protocol + '//' + window.location.hostname + ':81/detail/' // if protocol http or https we are in web environement
+  : 'http://windmama.fr:81/detail/'; // else we are app environement
 function reqDetail() {
-  $.ajax({
-    url: window.location.protocol === 'http:' || window.location.protocol === 'https:'
-      ? window.location.protocol + '//' + window.location.hostname + ':81/detail/' // if protocol http or https we are in web environement
-      : 'http://windmama.fr:81/detail/', // else we are app environement
-    type: 'POST',
-    async: true,
-    success(b) {
-      init.detail = JSON.parse(b);
-      Actions.DataReceived();
-      Actions.loadActivity(false);
-    }
+  request(urlDetails, (z, x, b) => {
+    init.detail = JSON.parse(b);
+    Actions.DataReceived();
+    Actions.loadActivity(false);
   });
 }
 
-$.ajax({
-  url: window.location.protocol === 'http:' || window.location.protocol === 'https:'
+let urlLocations = window.location.protocol === 'http:' || window.location.protocol === 'https:'
     ? window.location.protocol + '//' + window.location.hostname + ':81/location' // if protocol http or https we are in web environement
-    : 'http://windmama.fr:81/location', // else we are app environement
-  type: 'POST',
-  async: true,
-  success(a) {
-    a = JSON.parse(a);
-    const ids = Object.keys(a);
-    ids.forEach(e => {
-      init.place[e] = JSON.parse(a[e]);
-    });
-    reqDetail();
-  }
-});
+    : 'http://windmama.fr:81/location'; // else we are app environement
 
+request(urlLocations, (z, x, a) => {
+  a = JSON.parse(a);
+  const ids = Object.keys(a);
+  ids.forEach(e => {
+    init.place[e] = JSON.parse(a[e]);
+  });
+  reqDetail();
+});
 
 export default init;
