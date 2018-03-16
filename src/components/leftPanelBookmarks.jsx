@@ -76,7 +76,8 @@ class LeftPanelBookmarks extends Component {
     } else {
       return <div className="child-container">
         <h1>
-          <i className="fas fa-heart" />
+          <i
+            className="fas fa-heart" />
           &nbsp;&nbsp;
           <span>
             Favorites places
