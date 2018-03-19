@@ -31,6 +31,7 @@ class ContainerWidget extends Component {
   }
   componentWillUnmount() {
     store.removeListener(typeOfActions.UPDATE_DETAIL, this.updateDetail);
+    store.removeListener(typeOfActions.DATA_RECEIVED, this.loadPageAtStationLevel);
   }
   loadPageAtStationLevel() {
     this.request(this.props.match.params.stationId);
