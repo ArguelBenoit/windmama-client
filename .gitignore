@@ -80,5 +80,5 @@ yarn-debug.log*
 yarn-error.log*
 
 cordova/www
-cordova/platforms/**
-cordova/plugins/**
+cordova/plugins
+cordova/platforms
