@@ -59,27 +59,22 @@ class App extends Component {
     } = this.state;
 
     return <div id="ui" className="elements-ui-absolute">
-
+      {/* common for / and /station/@id */}
+      <Route path="/" render={routeProps => <ContainerMap {...routeProps}/>} />
       {/* only for exact path / */}
       {!store.mobile
         ? <Route exact path="/" render={() => <Tooltip rightActive={rightActive} />}/>
         : ''
       }
       <Route exact path="/" render={() => <ColorLegend mobile={store.mobile} leftActive={leftActive} />} />
-
-      {/* common for / and /station/@id */}
-      <Route path="/" render={routeProps => <ContainerMap {...routeProps}/>} />
-
       {/* only for path /station/@id */}
       <Route path={'/station/:stationId'} component={ContainerWidget} />
       <Route exact path={'/station'} render={() => <Redirect to="/" />} />
-
       {/* common for / and /station/@id */}
       <LeftPanel leftActive={leftActive} />
       <RightPanel rightActive={rightActive} />
       <Header leftActive={leftActive} rightActive={rightActive}/>
       <Loader />
-
     </div>;
   }
 }
