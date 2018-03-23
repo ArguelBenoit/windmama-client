@@ -22,7 +22,7 @@
   "_resolved": "https://registry.npmjs.org/cordova-plugin-statusbar/-/cordova-plugin-statusbar-2.4.1.tgz",
   "_shasum": "222628a78aa54d34d4c927990020d0a3bace5545",
   "_spec": "cordova-plugin-statusbar@^2.4.1",
-  "_where": "/home/benoit/Bureau/windmama-compose/interface-react/cordova",
+  "_where": "/Users/dev-windmama/Desktop/windmama-react/cordova",
   "author": {
     "name": "Apache Software Foundation"
   },
