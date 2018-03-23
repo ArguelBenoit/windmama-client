@@ -3,9 +3,7 @@ import { Actions } from './actions.js';
 import request from 'request';
 
 const socket = io.connect(
-  window.location.protocol === 'http:' || window.location.protocol === 'https:'
-    ? window.location.protocol + '//' + window.location.hostname + ':81'// if protocol http or https we are in web environement
-    : 'http://windmama.fr:81', // else we are app environement
+  window.location.protocol + '//' + window.location.hostname + ':81',
   {secure: true}
 );
 
