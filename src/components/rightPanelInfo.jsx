@@ -39,13 +39,13 @@ function RightPanelInfo() {
       <strong>Creator, Webmaster, developer, designer and publisher</strong> : Benoit Arguel – benoit.arguel@gmail.com<br />
       <strong>Host</strong> : OVH – 2 rue Kellermann - 59100 Roubaix - France<br />
       <h3>2. Terms and conditions of use of windmama and services offered.</h3>
-      <p>Use of the site <a href="http://windmama.fr/">windmama</a>and the application implies full acceptance of the terms and conditions described below. These conditions of use may be modified or supplemented at any time, users of the site and the application<a href="http://windmama.fr/">windmama</a> they are therefore invited to consult them on a regular time.</p>
+      <p>Use of the site <a href="http://windmama.fr/">windmama</a> and the application implies full acceptance of the terms and conditions described below. These conditions of use may be modified or supplemented at any time, users of the site and the application <a href="http://windmama.fr/">windmama</a> they are therefore invited to consult them on a regular time.</p>
       <p>Windmama is normally accessible to users at any time. An interruption due to technical maintenance may however be decided by Mr. Benoit Arguel, who will then endeavor to communicate before users the dates and times of the intervention.</p>
       <p>Windmama is updated regularly by Benoit Arguel. In the same way, the legal mentions can be modified at any time: they impose nevertheless on the user who is invited to refer to it as often as possible in order to take note of it.</p>
       <h3>3. Description of the services provided.</h3>
       <p>Windmama's purpose is to provide information about all of the company's activities.</p>
       <p>Mr. Benoit Arguel strives to provide windmama with as accurate information as possible. However, he can not be held responsible for omissions, inaccuracies and deficiencies in the update, whether by him or the third party partners who provide this information.</p>
-      <p>All information on the site and application<a href="http://windmama.fr/">windmama</a>are given as an indication and are subject to change. In addition, information on windmama are not exhaustive. the information is given subject to modifications having been made since it was put online.</p>
+      <p>All information on the site and application <a href="http://windmama.fr/">windmama</a> are given as an indication and are subject to change. In addition, information on windmama are not exhaustive. the information is given subject to modifications having been made since it was put online.</p>
       <h3>4. Contractual limitations on technical data.</h3>
       <p>Windmama use JavaScript.</p>
       <p>Windmama can not be held responsible for material damage related to the use of the site. In addition, the site user agrees to access the site using recent equipment, not containing any viruses and with a browser of last generation updated</p>
@@ -69,7 +69,7 @@ function RightPanelInfo() {
       <p>In Safari: Click on the top right of the browser on the menu pictogram (symbolized by a cog). Select Settings. Click Show Advanced Settings. In the "Privacy" section, click Content Settings. In the "Cookies" section, you can block cookies.</p>
       <p>In Chrome: Click at the top right of the browser on the menu icon (symbolized by three horizontal lines). Select Settings. Click Show Advanced Settings. In the "Privacy" section, click Preferences. In the "Privacy" tab, you can block cookies.</p>
       <h3>8. Applicable law and attribution of jurisdiction.</h3>
-      <p>Any dispute in connection with the use of<a href="http://windmama.fr/">windmama</a> is subject to French law. It is made exclusive jurisdiction to the competent courts of Paris.</p>
+      <p>Any dispute in connection with the use of <a href="http://windmama.fr/">windmama</a> is subject to French law. It is made exclusive jurisdiction to the competent courts of Paris.</p>
       <h3>9. The main laws concerned.</h3>
       <p>Law n ° 78-17 of January 6, 1978, notably modified by the law n ° 2004-801 of August 6, 2004 relating to data processing, files and freedoms.</p>
       <p>Law No. 2004-575 of 21 June 2004 on confidence in the digital economy.</p>

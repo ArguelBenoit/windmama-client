@@ -81,3 +81,4 @@ yarn-error.log*
 
 cordova/plugins
 cordova/platforms
+cordova/www

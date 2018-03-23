@@ -9,7 +9,6 @@
         Benoit Arguel
     </author>
     <content src="index.html" />
-    <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -25,15 +24,14 @@
         <icon density="xhdpi" src="res/icon/android/xhdpi.png" />
         <icon density="xxhdpi" src="res/icon/android/xxhdpi.png" />
         <icon density="xxxhdpi" src="res/icon/android/xxxhdpi.png" />
-
-        <splash src="res/screen/android/splash-land-hdpi.png" density="land-hdpi"/>
-        <splash src="res/screen/android/splash-port-hdpi.png" density="port-hdpi"/>
-        <splash src="res/screen/android/splash-land-ldpi.png" density="land-ldpi"/>
-        <splash src="res/screen/android/splash-port-ldpi.png" density="port-ldpi"/>
-        <splash src="res/screen/android/splash-land-mdpi.png" density="land-mdpi"/>
-        <splash src="res/screen/android/splash-port-mdpi.png" density="port-mdpi"/>
-        <splash src="res/screen/android/splash-land-xhdpi.png" density="land-xhdpi"/>
-        <splash src="res/screen/android/splash-port-xhdpi.png" density="port-xhdpi"/>
+        <splash density="land-hdpi" src="res/screen/android/splash-land-hdpi.png" />
+        <splash density="port-hdpi" src="res/screen/android/splash-port-hdpi.png" />
+        <splash density="land-ldpi" src="res/screen/android/splash-land-ldpi.png" />
+        <splash density="port-ldpi" src="res/screen/android/splash-port-ldpi.png" />
+        <splash density="land-mdpi" src="res/screen/android/splash-land-mdpi.png" />
+        <splash density="port-mdpi" src="res/screen/android/splash-port-mdpi.png" />
+        <splash density="land-xhdpi" src="res/screen/android/splash-land-xhdpi.png" />
+        <splash density="port-xhdpi" src="res/screen/android/splash-port-xhdpi.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -55,14 +53,14 @@
         <icon height="50" src="res/icon/ios/icon-50.png" width="50" />
         <icon height="100" src="res/icon/ios/icon-50@2x.png" width="100" />
         <icon height="167" src="res/icon/ios/icon-83.5@2x.png" width="167" />
-
         <splash src="res/screen/ios/Default@2x~universal~anyany.png" />
     </platform>
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#000000" />
     <preference name="StatusBarStyle" value="lightcontent" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="^7.0.0" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
 </widget>
