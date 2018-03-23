@@ -21,9 +21,6 @@ let init = {
       : [],
     viewportWidth: window.innerWidth,
     viewportHeight: window.innerHeight,
-    environment: window.location.protocol === 'http:' || window.location.protocol === 'https:'
-      ? 'web' // if protocol http or https we are in web environement
-      : 'app', // else we are app environement
     settings: localStorage.settings
       ? JSON.parse(localStorage.getItem('settings'))
       : {
@@ -58,9 +55,7 @@ registerData('sendPubsubData', (data) => {
 });
 
 
-let urlDetails = window.location.protocol === 'http:' || window.location.protocol === 'https:'
-  ? window.location.protocol + '//' + window.location.hostname + ':81/detail/' // if protocol http or https we are in web environement
-  : 'http://windmama.fr:81/detail/'; // else we are app environement
+let urlDetails = window.location.protocol + '//' + window.location.hostname + ':81/detail/';
 function reqDetail() {
   request(urlDetails, (z, x, b) => {
     init.detail = JSON.parse(b);
@@ -69,10 +64,7 @@ function reqDetail() {
   });
 }
 
-let urlLocations = window.location.protocol === 'http:' || window.location.protocol === 'https:'
-    ? window.location.protocol + '//' + window.location.hostname + ':81/location' // if protocol http or https we are in web environement
-    : 'http://windmama.fr:81/location'; // else we are app environement
-
+let urlLocations = window.location.protocol + '//' + window.location.hostname + ':81/location';
 request(urlLocations, (z, x, a) => {
   a = JSON.parse(a);
   const ids = Object.keys(a);

@@ -38,9 +38,7 @@ class ContainerWidget extends Component {
   }
   request(id) {
     if (Object.keys(store.place).length !== 0) {
-      let url = store.environment === 'web'
-        ? window.location.protocol + '//' + window.location.hostname + ':81/spot/?' + id // if protocol http or https we are in web environement
-        : 'http://windmama.fr:81/spot/?' + id; // else we are app environement
+      let url = window.location.protocol + '//' + window.location.hostname + ':81/spot/?' + id;
       request(url, (z, x, a) => {
         a = JSON.parse(a);
         var tempA = [];
