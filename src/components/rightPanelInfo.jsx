@@ -32,7 +32,7 @@ function RightPanelInfo() {
       </a>
     </div>
     <div className="child-container last">
-      <h1>Informations légales</h1>
+      <h1>Legal information</h1>
       <h3>1. presentation of the platform</h3>
       <p>Under article 6 of the law n ° 2004-575 of June 21st, 2004 for the confidence in the digital economy, it is specified to the users of <a href="http://windmama.fr/">windmama</a> the identity of the various stakeholders as part of its implementation and monitoring:</p>
       <p><strong>Owner</strong> Benoit Arguel – Auto-entrepreneur – 28 rue toscane, 34970 lattes, France</p>
@@ -62,7 +62,7 @@ function RightPanelInfo() {
       <p>The databases are protected by the provisions of the Act of 1 July 1998 transposing Directive 96/9 of 11 March 1996 on the legal protection of databases.</p>
       <h3>7. Hypertext links and cookies.</h3>
       <p><a href="http://windmama.fr/">windmama</a> contains a number of hypertext links to other sites, set up with the permission of Mr. Benoit Arguel. However, Mr. Benoit Arguel has no opportunity to check the content of the sites visited, and therefore assumes no liability for this fact.</p>
-      <p>Navigation on<a href="http://windmama.fr/">windmama</a> may cause the installation of cookie (s) on the user's computer. A cookie is a small file, which does not allow the identification of the user, but which records information relating to the navigation of a computer on a site. The data thus obtained are intended to facilitate subsequent navigation on the site, and are also intended to allow various measures of attendance.</p>
+      <p>Navigation on <a href="http://windmama.fr/">windmama</a> may cause the installation of cookie (s) on the user's computer. A cookie is a small file, which does not allow the identification of the user, but which records information relating to the navigation of a computer on a site. The data thus obtained are intended to facilitate subsequent navigation on the site, and are also intended to allow various measures of attendance.</p>
       <p>The refusal to install a cookie may make it impossible to access certain services. The user can however configure his computer as follows, to refuse the installation of cookies:</p>
       <p>In Internet Explorer: tool tab (pictogram in the form of a cog in the upper right corner) / internet options. Click Privacy and choose Block all cookies. Validate on Ok.</p>
       <p>In Firefox: at the top of the browser window, click the Firefox button, then go to the Options tab. Click on the Privacy tab. Set the retention rules to: use custom settings for history. Finally uncheck it to disable cookies.</p>

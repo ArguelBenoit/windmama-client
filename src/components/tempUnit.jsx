@@ -8,10 +8,10 @@ function TempUnit(props) {
     return '--';
   } else if(tempUnit === 'C') {
     const valueInC = Math.round(value);
-    return valueInC;
+    return valueInC + '°';
   } else if (tempUnit === 'F') {
     const valueInF = Math.round((value*1.8)+32);
-    return valueInF;
+    return valueInF + '°';
   }
 }
 
