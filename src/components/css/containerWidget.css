@@ -3,7 +3,7 @@
   opacity: 0;
   color: #dcdcdc;
   overflow: auto;
-  margin-top: 62px;
+  margin-top: 60px;
 }
 #cover-widgets.active {
   opacity: 1;
