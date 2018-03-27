@@ -101,22 +101,33 @@ class ArrayWidget extends Component {
       case 'humidity':
         var propsHumi = {
           style: {
-            background: data.humidity === '--'
-            ? rgbaNc
-            : getHumidityColor(data.humidity)
+            background: data.humidity === '--' || data.humidity === undefined
+              ? rgbaNc
+              : getHumidityColor(data.humidity)
           },
           key: i
         };
         return <td {...propsHumi}>
-          {data.humidity === '--'
+          {data.humidity === '--' || data.humidity === undefined
             ? '--'
             : Math.round(data.humidity) + '%'
           }
         </td>;
 
       case 'pressure':
-        return <td style={{background: 'rgba(255,255,255,0.7)'}} key={i}>
-          {data.pressure}
+        var propsPressure = {
+          style: {
+            background: data.pressure === '--' || data.pressure === null || data.pressure === undefined
+              ? rgbaNc
+              : getHumidityColor(data.pressure)
+          },
+          key: i
+        };
+        return <td {...propsPressure}>
+          {data.pressure === '--' || data.pressure === null || data.pressure === undefined
+            ? '--'
+            : Math.round(data.pressure)
+          }
         </td>;
 
       case 'rain':
