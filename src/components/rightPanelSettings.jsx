@@ -31,18 +31,15 @@ const RightPanelSettings = () => {
       &nbsp;
       {'For aviation'}
     </h2>
-    <div>
-      <Toggle label="Identifier instead location"
-        onToggle={(event, isInputChecked) => gloabalAction('idInsteadLoc', isInputChecked)}
-        toggled={localSettings.idInsteadLoc}
-        style={styles.toggle}
-        />
+    <div className="error">
+      Be careful, for show only airport, the application will reload.
     </div>
+    <br />
     <div>
       <Toggle
-        label="Show metar raw data"
-        onToggle={(event, isInputChecked) => gloabalAction('metarRaw', isInputChecked)}
-        toggled={localSettings.metarRaw}
+        label="Show only airport"
+        onToggle={(event, isInputChecked) => gloabalAction('onlyMetar', isInputChecked)}
+        toggled={localSettings.onlyMetar}
         style={styles.toggle}
         />
     </div>
@@ -51,6 +48,21 @@ const RightPanelSettings = () => {
         label="Show universal time"
         onToggle={(event, isInputChecked) => gloabalAction('universalTime', isInputChecked)}
         toggled={localSettings.universalTime}
+        style={styles.toggle}
+        />
+    </div>
+    <div>
+      <Toggle label="Identifier in the left panel"
+        onToggle={(event, isInputChecked) => gloabalAction('idInsteadLoc', isInputChecked)}
+        toggled={localSettings.idInsteadLoc}
+        style={styles.toggle}
+        />
+    </div>
+    <div>
+      <Toggle
+        label="Show METAR & TAF"
+        onToggle={(event, isInputChecked) => gloabalAction('metarRaw', isInputChecked)}
+        toggled={localSettings.metarRaw}
         style={styles.toggle}
         />
     </div>

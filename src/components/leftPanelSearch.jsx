@@ -43,11 +43,8 @@ class LeftPanelSearch extends Component {
         idDetail.city = place[id][2] + ' ' + place[id][3] + ' ' + place[id][4];
         idDetail.raw = idDetail.raw ? idDetail.raw : false;
 
-        if (idDetail.city.indexOf(search) >= 0 ||
-            idDetail.city.toLowerCase().indexOf(search) >= 0 ||
-            idDetail.id.toLowerCase().indexOf(search) >= 0 ||
-            idDetail.city.indexOf(search) >= 0 ||
-            idDetail.id.indexOf(search) >= 0) {
+        if (idDetail.city.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            idDetail.id.toLowerCase().indexOf(search.toLowerCase()) >= 0) {
           spotsList.push(idDetail);
         }
 
@@ -67,8 +64,21 @@ class LeftPanelSearch extends Component {
       });
     }
 
+    const propsInput = {
+      id: 'research',
+      type: 'text',
+      placeholder: '&#xf002;',
+      charSet: 'utf-8',
+      value: search,
+      onChange: this.handleChange.bind(this),
+      style: {
+        fontFamily: 'fontawesome !important',
+        borderBottom: '2px solid #ff4081'
+      }
+    };
+
     return <div>
-      <input id="research" type="text" placeholder="Find your spot" value={search} onChange={this.handleChange.bind(this)} />
+      <input {...propsInput} />
       <div className="child-container">
         {search !== '' ? spotsList : ''}
         <div style={{display: search !== '' ? 'none' : 'inherit'}}>

@@ -2,11 +2,6 @@ import io from 'socket.io-client';
 import { Actions } from './actions.js';
 import request from 'request';
 
-const socket = io.connect(
-  window.location.protocol + '//' + window.location.hostname + ':81',
-  {secure: true}
-);
-
 let init = {
     detail: {},
     place: {},
@@ -23,6 +18,7 @@ let init = {
       ? JSON.parse(localStorage.getItem('settings'))
       : {
           idInsteadLoc: false,
+          onlyMetar: false,
           metarRaw: false,
           universalTime: false, // local / utc
           windUnit: 'kt', // 'km/h', 'kt', 'm/s'
@@ -45,6 +41,13 @@ let init = {
     init.mobile = false;
 })();
 
+console.log(init.settings.onlyMetar);
+const socket = io.connect(
+  init.settings.onlyMetar
+    ? window.location.protocol + '//' + window.location.hostname + ':81'
+    : window.location.protocol + '//' + window.location.hostname + ':81?type=metar',
+  {secure: true}
+);
 const registerData = (chanel, callback) => {
   socket.on(chanel, (data) => { callback(data); });
 };
@@ -53,7 +56,9 @@ registerData('sendPubsubData', (data) => {
 });
 
 
-let urlDetails = window.location.protocol + '//' + window.location.hostname + ':81/detail/';
+let urlDetails = !init.settings.onlyMetar
+  ? window.location.protocol + '//' + window.location.hostname + ':81/detail'
+  : window.location.protocol + '//' + window.location.hostname + ':81/detail?type=metar';
 function reqDetail() {
   request(urlDetails, (z, x, b) => {
     init.detail = JSON.parse(b);
@@ -62,7 +67,9 @@ function reqDetail() {
   });
 }
 
-let urlLocations = window.location.protocol + '//' + window.location.hostname + ':81/location';
+let urlLocations = !init.settings.onlyMetar
+  ? window.location.protocol + '//' + window.location.hostname + ':81/location'
+  : window.location.protocol + '//' + window.location.hostname + ':81/location?type=metar';
 request(urlLocations, (z, x, a) => {
   a = JSON.parse(a);
   const ids = Object.keys(a);

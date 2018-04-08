@@ -31,12 +31,15 @@ class InfoWidget extends Component {
           {link}
         </div>
         <InfoDate id={displayDetail}/>
-        {displayDetail.split('.')[0] === 'metar'
-          && store.settings.metarRaw
+        {displayDetail.split('.')[0] === 'metar' && store.settings.metarRaw
           ? <div className="metar-info">
-          {JSON.parse(store.detail[displayDetail][0]).raw}
-        </div>
-        : '' // nothing
+              <span>--</span>
+              <br/>
+              <span style={{color: 'red', fontWeight: 'bold'}}>METAR {JSON.parse(store.detail[displayDetail][0]).raw}</span>
+              <br/>
+              <span>{JSON.parse(store.detail[displayDetail][0]).taf}</span>
+            </div>
+          : ''
       }
     </div>;
   }

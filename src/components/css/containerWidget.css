@@ -27,10 +27,8 @@
 }
 #cover-widgets .container-widgets .info-widget .metar-info {
   font-size: 14px;
-  color: red;
   text-shadow: 1px 1px 0px #555;
   padding: 0 10px;
-  font-weight: bold;
 }
 #cover-widgets .container-widgets .info-widget .buttons-container {
   display: inline-block;
