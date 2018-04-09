@@ -40,10 +40,7 @@ class PanelSpot extends Component {
           : 0.4,
         padding: !store.settings.metarRaw
           ? '8px 0px'
-          : '12px 0px',
-        borderTop: !store.settings.metarRaw
-          ? ''
-          : '1px solid #3d3d3d'
+          : '12px 0px'
       },
       onClick: () => this.sumFunc(spot.id),
       onMouseOver: () => Actions.hoverId(spot.id)

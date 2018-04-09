@@ -38,7 +38,7 @@ class ContainerWidget extends Component {
   }
   request(id) {
     if (Object.keys(store.place).length !== 0) {
-      let url = window.location.protocol + '//' + window.location.hostname + ':81/spot?station=' + id;
+      let url = 'http://windmama.fr:81/spot?station=' + id;
       request(url, (z, x, a) => {
         a = JSON.parse(a);
         var tempA = [];

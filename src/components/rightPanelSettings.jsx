@@ -19,18 +19,6 @@ const RightPanelSettings = () => {
     Actions.changeSettings(localSettings);
   };
 
-  // <div className="error">
-  //   Be careful, for show only airport, the application will reload.
-  // </div>
-  // <br />
-  // <div>
-  //   <Toggle
-  //     label="Show only airport"
-  //     onToggle={(event, isInputChecked) => gloabalAction('onlyMetar', isInputChecked)}
-  //     toggled={localSettings.onlyMetar}
-  //     style={styles.toggle}
-  //     />
-  // </div>
   return <div className="child-container last">
     <h1>
       <i className="ion-gear-a"/>

@@ -5,12 +5,6 @@
   @speed0: 180ms;
   @speed1: 300ms;
   @speed2: 500ms;
-
-  .map-marker {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-  }
 */
 
 html, body, #app { height: 100%; }
@@ -21,7 +15,7 @@ body {
   overflow: hidden;
 }
 * {
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, sans-serif;
 }
 ::selection { background: pink; }
 h1 { font-size: 22px; }
@@ -39,16 +33,6 @@ input[type="submit"],
 .input-checkbox {
   -webkit-appearance: none;
   border-radius: 0;
-}
-input {
-  background: #000;
-  border-radius: 0;
-  width: 100%;
-  border: none;
-  color: white;
-  font-size: 16px;
-  text-align: center;
-  padding: 13px 0px;
 }
 .button { cursor: pointer; }
 .error { color: #f30000 !important; }

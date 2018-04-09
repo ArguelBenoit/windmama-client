@@ -4,9 +4,6 @@ import store from '../store/store.js';
 import RightPanelInfo from './rightPanelInfo.jsx';
 import RightPanelSettings from './rightPanelSettings.jsx';
 import { Scrollbars } from 'react-custom-scrollbars';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import './css/panel.css';
 import './css/rightPanel.css';
@@ -31,16 +28,14 @@ function RightPanel(props) {
   };
   return <div {...propsLeftPanel}>
     <Scrollbars style={{height: store.viewportHeight - 60 }} >
-      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-        <Tabs>
-          <Tab style={style.tabStyle} icon={<i style={style.iconStyle} className="ion-gear-a" />}>
-            <RightPanelSettings />
-          </Tab>
-          <Tab style={style.tabStyle} icon={<i style={style.iconStyle} className="ion-information-circled" />}>
-            <RightPanelInfo />
-          </Tab>
-        </Tabs>
-      </MuiThemeProvider>
+      <Tabs>
+        <Tab style={style.tabStyle} icon={<i style={style.iconStyle} className="ion-gear-a" />}>
+          <RightPanelSettings />
+        </Tab>
+        <Tab style={style.tabStyle} icon={<i style={style.iconStyle} className="ion-information-circled" />}>
+          <RightPanelInfo />
+        </Tab>
+      </Tabs>
     </Scrollbars>
   </div>;
 }

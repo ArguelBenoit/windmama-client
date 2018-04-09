@@ -168,7 +168,7 @@ class WebglLayer extends Component {
       let tempState = this.state.locations;
       if (place[idUpdate] && detail[idUpdate]) {
         detail = JSON.parse(detail[idUpdate][0]);
-        const diff = moment().valueOf() - moment(detail.date).valueOf(); // remplacer par Object Date à la place de moment.js
+        const diff = moment().valueOf() - moment(detail.date).valueOf(); // Object Date instead moment.js
         tempState[idUpdate] = {
           longitude: place[idUpdate][1],
           latitude: place[idUpdate][0],

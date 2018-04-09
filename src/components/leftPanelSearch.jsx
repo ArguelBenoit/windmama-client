@@ -5,6 +5,7 @@ import moment from 'moment';
 import store from '../store/store.js';
 import { typeOfActions } from '../store/actions.js';
 import _ from 'lodash';
+import TextField from 'material-ui/TextField';
 
 class LeftPanelSearch extends Component {
   constructor(props) {
@@ -65,25 +66,17 @@ class LeftPanelSearch extends Component {
     }
 
     const propsInput = {
-      id: 'research',
-      type: 'text',
-      placeholder: '&#xf002;',
-      charSet: 'utf-8',
+      floatingLabelText: `Search into ${nbrSpot} places`,
       value: search,
       onChange: this.handleChange.bind(this),
-      style: {
-        fontFamily: 'fontawesome !important',
-        borderBottom: '2px solid #ff4081'
-      }
+      fullWidth: true,
+      hintStyle:{ color: '#fff' }
     };
 
     return <div>
-      <input {...propsInput} />
-      <div className="child-container">
+      <div className="child-container" style={{padding: '0 15px', borderBottom: 'none'}}>
+        <TextField {...propsInput} />
         {search !== '' ? spotsList : ''}
-        <div style={{display: search !== '' ? 'none' : 'inherit'}}>
-          Search into {nbrSpot} places with postal code, city, country code or id.
-        </div>
         <div className="error" style={{display: spotsList.length === 60 ? 'inherit' : 'none'}}>
           Windmama show maximum 60 places, please refine your search
         </div>

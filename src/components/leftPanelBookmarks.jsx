@@ -74,19 +74,7 @@ class LeftPanelBookmarks extends Component {
         })}
       </div>;
     } else {
-      return <div className="child-container">
-        <h1>
-          <i
-            className="fas fa-heart" />
-          &nbsp;&nbsp;
-          <span>
-            Favorites places
-          </span>
-        </h1>
-        <p className="child-panel-info error">
-          You have no favorite places...
-        </p>
-      </div>;
+      return '';
     }
   }
 }

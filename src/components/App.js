@@ -11,6 +11,9 @@ import Tooltip from './tooltip.jsx';
 import ColorLegend from './colorLegend.jsx';
 import Loader from './loader.jsx';
 import ContainerMap from './containerMap.jsx';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Route, Redirect } from 'react-router-dom';
 import './css/app.css';
 
@@ -59,21 +62,25 @@ class App extends Component {
     } = this.state;
 
     return <div id="ui" className="elements-ui-absolute">
-      {/* common for / and /station/@id */}
-      <Route path="/" render={routeProps => <ContainerMap {...routeProps}/>} />
-      {/* only for exact path / */}
-      {!store.mobile
-        ? <Route exact path="/" render={() => <Tooltip rightActive={rightActive} />}/>
-        : ''
-      }
-      <Route exact path="/" render={() => <ColorLegend mobile={store.mobile} leftActive={leftActive} />} />
-      {/* only for path /station/@id */}
-      <Route path={'/station/:stationId'} component={ContainerWidget} />
-      <Route exact path={'/station'} render={() => <Redirect to="/" />} />
-      {/* common for / and /station/@id */}
-      <LeftPanel leftActive={leftActive} />
-      <RightPanel rightActive={rightActive} />
-      <Header leftActive={leftActive} rightActive={rightActive}/>
+        {/* common for / and /station/@id */}
+        <Route path="/" render={routeProps => <ContainerMap {...routeProps}/>} />
+        {/* only for exact path / */}
+        {!store.mobile
+          ? <Route exact path="/" render={() => <Tooltip rightActive={rightActive} />}/>
+          : ''
+        }
+        <Route exact path="/" render={() => <ColorLegend mobile={store.mobile} leftActive={leftActive} />} />
+        {/* only for path /station/@id */}
+        <Route path={'/station/:stationId'} component={ContainerWidget} />
+        <Route exact path={'/station'} render={() => <Redirect to="/" />} />
+        {/* common for / and /station/@id */}
+        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+          <span>
+            <LeftPanel leftActive={leftActive} />
+            <RightPanel rightActive={rightActive} />
+            <Header leftActive={leftActive} rightActive={rightActive}/>
+          </span>
+        </MuiThemeProvider>
       <Loader />
     </div>;
   }
