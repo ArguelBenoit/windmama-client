@@ -40,21 +40,15 @@ class PanelSpot extends Component {
           : 0.4,
         padding: !store.settings.metarRaw
           ? '8px 0px'
-          : '12px 0px'
+          : '8px 0px'
       },
       onClick: () => this.sumFunc(spot.id),
       onMouseOver: () => Actions.hoverId(spot.id)
     };
 
-    const styleChildContainer = {
-      paddingBottom: !store.settings.metarRaw
-        ? '0px'
-        : '8px'
-    };
-
     return <Link to={`/station/${spot.id}`} style={{color: '#e8e8e8'}}>
       <div {...spotProps} >
-        <div className="container-city-info" style={styleChildContainer}>
+        <div className="container-city-info">
           <span className="city">
             {id}
           </span>
