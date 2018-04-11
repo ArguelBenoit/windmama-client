@@ -17,6 +17,8 @@ const RightPanelSettings = () => {
   const gloabalAction = (key, value) => {
     localSettings[key] = value;
     Actions.changeSettings(localSettings);
+    if (key === 'onlyMetar')
+      setTimeout(() => window.location.reload(), 1500);
   };
 
   return <div className="child-container last">
@@ -51,6 +53,18 @@ const RightPanelSettings = () => {
         label="Show METAR & TAF"
         onToggle={(event, isInputChecked) => gloabalAction('metarRaw', isInputChecked)}
         toggled={localSettings.metarRaw}
+        style={styles.toggle}
+        />
+    </div>
+    <div className="error">
+      The next option reloads the app.
+    </div>
+    <br />
+    <div>
+      <Toggle
+        label="Show only airport"
+        onToggle={(event, isInputChecked) => gloabalAction('onlyMetar', isInputChecked)}
+        toggled={localSettings.onlyMetar}
         style={styles.toggle}
         />
     </div>
