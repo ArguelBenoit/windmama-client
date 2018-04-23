@@ -41,9 +41,9 @@ AppDispatcher.register((action) => {
       break;
 
     case typeOfActions.UPDATE_DETAIL:
-      var id = JSON.parse(action.update).id;
+      var id = action.update.id;
       if (store.detail[id] && store.place[id]) {
-        store.detail[id].unshift(action.update);
+        store.detail[id] = action.update;
         store.idUpdate = id;
         store.emit(typeOfActions.UPDATE_DETAIL);
       }

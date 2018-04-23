@@ -40,7 +40,7 @@ class Tooltip extends Component {
 
     if (idHover) {
 
-      const oneDetail = JSON.parse(detail[idHover][0]);
+      const oneDetail = detail[idHover];
       const hour = store.settings.universalTime
         ? moment(oneDetail.date, moment.ISO_8601).utcOffset(+0).format('HH:mm')
         : moment(oneDetail.date, moment.ISO_8601).format('HH:mm');

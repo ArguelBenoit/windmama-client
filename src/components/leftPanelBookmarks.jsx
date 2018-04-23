@@ -35,8 +35,8 @@ class LeftPanelBookmarks extends Component {
     const { detail } = store;
     let spots = [];
     bookmarks.forEach( el => {
-      if (detail[el] && detail[el][0]) {
-        const detailById = JSON.parse(detail[el][0]);
+      if (detail[el] && detail[el]) {
+        const detailById = detail[el];
         const diff = moment().valueOf() - moment(detailById.date).valueOf();
         const spot = {
           id: el,

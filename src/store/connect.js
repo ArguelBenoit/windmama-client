@@ -41,18 +41,29 @@ let init = {
     init.mobile = false;
 })();
 
-const socket = io.connect(
-  'http://windmama.fr:81' + (init.settings.onlyMetar ? '?type=metar' : ''),
+
+const socket= io.connect(
+  window.location.protocol + '//' + window.location.hostname + ':81',
   {secure: true}
 );
-const registerData = (chanel, callback) => {
-  socket.on(chanel, (data) => { callback(data); });
-};
-registerData('sendPubsubData', (data) => {
-  Actions.updateDetail(data);
+// socket.emit('subscribe', (init.settings.onlyMetar ? 'metar' : 'observation'));
+// socket.on('observationData', observationData => {
+//    Actions.updateDetail(observationData);
+//    console.log('test');
+// });
+// socket.emit('subscribe', 'forcast');
+// socket.on('forcastData', forcastData => {
+//   console.log('taf: ',forcastData);
+// });
+
+socket.emit('subscribe', 'observation');
+socket.on('observation', observation => {
+   // Actions.updateDetail(observationData);
+   console.log(observation);
 });
 
-let urlDetails = 'http://windmama.fr:81/detail' + (init.settings.onlyMetar ? '?type=metar' : '');
+
+let urlDetails = window.location.protocol + '//' + window.location.hostname + ':81/detail/' + (init.settings.onlyMetar ? '?type=metar' : '');
 function reqDetail() {
   request(urlDetails, (z, x, b) => {
     init.detail = JSON.parse(b);
@@ -60,15 +71,11 @@ function reqDetail() {
     Actions.loadActivity(false);
   });
 }
-
-let urlLocations = 'http://windmama.fr:81/location' + (init.settings.onlyMetar ? '?type=metar' : '');
+let urlLocations = window.location.protocol + '//' + window.location.hostname + ':81/location' + (init.settings.onlyMetar ? '?type=metar' : '');
 request(urlLocations, (z, x, a) => {
-  a = JSON.parse(a);
-  const ids = Object.keys(a);
-  ids.forEach(e => {
-    init.place[e] = JSON.parse(a[e]);
-  });
+  init.place = JSON.parse(a);
   reqDetail();
 });
+
 
 export default init;

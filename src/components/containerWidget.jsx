@@ -41,14 +41,10 @@ class ContainerWidget extends Component {
       let url = 'http://windmama.fr:81/spot?station=' + id;
       request(url, (z, x, a) => {
         a = JSON.parse(a);
-        var tempA = [];
-        a.forEach(e => {
-          tempA.push(e);
-        });
         Actions.loadActivity(false);
         this.setState({
           onePlace: store.place[id],
-          oneDetail: tempA.reverse()
+          oneDetail: a.reverse()
         });
       });
     }
@@ -58,7 +54,7 @@ class ContainerWidget extends Component {
     let { oneDetail } = this.state;
     let { idUpdate, detail } = store;
     if (idUpdate === displayDetail) {
-      oneDetail.push(detail[idUpdate][0]);
+      oneDetail.push(detail[idUpdate]);
       this.setState({ oneDetail });
     }
   }

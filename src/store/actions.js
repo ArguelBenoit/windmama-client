@@ -17,7 +17,7 @@ export var Actions = {
     AppDispatcher.dispatch({
       actionType: typeOfActions.UPDATE_DETAIL,
       update,
-      idUpdate: JSON.parse(update).id
+      idUpdate: update.id
     });
   },
   loadActivity(value) {

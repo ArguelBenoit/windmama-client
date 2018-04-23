@@ -36,7 +36,7 @@ class LeftPanelSearch extends Component {
     let spotsList = [];
     if (this.allId && search !== '') {
       this.allId.forEach( id => {
-        var idDetail = JSON.parse(detail[id][0]);
+        var idDetail = detail[id];
         const diff = moment().valueOf() - moment(idDetail.date).valueOf();
         idDetail.avg = idDetail.avg === '--' ? 0 : idDetail.avg;
         idDetail.connected = diff > 3600000 ? false : true;

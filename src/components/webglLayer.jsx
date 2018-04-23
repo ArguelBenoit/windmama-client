@@ -60,7 +60,7 @@ class WebglLayer extends Component {
     const allId = _.intersection(Object.keys(detail), Object.keys(place));
     let locations = this.state.locations;
     allId.forEach((id, i) => {
-      let oneDetail = JSON.parse(detail[id][0]);
+      let oneDetail = detail[id];
       const diff = moment().valueOf() - moment(oneDetail.date).valueOf();
       locations[id] = {
         longitude: place[id][1],
@@ -167,7 +167,7 @@ class WebglLayer extends Component {
       const idMarker = this.state.locations[idUpdate].webglRef;
       let tempState = this.state.locations;
       if (place[idUpdate] && detail[idUpdate]) {
-        detail = JSON.parse(detail[idUpdate][0]);
+        detail = detail[idUpdate];
         const diff = moment().valueOf() - moment(detail.date).valueOf(); // Object Date instead moment.js
         tempState[idUpdate] = {
           longitude: place[idUpdate][1],

@@ -28,7 +28,7 @@ class LeftPanelPowerfull extends Component {
     const allId = _.intersection(Object.keys(detail), Object.keys(place));
     let maxList = [];
     allId.forEach( id => {
-      const detailById = JSON.parse(detail[id][0]);
+      const detailById = detail[id];
       const diff = moment().valueOf() - moment(detailById.date).valueOf();
       let tempDetail = {
         id,
@@ -55,7 +55,7 @@ class LeftPanelPowerfull extends Component {
   updateList() {
     const { idUpdate, detail } = store;
     const { maxList } = this.state;
-    const detailById = JSON.parse(detail[idUpdate][0]);
+    const detailById = detail[idUpdate];
     maxList.forEach( el => {
       if (idUpdate === el.id) {
         this.initList();

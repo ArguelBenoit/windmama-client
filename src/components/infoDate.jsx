@@ -9,7 +9,7 @@ class InfoDate extends Component {
     super(props);
     const { id } = this.props;
     const { detail } = store;
-    let date = JSON.parse(detail[id][0]).date;
+    let date = detail[id].date;
     this.updateTime = this.updateTime.bind(this);
     this.mainUpdate = this.mainUpdate.bind(this);
     this.state = {
@@ -23,7 +23,7 @@ class InfoDate extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.id !== this.props.id) {
-      let date = JSON.parse(store.detail[nextProps.id][0]).date;
+      let date = store.detail[nextProps.id].date;
       this.setState({
         last: date,
         diff: moment.utc(moment().diff(date))
@@ -36,7 +36,7 @@ class InfoDate extends Component {
   }
   mainUpdate() {
     if (store.idUpdate === this.props.id) {
-      let date = JSON.parse(store.detail[this.props.id][0]).date;
+      let date = store.detail[this.props.id].date;
       this.setState({
         last: date,
         diff: moment.utc(moment().diff(date))

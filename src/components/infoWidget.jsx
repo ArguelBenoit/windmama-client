@@ -35,9 +35,7 @@ class InfoWidget extends Component {
           ? <div className="metar-info">
               <span>--</span>
               <br/>
-              <span style={{color: 'red', fontWeight: 'bold'}}>METAR {JSON.parse(store.detail[displayDetail][0]).raw}</span>
-              <br/>
-              <span>{JSON.parse(store.detail[displayDetail][0]).taf}</span>
+              <span style={{color: 'red', fontWeight: 'bold'}}>METAR {store.detail[displayDetail].raw}</span>
             </div>
           : ''
       }

@@ -70,7 +70,7 @@ class LeftPanelAroundUser extends Component {
           return -1;
       });
       for (let i = 0; i < 8; i++) {
-        const detailById = JSON.parse(detail[allDistancesTemp[i].id][0]);
+        const detailById = detail[allDistancesTemp[i].id];
         const diff = moment().valueOf() - moment(detailById.date).valueOf();
         allDistancesTemp[i].heading = detailById.heading;
         allDistancesTemp[i].avg = detailById.avg === '--' ? 0 : detailById.avg;
@@ -95,7 +95,7 @@ class LeftPanelAroundUser extends Component {
     const { detail, idUpdate } = store;
     if (listId.indexOf(idUpdate) > -1) {
       list.forEach( e => {
-        const detailById = JSON.parse(detail[e.id][0]);
+        const detailById = detail[e.id];
         const diff = moment().valueOf() - moment(detailById.date).valueOf();
         e.heading = detailById.heading;
         e.avg = detailById.avg;
