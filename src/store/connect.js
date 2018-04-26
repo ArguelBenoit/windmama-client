@@ -43,7 +43,7 @@ let init = {
 
 
 const socket= io.connect(
-  window.location.protocol + '//' + window.location.hostname + ':81',
+  'http://windmama.fr:81',
   {secure: true}
 );
 socket.on('connect', () => {
@@ -66,7 +66,7 @@ const jsonParsePromise = json => {
   });
 };
 
-let urlDetails = window.location.protocol + '//' + window.location.hostname + ':81/detail/' + (init.settings.onlyMetar ? '?type=metar' : '');
+let urlDetails = 'http://windmama.fr:81/detail' + (init.settings.onlyMetar ? '?type=metar' : '');
 function reqDetail() {
   request(urlDetails, (z, x, b) => {
     jsonParsePromise(b).then( value => {
@@ -80,7 +80,7 @@ function reqDetail() {
   });
 }
 
-let urlLocations = window.location.protocol + '//' + window.location.hostname + ':81/location' + (init.settings.onlyMetar ? '?type=metar' : '');
+let urlLocations = 'http://windmama.fr:81/location' + (init.settings.onlyMetar ? '?type=metar' : '');
 request(urlLocations, (z, x, a) => {
   jsonParsePromise(a).then( value => {
     init.place = value;
