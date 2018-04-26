@@ -4,6 +4,7 @@
 #right-panel {
   border-left: 1px solid black;
   right: 0px;
+  font-size: 16px;
 }
 #right-panel.active { right: -260px; }
 #right-panel h2 {

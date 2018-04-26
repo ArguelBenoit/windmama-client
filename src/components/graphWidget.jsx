@@ -42,7 +42,6 @@ class GraphWidget extends Component {
       ctx.imageSmoothingEnabled = true;
       ctx.moveTo(0, heightCanvas);
       detail.forEach( (el,i) => {
-        el = JSON.parse(el);
         if (el[e] === '--') { el[e] = 0; }
         if (i === 0) {
           ctx.lineTo(0, heightCanvas - (el[e]/1.852)*2);
@@ -69,7 +68,7 @@ class GraphWidget extends Component {
             );
           }
         } else {
-          el.prev = JSON.parse(detail[i+1]);
+          el.prev = detail[i+1];
           if (el.prev.max === '--') { el.prev.max = 0; }
           if (el[e] && el[e] > 0) {
             ctx.font = 'bold 14px Helvetica';

@@ -148,7 +148,6 @@ class ArrayWidget extends Component {
           {presentsKeys.map( key => {
             return <tr key={key}>
               {detail.map( (e, i) => {
-                e = JSON.parse(e);
                 return this.dataFilters(e, key, key + '_' + i);
               })}
             </tr>;

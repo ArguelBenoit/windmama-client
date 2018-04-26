@@ -46,36 +46,49 @@ const socket= io.connect(
   window.location.protocol + '//' + window.location.hostname + ':81',
   {secure: true}
 );
-// socket.emit('subscribe', (init.settings.onlyMetar ? 'metar' : 'observation'));
-// socket.on('observationData', observationData => {
-//    Actions.updateDetail(observationData);
-//    console.log('test');
-// });
-// socket.emit('subscribe', 'forcast');
-// socket.on('forcastData', forcastData => {
-//   console.log('taf: ',forcastData);
-// });
-
-socket.emit('subscribe', 'observation');
-socket.on('observation', observation => {
-   // Actions.updateDetail(observationData);
-   console.log(observation);
+socket.on('connect', () => {
+  socket.emit('room', (init.settings.onlyMetar ? 'metar' : 'observation'));
+});
+socket.on('observationType', data => {
+  Actions.updateDetail(data);
 });
 
+
+
+const jsonParsePromise = json => {
+  return new Promise((resolve, reject) => {
+    try {
+      let obj = JSON.parse(json);
+      resolve(obj);
+    } catch(err) {
+      reject(err);
+    }
+  });
+};
 
 let urlDetails = window.location.protocol + '//' + window.location.hostname + ':81/detail/' + (init.settings.onlyMetar ? '?type=metar' : '');
 function reqDetail() {
   request(urlDetails, (z, x, b) => {
-    init.detail = JSON.parse(b);
-    Actions.DataReceived();
-    Actions.loadActivity(false);
+    jsonParsePromise(b).then( value => {
+      init.detail = value;
+      Actions.DataReceived();
+      Actions.loadActivity(false);
+    }).catch( () => {
+      Actions.loadActivity(false);
+      alert('Hum... There is a problem connecting to the Windmama API');
+    });
   });
 }
+
 let urlLocations = window.location.protocol + '//' + window.location.hostname + ':81/location' + (init.settings.onlyMetar ? '?type=metar' : '');
 request(urlLocations, (z, x, a) => {
-  init.place = JSON.parse(a);
-  reqDetail();
+  jsonParsePromise(a).then( value => {
+    init.place = value;
+    reqDetail();
+  }).catch( () => {
+    Actions.loadActivity(false);
+    alert('Hum... There is a problem connecting to the Windmama API');
+  });
 });
-
 
 export default init;

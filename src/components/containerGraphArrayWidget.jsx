@@ -24,7 +24,7 @@ class ContainerGraphArrayWidget extends Component {
     if (prevProps.detail !== this.props.detail) {
       return true;
     } else if (
-      store.idUpdate === JSON.parse(prevProps.detail[0]).id
+      store.idUpdate === prevProps.detail[0].id
     ) {
       return true;
     } else {
@@ -47,7 +47,7 @@ class ContainerGraphArrayWidget extends Component {
   }
   render() {
     let { detail } = this.props;
-    let lastData = JSON.parse(detail[detail.length - 1]),
+    let lastData = detail[detail.length - 1],
         keys = Object.keys(lastData),
         allKeys = [
           'date',

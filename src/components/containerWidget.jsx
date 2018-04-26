@@ -9,6 +9,17 @@ import request from 'request';
 import './css/containerWidget.css';
 
 
+const jsonParsePromise = json => {
+  return new Promise((resolve, reject) => {
+    try {
+      let obj = JSON.parse(json);
+      resolve(obj);
+    } catch(err) {
+      reject(err);
+    }
+  });
+};
+
 class ContainerWidget extends Component {
   constructor(props) {
     super(props);
@@ -38,13 +49,22 @@ class ContainerWidget extends Component {
   }
   request(id) {
     if (Object.keys(store.place).length !== 0) {
-      let url = 'http://windmama.fr:81/spot?station=' + id;
+      let url = window.location.protocol + '//' + window.location.hostname + ':81/spot?station=' + id;
       request(url, (z, x, a) => {
-        a = JSON.parse(a);
-        Actions.loadActivity(false);
-        this.setState({
-          onePlace: store.place[id],
-          oneDetail: a.reverse()
+        jsonParsePromise(a).then( value => {
+          Actions.loadActivity(false);
+          this.setState({
+            onePlace: store.place[id],
+            oneDetail: value.reverse()
+          });
+        }).catch( () => {
+          const txt = 'Patatra... ' +
+                      id.charAt(0).toUpperCase() +
+                      id.substring(1).toLowerCase() +
+                      ' does not exist.';
+          if(!alert(txt)) {
+            this.props.history.push('/');
+          }
         });
       });
     }
@@ -108,7 +128,8 @@ ContainerWidget.propTypes = {
   rightActive: PropTypes.bool,
   displayDetail: PropTypes.any,
   match: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default ContainerWidget;
