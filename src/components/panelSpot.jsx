@@ -55,7 +55,7 @@ class PanelSpot extends Component {
             <div>
               <HeadingUnit heading={spot.heading} max={spot.avg} />
             </div>
-            {spot.avg === '--'
+            {spot.avg == null
               ? <span className="max">--</span>
               : <span className="max" style={{color: getColor(spot.avg)}}>
               <WindUnit value={spot.avg}/>

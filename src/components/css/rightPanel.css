@@ -2,7 +2,7 @@
   text-decoration: none;
 }
 #right-panel {
-  border-left: 1px solid black;
+  /* border-left: 1px solid black; */
   right: 0px;
   font-size: 16px;
 }

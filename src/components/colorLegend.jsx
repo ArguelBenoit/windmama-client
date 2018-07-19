@@ -2,27 +2,19 @@ import React from 'react';
 import { getColor } from '../filters';
 import PropTypes from 'prop-types';
 import './css/colorLegend.css';
+import { windUnit } from '../filters';
 
-function ColorLegend(props) {
-  const { leftActive, mobile } = props;
+function ColorLegend() {
   const array = [];
   for(let i = 0; i < 50; i++)
     array.push(i);
 
-  let marginLeft;
-  if (mobile)
-    marginLeft = 8;
-  else if (leftActive)
-    marginLeft = 268;
-  else
-    marginLeft = 8;
-
-  return <div id="color-legend" style={{ left: marginLeft }}>
-    <div className="legend-block" style={{ width: 20 }} key={'e'}>{'0kt'}</div>
+  return <div id="color-legend">
     {array.map( e => {
-      return <div className="legend-block" key={e} style={{ background: getColor(e*1.853) }} />;
+      return <div className="legend-block" key={e} style={{ background: getColor(e*1.853) }}>
+        <div>{windUnit(e*1.852)}</div>
+      </div>;
     })}
-    <div className="legend-block" style={{ width: 40 }} key={'r'}>{'+50kt'}</div>
   </div>;
 }
 

@@ -48,7 +48,7 @@ class Tooltip extends Component {
       info = <span>
          {hour + ' - '}
          <WindUnit value={oneDetail.avg}/>
-         {oneDetail.max !== 0 && oneDetail.max !== '--'
+         {oneDetail.max !== 0 && oneDetail.max != null
            ? <span>
                {'/' }
                <WindUnit value={oneDetail.max}/>
@@ -65,7 +65,7 @@ class Tooltip extends Component {
       }
       let graph = new PIXI.Graphics();
 
-      const max = oneDetail.max !== '--' ? oneDetail.max*2 : 0;
+      const max = oneDetail.max != null ? oneDetail.max*2 : 0;
       const avg = oneDetail.avg*2;
       const width = 260;
       const height = max < avg

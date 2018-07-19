@@ -102,13 +102,13 @@ class ContainerWidget extends Component {
     }
 
     var heightCoverWidget = {
-      height: viewportHeight - 60 + 'px',
+      height: viewportHeight - 80 + 'px',
       width: widthContainer,
       marginLeft: marginLeftContainer
     };
 
     return <div id="cover-widgets" style={heightCoverWidget} className={'active'}>
-      <Scrollbars style={{height: ( viewportHeight - 60 ) + 'px'}}>
+      <Scrollbars style={{height: ( viewportHeight - 80 ) + 'px'}}>
         <div className="container-widgets" id="container-widgets" >
           {displayDetail ? content : ''}
         </div>

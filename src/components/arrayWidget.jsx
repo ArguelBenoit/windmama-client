@@ -20,26 +20,26 @@ class ArrayWidget extends Component {
     this.dataFilters = this.dataFilters.bind(this);
   }
   dataFilters(data, type, i) {
-    const rgbaNc = 'rgba(255,255,255,0.25)';
+    const rgbaNc = 'rgba(255,255,255,0.3)';
 
     switch (type) {
 
       case 'date':
         var dateProps = {
           style: {
-            background: 'rgba(100,100,100,0.3)'
+            background: 'rgba(100,100,100,0.35)'
           },
           className: 'hour',
           key: i
         };
         return <td {...dateProps}>
           <div style={{width: 50}}>
-            { data
-              ? (store.settings.universalTime
+            { data == null
+              ? '--'
+              : (store.settings.universalTime
                   ? moment(data.date, moment.ISO_8601).utcOffset(+0).format('HH:mm')
                   : moment(data.date, moment.ISO_8601).format('HH:mm')
               )
-              : '--'
             }
           </div>
         </td>;
@@ -55,9 +55,9 @@ class ArrayWidget extends Component {
 
       case 'max':
         var styleMax = {
-          background: data.max
-            ? getColor(data.max)
-            : rgbaNc
+          background: data.max == null
+            ? rgbaNc
+            : getColor(data.max)
         };
         return <td style={styleMax} key={i}>
           <WindUnit value={data.max}/>
@@ -65,9 +65,9 @@ class ArrayWidget extends Component {
 
       case 'avg':
         var styleAvg = {
-          background: data.avg
-            ? getColor(data.avg)
-            : rgbaNc
+          background: data.avg == null
+            ? rgbaNc
+            : getColor(data.avg)
         };
         return <td style={styleAvg} key={i}>
           <b>
@@ -77,9 +77,9 @@ class ArrayWidget extends Component {
 
       case 'min':
         var styleMin = {
-          background: data.min
-            ? getColor(data.min)
-            : rgbaNc
+          background: data.min == null
+            ? rgbaNc
+            : getColor(data.min)
         };
         return <td style={styleMin} key={i}>
           <WindUnit value={data.min}/>
@@ -88,9 +88,9 @@ class ArrayWidget extends Component {
       case 'temperature':
         var propsTemp = {
           style : {
-            background: data.min
-              ? getColorTemp(data.temperature)
-              : rgbaNc
+            background: data.temperature == null
+              ? rgbaNc
+              : getColorTemp(data.temperature)
           },
           key: i
         };
@@ -101,32 +101,30 @@ class ArrayWidget extends Component {
       case 'humidity':
         var propsHumi = {
           style: {
-            background: data.humidity
-              ? getHumidityColor(data.humidity)
-              : rgbaNc
+            background: data.humidity == null || data.humidity > 100
+              ? rgbaNc
+              : getHumidityColor(data.humidity)
           },
           key: i
         };
         return <td {...propsHumi}>
-          {data.humidity
-            ? Math.round(data.humidity) + '%'
-            : '--'
+          {data.humidity == null || data.humidity > 100
+            ? '--'
+            : Math.round(data.humidity) + '%'
           }
         </td>;
 
       case 'pressure':
         var propsPressure = {
           style: {
-            background: data.pressure
-              ? getHumidityColor(data.pressure)
-              : rgbaNc
+            background: rgbaNc
           },
           key: i
         };
         return <td {...propsPressure}>
-          {data.pressure
-            ? Math.round(data.pressure)
-            : '--'
+          {data.pressure == null
+            ? '--'
+            : Math.round(data.pressure)
           }
         </td>;
 

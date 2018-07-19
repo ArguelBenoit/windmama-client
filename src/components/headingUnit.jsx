@@ -51,7 +51,7 @@ class HeadingUnit extends Component {
   render () {
     let { heading } = this.props;
     const { headingUnit } = store.settings;
-    if ( heading === null ) {
+    if ( heading == null ) {
       return '--';
     } else if(headingUnit === 'arrow') {
       const props = {

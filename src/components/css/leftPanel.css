@@ -1,6 +1,6 @@
 
 #left-panel {
-  border-right: 1px solid black;
+  /* border-right: 1px solid black; */
   left: 0px;
 }
 #left-panel.active { left: -260px; }

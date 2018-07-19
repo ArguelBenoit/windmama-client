@@ -42,7 +42,7 @@ class GraphWidget extends Component {
       ctx.imageSmoothingEnabled = true;
       ctx.moveTo(0, heightCanvas);
       items.forEach( (el,i) => {
-        if (el[e] === '--') { el[e] = 0; }
+        if (el[e] == null) { el[e] = 0; }
         if (i === 0) {
           ctx.lineTo(0, heightCanvas - (el[e]/1.852)*2);
           ctx.lineTo(widthPlot*0.5, heightCanvas - (el[e]/1.852)*2);
@@ -69,7 +69,7 @@ class GraphWidget extends Component {
           }
         } else {
           el.prev = items[i+1];
-          if (el.prev.max === '--') { el.prev.max = 0; }
+          if (el.prev.max == null) { el.prev.max = 0; }
           if (el[e] && el[e] > 0) {
             ctx.font = 'bold 14px Helvetica';
             ctx.fillStyle = getColor(el[e]);

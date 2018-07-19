@@ -2,8 +2,8 @@ import hexToRgba from 'hex-rgba';
 import { color } from './color.js';
 
 const getColorTemp = value => {
-  value = value !== '--' ? Math.round(value) : value;
-  if (value === '--')
+  value = value != null ? Math.round(value) : value;
+  if (value == null)
     return 'rgba(255,255,255,0.25)';
   else if (value < 0 && value > -49)
     return hexToRgba(color[value*-1], 70);

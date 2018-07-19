@@ -16,11 +16,11 @@ class LeftPanel extends Component {
       className: leftActive ? ' ' : 'active',
       id: 'left-panel',
       style: {
-        height: store.viewportHeight - 60 // viewport height - header height
+        height: store.viewportHeight - 80 // viewport height - header height
       }
     };
     return <div {...propsLeftPanel}>
-      <Scrollbars style={{height: store.viewportHeight - 60 }} >
+      <Scrollbars style={{height: store.viewportHeight - 80 }} >
         <LeftPanelSearch />
         <LeftPanelAroundUser />
         <LeftPanelBookmarks />

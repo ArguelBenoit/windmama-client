@@ -69,11 +69,11 @@ class App extends Component {
           ? <Route exact path="/" render={() => <Tooltip rightActive={rightActive} />}/>
           : ''
         }
-        <Route exact path="/" render={() => <ColorLegend mobile={store.mobile} leftActive={leftActive} />} />
         {/* only for path /station/@type/@id */}
         <Route path={'/station/:type/:id'} component={ContainerWidget} />
         <Route exact path={'/station'} render={() => <Redirect to="/" />} />
         {/* common for / and /station/@id */}
+        <Route path="/" render={() => <ColorLegend mobile={store.mobile} />} />
         <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
           <span>
             <LeftPanel leftActive={leftActive} />

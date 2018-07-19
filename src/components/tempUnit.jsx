@@ -4,7 +4,7 @@ import store from '../store/store.js';
 function TempUnit(props) {
   const { value } = props;
   const { tempUnit } = store.settings;
-  if ( value === '--' ) {
+  if ( value == null ) {
     return '--';
   } else if(tempUnit === 'C') {
     const valueInC = Math.round(value);

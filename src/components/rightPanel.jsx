@@ -14,7 +14,7 @@ function RightPanel(props) {
     className: props.rightActive ? ' ' : 'active',
     id: 'right-panel',
     style: {
-      height: store.viewportHeight - 60 // viewport height - header height
+      height: store.viewportHeight - 80 // viewport height - header height
     }
   };
   const style = {
@@ -27,7 +27,7 @@ function RightPanel(props) {
     }
   };
   return <div {...propsLeftPanel}>
-    <Scrollbars style={{height: store.viewportHeight - 60 }} >
+    <Scrollbars style={{height: store.viewportHeight - 80 }} >
       <Tabs>
         <Tab style={style.tabStyle} icon={<i style={style.iconStyle} className="ion-gear-a" />}>
           <RightPanelSettings />
