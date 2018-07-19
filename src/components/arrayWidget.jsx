@@ -55,9 +55,9 @@ class ArrayWidget extends Component {
 
       case 'max':
         var styleMax = {
-          background: data.max === '--'
-            ? rgbaNc
-            : getColor(data.max)
+          background: data.max
+            ? getColor(data.max)
+            : rgbaNc
         };
         return <td style={styleMax} key={i}>
           <WindUnit value={data.max}/>
@@ -65,9 +65,9 @@ class ArrayWidget extends Component {
 
       case 'avg':
         var styleAvg = {
-          background: data.avg === '--'
-            ? rgbaNc
-            : getColor(data.avg)
+          background: data.avg
+            ? getColor(data.avg)
+            : rgbaNc
         };
         return <td style={styleAvg} key={i}>
           <b>
@@ -77,9 +77,9 @@ class ArrayWidget extends Component {
 
       case 'min':
         var styleMin = {
-          background: data.min === '--'
-            ? rgbaNc
-            : getColor(data.min)
+          background: data.min
+            ? getColor(data.min)
+            : rgbaNc
         };
         return <td style={styleMin} key={i}>
           <WindUnit value={data.min}/>
@@ -88,9 +88,9 @@ class ArrayWidget extends Component {
       case 'temperature':
         var propsTemp = {
           style : {
-            background: data.min === '--'
-              ? rgbaNc
-              : getColorTemp(data.temperature)
+            background: data.min
+              ? getColorTemp(data.temperature)
+              : rgbaNc
           },
           key: i
         };
@@ -101,32 +101,32 @@ class ArrayWidget extends Component {
       case 'humidity':
         var propsHumi = {
           style: {
-            background: data.humidity === '--' || data.humidity === undefined
-              ? rgbaNc
-              : getHumidityColor(data.humidity)
+            background: data.humidity
+              ? getHumidityColor(data.humidity)
+              : rgbaNc
           },
           key: i
         };
         return <td {...propsHumi}>
-          {data.humidity === '--' || data.humidity === undefined
-            ? '--'
-            : Math.round(data.humidity) + '%'
+          {data.humidity
+            ? Math.round(data.humidity) + '%'
+            : '--'
           }
         </td>;
 
       case 'pressure':
         var propsPressure = {
           style: {
-            background: data.pressure === '--' || data.pressure === null || data.pressure === undefined
-              ? rgbaNc
-              : getHumidityColor(data.pressure)
+            background: data.pressure
+              ? getHumidityColor(data.pressure)
+              : rgbaNc
           },
           key: i
         };
         return <td {...propsPressure}>
-          {data.pressure === '--' || data.pressure === null || data.pressure === undefined
-            ? '--'
-            : Math.round(data.pressure)
+          {data.pressure
+            ? Math.round(data.pressure)
+            : '--'
           }
         </td>;
 
@@ -147,7 +147,7 @@ class ArrayWidget extends Component {
         <tbody>
           {presentsKeys.map( key => {
             return <tr key={key}>
-              {detail.map( (e, i) => {
+              {detail.items.map( (e, i) => {
                 return this.dataFilters(e, key, key + '_' + i);
               })}
             </tr>;

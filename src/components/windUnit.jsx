@@ -4,7 +4,7 @@ import store from '../store/store.js';
 function WindUnit(props) {
   const { value } = props;
   const { windUnit } = store.settings;
-  if ( value === '--' ) {
+  if (!value) {
     return '--';
   } else if(windUnit === 'km/h') {
     const valueInKM = Math.round(value);

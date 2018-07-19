@@ -18,9 +18,9 @@ class HeadingUnit extends Component {
     this.canvasCreator();
   }
   canvasCreator() {
-    let { max, heading } = this.props;
+    let { max } = this.props;
     const { headingUnit } = store.settings;
-    if(headingUnit === 'arrow' && heading !== '--') {
+    if(headingUnit === 'arrow') {
       const color = getColor(max);
       let canvas = ReactDOM.findDOMNode(this.canvas);
       canvas.style.height = '20px';
@@ -51,7 +51,7 @@ class HeadingUnit extends Component {
   render () {
     let { heading } = this.props;
     const { headingUnit } = store.settings;
-    if ( heading === '--' ) {
+    if ( heading === null ) {
       return '--';
     } else if(headingUnit === 'arrow') {
       const props = {

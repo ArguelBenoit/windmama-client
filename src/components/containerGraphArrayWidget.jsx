@@ -24,7 +24,7 @@ class ContainerGraphArrayWidget extends Component {
     if (prevProps.detail !== this.props.detail) {
       return true;
     } else if (
-      store.idUpdate === prevProps.detail[0].id
+      store.idUpdate === prevProps.detail.name
     ) {
       return true;
     } else {
@@ -47,7 +47,7 @@ class ContainerGraphArrayWidget extends Component {
   }
   render() {
     let { detail } = this.props;
-    let lastData = detail[detail.length - 1],
+    let lastData = detail.items[detail.items.length - 1],
         keys = Object.keys(lastData),
         allKeys = [
           'date',
@@ -63,14 +63,11 @@ class ContainerGraphArrayWidget extends Component {
         presentsKeys = [];
 
     allKeys.forEach( el => {
-      if (keys.indexOf(el) >= 0 && lastData[el] !== 'nc')
+      if (keys.indexOf(el) >= 0)
         presentsKeys.push(el);
     });
 
-    const style = {
-      display: 'flex'
-    };
-    return <div className="widget-wind-array" style={style} >
+    return <div className="widget-wind-array" style={{display: 'flex'}} >
       <div className="legend">
         <GraphLegend />
         <ArrayLegend presentsKeys={presentsKeys} />

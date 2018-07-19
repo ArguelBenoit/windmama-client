@@ -5,7 +5,7 @@ import store from '../store/store.js';
 function RainUnit(props) {
   const { value } = props;
   const { rainUnit } = store.settings;
-  if ( value === '--'
+  if ( !value
       || value === 0
       || value === '0') {
     return '--';

@@ -7,9 +7,7 @@ import { typeOfActions } from '../store/actions.js';
 class InfoDate extends Component {
   constructor(props) {
     super(props);
-    const { id } = this.props;
-    const { detail } = store;
-    let date = detail[id].date;
+    let { date } = this.props;
     this.updateTime = this.updateTime.bind(this);
     this.mainUpdate = this.mainUpdate.bind(this);
     this.state = {
@@ -22,8 +20,8 @@ class InfoDate extends Component {
     this.updateTime();
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.id !== this.props.id) {
-      let date = store.detail[nextProps.id].date;
+    if (nextProps.name !== this.props.name) {
+      let { date } = this.props;
       this.setState({
         last: date,
         diff: moment.utc(moment().diff(date))
@@ -35,8 +33,8 @@ class InfoDate extends Component {
     store.removeListener(typeOfActions.UPDATE_DETAIL, this.mainUpdate);
   }
   mainUpdate() {
-    if (store.idUpdate === this.props.id) {
-      let date = store.detail[this.props.id].date;
+    if (store.idUpdate === this.props.name) {
+      let { date } = this.props;
       this.setState({
         last: date,
         diff: moment.utc(moment().diff(date))
@@ -70,5 +68,8 @@ class InfoDate extends Component {
   }
 }
 
-InfoDate.propTypes = { id: PropTypes.string };
+InfoDate.propTypes = {
+  name: PropTypes.string,
+  date: PropTypes.string
+};
 export default InfoDate;

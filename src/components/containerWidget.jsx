@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import InfoWidget from './infoWidget.jsx';
 import ContainerGraphArrayWidget from './containerGraphArrayWidget.jsx';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Actions, typeOfActions } from '../store/actions.js';
+import { Actions } from '../store/actions.js';
 import store from '../store/store.js';
 import request from 'request';
 import './css/containerWidget.css';
@@ -20,12 +20,12 @@ const jsonParsePromise = json => {
   });
 };
 
+
 class ContainerWidget extends Component {
   constructor(props) {
     super(props);
     this.request = this.request.bind(this);
-    this.updateDetail = this.updateDetail.bind(this);
-    this.loadPageAtStationLevel = this.loadPageAtStationLevel.bind(this);
+    // this.updateDetail = this.updateDetail.bind(this);
     this.state = {
       detail: null
     };
@@ -33,27 +33,23 @@ class ContainerWidget extends Component {
   componentDidMount() {
     let { type, id } = this.props.match.params;
     this.request(type, id);
-    store.on(typeOfActions.UPDATE_DETAIL, this.updateDetail);
-    store.on(typeOfActions.DATA_RECEIVED, this.loadPageAtStationLevel);
+    // store.on(typeOfActions.UPDATE_DETAIL, this.updateDetail);
   }
-  // componentWillReceiveProps(nextProps) {
-  //   let { type, id } = nextProps.match.params;
-  //   if (this.props.location.pathname !== nextProps.location.pathname) {
-  //     this.request(type, id);
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    let { type, id } = nextProps.match.params;
+    if (this.props.location.pathname !== nextProps.location.pathname) {
+      this.request(type, id);
+    }
+  }
   componentWillUnmount() {
-    store.removeListener(typeOfActions.UPDATE_DETAIL, this.updateDetail);
-    store.removeListener(typeOfActions.DATA_RECEIVED, this.loadPageAtStationLevel);
-  }
-  loadPageAtStationLevel() {
-    this.request(this.props.match.params.stationId);
+    // store.removeListener(typeOfActions.UPDATE_DETAIL, this.updateDetail);
   }
   request(type, id) {
     let url = `http://${window.location.hostname}:81/v2/wind-observation/by-name/${type}/${id}/all`;
     request(url, (z, x, a) => {
       jsonParsePromise(a).then( value => {
         Actions.loadActivity(false);
+        value.name = value.type + '.' + value.id;
         this.setState({
           detail: value
         });
@@ -66,17 +62,18 @@ class ContainerWidget extends Component {
       });
     });
   }
-  updateDetail() {
-    const displayDetail = this.props.match.params.stationId;
-    let { oneDetail } = this.state;
-    let { idUpdate, detail } = store;
-    if (idUpdate === displayDetail) {
-      oneDetail.push(detail[idUpdate]);
-      this.setState({ oneDetail });
-    }
-  }
+  // updateDetail() {
+  //   const displayDetail = this.props.match.params.stationId;
+  //   let { detail } = this.state;
+  //   let { idUpdate } = store;
+  //   if (idUpdate === displayDetail) {
+  //     detail.push(detail[idUpdate]);
+  //     this.setState({ detail });
+  //   }
+  // }
   render() {
-    const displayDetail = this.props.match.params.stationId;
+    let { type, id } = this.props.match.params;
+    const displayDetail = type + '.' + id;
     const {
       rightActive,
       leftActive,
@@ -84,11 +81,11 @@ class ContainerWidget extends Component {
       viewportWidth,
       viewportHeight
     } = store;
-    const { oneDetail, onePlace } = this.state;
+    const { detail } = this.state;
 
-    let content = oneDetail ? <div>
-      <InfoWidget detail={oneDetail} place={onePlace} displayDetail={displayDetail} />
-      <ContainerGraphArrayWidget detail={oneDetail} displayDetail={displayDetail} />
+    let content = detail ? <div>
+      <InfoWidget detail={detail} displayDetail={displayDetail} />
+      <ContainerGraphArrayWidget detail={detail} displayDetail={displayDetail} />
     </div>: '';
 
     let widthContainer;

@@ -26,9 +26,9 @@ class GraphWidget extends Component {
     );
   }
   canvasCreator() {
-    const { detail } = this.props;
+    let { items } = this.props.detail;
     const { widthPlot, heightCanvas } = this;
-    const widthCanvas = detail.length * widthPlot;
+    const widthCanvas = items.length * widthPlot;
 
     let canvas = ReactDOM.findDOMNode(this.refs.canvas);
 
@@ -41,7 +41,7 @@ class GraphWidget extends Component {
       ctx.beginPath();
       ctx.imageSmoothingEnabled = true;
       ctx.moveTo(0, heightCanvas);
-      detail.forEach( (el,i) => {
+      items.forEach( (el,i) => {
         if (el[e] === '--') { el[e] = 0; }
         if (i === 0) {
           ctx.lineTo(0, heightCanvas - (el[e]/1.852)*2);
@@ -55,7 +55,7 @@ class GraphWidget extends Component {
               heightCanvas - (el[e]/1.852)*2 - (e === 'avg' ? 4 : 12)
             );
           }
-        } else if (i === detail.length-1) {
+        } else if (i === items.length-1) {
           ctx.lineTo(widthCanvas, heightCanvas - (el[e]/1.852)*2);
           ctx.lineTo(widthCanvas, heightCanvas);
           if (el[e] && el[e] > 0) {
@@ -68,7 +68,7 @@ class GraphWidget extends Component {
             );
           }
         } else {
-          el.prev = detail[i+1];
+          el.prev = items[i+1];
           if (el.prev.max === '--') { el.prev.max = 0; }
           if (el[e] && el[e] > 0) {
             ctx.font = 'bold 14px Helvetica';
