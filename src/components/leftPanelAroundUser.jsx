@@ -4,7 +4,6 @@ import PanelSpot from './panelSpot.jsx';
 import moment from 'moment';
 import store from '../store/store.js';
 import { typeOfActions } from '../store/actions.js';
-import _ from 'lodash';
 
 class LeftPanelAroundUser extends Component {
   constructor(props) {
@@ -15,7 +14,7 @@ class LeftPanelAroundUser extends Component {
       lat1: false,
       lng1: false,
       list: [],
-      listId: []
+      listName: []
     };
   }
   componentDidMount() {
@@ -32,17 +31,17 @@ class LeftPanelAroundUser extends Component {
     store.removeListener(typeOfActions.DATA_RECEIVED, this.dataReceived);
   }
   dataReceived() {
-    const { detail, place } = store;
+    const { windObservation } = store;
     let { lat1, lng1 } = this.state;
-    const allId = _.intersection(Object.keys(detail), Object.keys(place));
+    const allName = Object.keys(windObservation);
     let allDistancesTemp = [];
     let allDistances = [];
-    let listId = [];
+    let listName = [];
     if (lat1 && lng1) { // "if loc active"
-      allId.forEach( e => {
+      allName.forEach( e => {
 
-        let lat2 = place[e][0];
-        let lng2 = place[e][1];
+        let lat2 = windObservation[e].lat;
+        let lng2 = windObservation[e].lng;
 
         const toRadians = Number => {
           return Number * Math.PI / 180;
@@ -59,7 +58,7 @@ class LeftPanelAroundUser extends Component {
 
         let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         let d = R * c;
-        allDistancesTemp.push({ id: e, d });
+        allDistancesTemp.push({ name: e, d });
       });
       allDistancesTemp.sort((a, b) => {
         if (a.d < b.d)
@@ -70,14 +69,20 @@ class LeftPanelAroundUser extends Component {
           return -1;
       });
       for (let i = 0; i < 8; i++) {
-        const detailById = detail[allDistancesTemp[i].id];
-        const diff = moment().valueOf() - moment(detailById.date).valueOf();
-        allDistancesTemp[i].heading = detailById.heading;
-        allDistancesTemp[i].avg = detailById.avg === '--' ? 0 : detailById.avg;
-        allDistancesTemp[i].connected = diff < 3600000 ? true : false;
-        allDistancesTemp[i].raw = detailById.raw ? detailById.raw : false;
-        allDistances.push(allDistancesTemp[i]);
-        listId.push(allDistancesTemp[i].id);
+        const detailName = windObservation[allDistancesTemp[i].name].items[0];
+        const infoName = windObservation[allDistancesTemp[i].name];
+        const diff = moment().valueOf() - moment(infoName.date).valueOf();
+        let obj = {
+          id: infoName.id,
+          type: infoName.type,
+          name: infoName.name,
+          heading: detailName.heading,
+          avg: detailName.avg,
+          connected: diff < 3600000 ? true : false,
+          raw: detailName.raw ? detailName.raw : null
+        };
+        allDistances.push(obj);
+        listName.push(obj.name);
       }
       allDistances.sort((a, b) => {
         if (a.avg < b.avg)
@@ -87,13 +92,13 @@ class LeftPanelAroundUser extends Component {
         else
           return -1;
       });
-      this.setState({ list: allDistances, listId });
+      this.setState({ list: allDistances, listName });
     }
   }
   updateDetail() {
-    const { listId, list } = this.state;
+    const { listName, list } = this.state;
     const { detail, idUpdate } = store;
-    if (listId.indexOf(idUpdate) > -1) {
+    if (listName.indexOf(idUpdate) > -1) {
       list.forEach( e => {
         const detailById = detail[e.id];
         const diff = moment().valueOf() - moment(detailById.date).valueOf();

@@ -35,12 +35,12 @@ class Tooltip extends Component {
   }
   render() {
     const { idHover } = this.state;
-    let { detail } = store;
+    let { windObservation } = store;
     let info;
 
     if (idHover) {
 
-      const oneDetail = detail[idHover];
+      const oneDetail = windObservation[idHover].items[0];
       const hour = store.settings.universalTime
         ? moment(oneDetail.date, moment.ISO_8601).utcOffset(+0).format('HH:mm')
         : moment(oneDetail.date, moment.ISO_8601).format('HH:mm');

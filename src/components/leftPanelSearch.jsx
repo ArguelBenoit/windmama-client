@@ -4,7 +4,6 @@ import PanelSpot from './panelSpot.jsx';
 import moment from 'moment';
 import store from '../store/store.js';
 import { typeOfActions } from '../store/actions.js';
-import _ from 'lodash';
 
 class LeftPanelSearch extends Component {
   constructor(props) {
@@ -22,32 +21,42 @@ class LeftPanelSearch extends Component {
     store.removeListener(typeOfActions.DATA_RECEIVED, this.dataReceived);
   }
   dataReceived() {
-    const { detail, place } = store;
-    this.allId = _.intersection(Object.keys(detail), Object.keys(place));
-    this.setState({ nbrSpot: this.allId.length });
+    const { windObservation } = store;
+    this.allName = Object.keys(windObservation);
+    this.setState({ nbrSpot: this.allName.length });
   }
   handleChange(e) {
     this.setState({ search: e.target.value });
   }
   render() {
     const { search, nbrSpot } = this.state;
-    const { detail, place } = store;
+    const { windObservation } = store;
 
     let spotsList = [];
-    if (this.allId && search !== '') {
-      this.allId.forEach( id => {
-        var idDetail = detail[id];
-        const diff = moment().valueOf() - moment(idDetail.date).valueOf();
-        idDetail.avg = idDetail.avg === '--' ? 0 : idDetail.avg;
-        idDetail.connected = diff > 3600000 ? false : true;
-        idDetail.city = place[id][2] + ' ' + place[id][3] + ' ' + place[id][4];
-        idDetail.raw = idDetail.raw ? idDetail.raw : false;
+    if (this.allName && search !== '') {
+      this.allName.forEach( name => {
+        let nameDetail = windObservation[name].items[0];
+        let nameInfo = windObservation[name];
 
-        if (idDetail.city.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
-            idDetail.id.toLowerCase().indexOf(search.toLowerCase()) >= 0) {
-          spotsList.push(idDetail);
+        if (nameInfo.id.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            nameInfo.type.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            nameInfo.name.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            nameInfo.id.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            nameInfo.address1.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            nameInfo.address2.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            nameInfo.address3.toLowerCase().indexOf(search.toLowerCase()) >= 0)
+        {
+          let diff = moment().valueOf() - moment(nameDetail.date).valueOf();
+          spotsList.push({
+            name: nameInfo.name,
+            type: nameInfo.type,
+            id: nameInfo.id,
+            heading: nameDetail.heading,
+            avg: nameDetail.avg,
+            connected: diff < 3600000 ? true : false,
+            raw: nameDetail.raw ? nameDetail.raw : null
+          });
         }
-
       });
 
       spotsList.sort((a, b) => {
@@ -89,7 +98,7 @@ class LeftPanelSearch extends Component {
       <div className="child-container">
         {search !== '' ? spotsList : ''}
         <div style={{display: search !== '' ? 'none' : 'inherit'}}>
-          Find among {nbrSpot} stations with postal code, city, country code or id.
+          Find among {nbrSpot} stations with postal code, city, country code, type, id or name.
         </div>
         <div className="error" style={{display: spotsList.length === 60 ? 'inherit' : 'none'}}>
           Windmama show maximum 60 places, please refine your search

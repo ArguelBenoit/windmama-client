@@ -70,8 +70,8 @@ class App extends Component {
           : ''
         }
         <Route exact path="/" render={() => <ColorLegend mobile={store.mobile} leftActive={leftActive} />} />
-        {/* only for path /station/@id */}
-        <Route path={'/station/:stationId'} component={ContainerWidget} />
+        {/* only for path /station/@type/@id */}
+        <Route path={'/station/:type/:id'} component={ContainerWidget} />
         <Route exact path={'/station'} render={() => <Redirect to="/" />} />
         {/* common for / and /station/@id */}
         <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import PanelSpot from './panelSpot.jsx';
-import _ from 'lodash';
 import moment from 'moment';
 import store from '../store/store.js';
 import { typeOfActions } from '../store/actions.js';
@@ -24,18 +23,21 @@ class LeftPanelPowerfull extends Component {
     store.removeListener(typeOfActions.DATA_RECEIVED, this.initList);
   }
   initList() {
-    const { place, detail } = store;
-    const allId = _.intersection(Object.keys(detail), Object.keys(place));
+    const { windObservation } = store;
+    const allId = Object.keys(windObservation);
     let maxList = [];
-    allId.forEach( id => {
-      const detailById = detail[id];
-      const diff = moment().valueOf() - moment(detailById.date).valueOf();
+    allId.forEach( name => {
+      const detailName = windObservation[name].items[0];
+      const infoName = windObservation[name];
+      const diff = moment().valueOf() - moment(infoName.date).valueOf();
       let tempDetail = {
-        id,
-        heading: detailById.heading,
-        avg: detailById.avg === '--' ? 0 : detailById.avg,
+        name,
+        type: infoName.type,
+        id: infoName.id,
+        heading: detailName.heading,
+        avg: detailName.avg,
         connected: diff < 3600000 ? true : false,
-        raw: detailById.raw ? detailById.raw : false
+        raw: detailName.raw ? detailName.raw : null
       };
       if (tempDetail.connected)
         maxList.push(tempDetail);
@@ -53,9 +55,9 @@ class LeftPanelPowerfull extends Component {
     });
   }
   updateList() {
-    const { idUpdate, detail } = store;
+    const { idUpdate, windObservation } = store;
     const { maxList } = this.state;
-    const detailById = detail[idUpdate];
+    const detailById = windObservation[idUpdate].items[0];
     maxList.forEach( el => {
       if (idUpdate === el.id) {
         this.initList();
@@ -67,7 +69,7 @@ class LeftPanelPowerfull extends Component {
   render() {
     const { maxList } = this.state;
     var spots = maxList.map( spot => {
-      return <PanelSpot spot={spot} key={spot.id} />;
+      return <PanelSpot spot={spot} key={spot.name} />;
     });
     return <div className="child-container last">
       <h1>

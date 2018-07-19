@@ -4,7 +4,6 @@ import * as PIXI from 'pixi.js';
 import store from '../store/store.js';
 import { typeOfActions } from '../store/actions.js';
 import moment from 'moment';
-import _ from 'lodash';
 import { getColor } from '../filters';
 import { Actions } from '../store/actions.js';
 import WebMercatorViewport from 'viewport-mercator-project';
@@ -56,19 +55,21 @@ class WebglLayer extends Component {
     store.removeListener(typeOfActions.UPDATE_DETAIL, this.updateSensor);
   }
   initLocations() {
-    const { detail, place } = store;
-    const allId = _.intersection(Object.keys(detail), Object.keys(place));
+    const { windObservation } = store;
+    const allId = Object.keys(windObservation);
     let locations = this.state.locations;
-    allId.forEach((id, i) => {
-      let oneDetail = detail[id];
+    allId.forEach((name, i) => {
+      let oneDetail = windObservation[name].items[0];
       const diff = moment().valueOf() - moment(oneDetail.date).valueOf();
-      locations[id] = {
-        longitude: place[id][1],
-        latitude: place[id][0],
+      locations[name] = {
+        longitude: windObservation[name].lng,
+        latitude: windObservation[name].lat,
         heading: oneDetail.heading,
         max: oneDetail.max,
         avg: oneDetail.avg,
-        id,
+        name: oneDetail.name,
+        id: windObservation[name].id,
+        type: windObservation[name].type,
         connected: diff < 3600000 ? true : false,
         webglRef: i
       };
@@ -81,7 +82,7 @@ class WebglLayer extends Component {
     this.markerGeneration();
   }
   markerGeneration() {
-    const { allId } = this.state;
+    const { allId, locations } = this.state;
     const { width, zoom, height, latitude, longitude } = this.props.viewport;
     const mercator = new WebMercatorViewport({
       longitude,
@@ -90,33 +91,34 @@ class WebglLayer extends Component {
       width,
       height
     });
-    allId.forEach( id => {
+    allId.forEach( name => {
       let marker = new PIXI.Sprite.fromImage(markerImage);
-      const onHover = () => Actions.hoverId(id);
+      let { type, id } = locations[name];
+      const onHover = () => Actions.hoverId(name);
       const onClick = () => {
-        this.props.history.push(`/station/${id}`);
+        this.props.history.push(`/station/${type}/${id}`);
         Actions.loadActivity(true);
       };
       marker.on('mouseover', onHover);
       marker.on('click', onClick);
       marker.on('tap', onClick);
-      this.app.stage.addChild(this.drawMarker(id, marker, mercator));
+      this.app.stage.addChild(this.drawMarker(name, marker, mercator));
     });
   }
-  drawMarker(id, marker, mercator) {
+  drawMarker(name, marker, mercator) {
 
     const { locations } = this.state;
     let mercatorProject = mercator.project(
       [
-        locations[id].longitude,
-        locations[id].latitude
+        locations[name].longitude,
+        locations[name].latitude
       ]
     );
 
-    let color = getColor(locations[id].avg, true);
+    let color = getColor(locations[name].avg, true);
     marker.tint = color;
-    marker.id = id;
-    if (!locations[id].connected) {
+    marker.name = name;
+    if (!locations[name].connected) {
       marker.alpha = 0.5;
     } else {
       marker.alpha = 1.0;
@@ -127,7 +129,7 @@ class WebglLayer extends Component {
     };
     marker.height = 17;
     marker.width = marker.height;
-    marker.rotation = locations[id].heading * 0.0174533;
+    marker.rotation = locations[name].heading * 0.0174533;
     marker.x = mercatorProject[0];
     marker.y = mercatorProject[1];
 
@@ -153,8 +155,8 @@ class WebglLayer extends Component {
     this.app.stage.children.forEach( el => {
       let mercatorProject = mercator.project(
         [
-          locations[el.id].longitude,
-          locations[el.id].latitude
+          locations[el.name].longitude,
+          locations[el.name].latitude
         ]
       );
       el.x = mercatorProject[0];
@@ -176,6 +178,8 @@ class WebglLayer extends Component {
           max: detail.max,
           avg: detail.avg,
           id: detail.id,
+          type: detail.type,
+          name: detail.name,
           connected: diff < 3600000 ? true : false,
           webglRef: idMarker
         };
@@ -190,7 +194,7 @@ class WebglLayer extends Component {
         height
       });
       const sprite = this.app.stage.children[idMarker];
-      this.drawMarker(sprite.id, sprite, mercator);
+      this.drawMarker(sprite.name, sprite, mercator);
     }
   }
   render() {

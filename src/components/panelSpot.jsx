@@ -16,21 +16,20 @@ class PanelSpot extends Component {
   }
   render() {
     const { spot } = this.props;
-    const { viewportWidth, place } = store;
+    const { viewportWidth, windObservation } = store;
     const { idInsteadLoc } = store.settings;
-    let id;
+    let name;
     if (idInsteadLoc) {
-      id = spot.id;
-    } else if (!idInsteadLoc && place[spot.id][3] === '') {
-      id = (place[spot.id][4] ? place[spot.id][4] + ' - ' : '' ) +
-            place[spot.id][0] + ', ' +
-            place[spot.id][1]; // countryCode (lat, lng)
+      name = spot.type + ' ' + spot.id;
+    } else if (windObservation[spot.name].address2 !== '') {
+      name =  (windObservation[spot.name].address3 !== '' ? windObservation[spot.name].address3 + ' - ' : '') +
+               windObservation[spot.name].address2;
     } else {
-      id = place[spot.id][4] + ' - ' + place[spot.id][3]; // countryCode cityName
+      name = windObservation[spot.name].address3 + ' - ' + windObservation[spot.name].lng + '  ' + windObservation[spot.name].lat ;
     }
 
-    if (id && id.length >= 22 && viewportWidth >= 480)
-      id = id.substring(0, 20) + '..';
+    if (name && name.length >= 22 && viewportWidth >= 480)
+      name = name.substring(0, 20) + '..';
 
     const spotProps = {
       className: 'child-panel button',
@@ -43,14 +42,14 @@ class PanelSpot extends Component {
           : '8px 0px'
       },
       onClick: () => this.sumFunc(spot.id),
-      onMouseOver: () => Actions.hoverId(spot.id)
+      onMouseOver: () => Actions.hoverId(spot.name)
     };
 
-    return <Link to={`/station/${spot.id}`} style={{color: '#e8e8e8'}}>
+    return <Link to={`/station/${spot.type}/${spot.id}`} style={{color: '#e8e8e8'}}>
       <div {...spotProps} >
         <div className="container-city-info">
           <span className="city">
-            {id}
+            {name}
           </span>
           <div className="info">
             <div>

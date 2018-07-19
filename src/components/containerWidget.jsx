@@ -27,19 +27,21 @@ class ContainerWidget extends Component {
     this.updateDetail = this.updateDetail.bind(this);
     this.loadPageAtStationLevel = this.loadPageAtStationLevel.bind(this);
     this.state = {
-      onePlace: false,
-      oneDetail: false
+      detail: null
     };
   }
   componentDidMount() {
-    this.request(this.props.match.params.stationId);
+    let { type, id } = this.props.match.params;
+    this.request(type, id);
     store.on(typeOfActions.UPDATE_DETAIL, this.updateDetail);
     store.on(typeOfActions.DATA_RECEIVED, this.loadPageAtStationLevel);
   }
-  componentWillReceiveProps(nextProps) {
-    if (this.props.location.pathname !== nextProps.location.pathname)
-      this.request(nextProps.match.params.stationId);
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   let { type, id } = nextProps.match.params;
+  //   if (this.props.location.pathname !== nextProps.location.pathname) {
+  //     this.request(type, id);
+  //   }
+  // }
   componentWillUnmount() {
     store.removeListener(typeOfActions.UPDATE_DETAIL, this.updateDetail);
     store.removeListener(typeOfActions.DATA_RECEIVED, this.loadPageAtStationLevel);
@@ -47,27 +49,22 @@ class ContainerWidget extends Component {
   loadPageAtStationLevel() {
     this.request(this.props.match.params.stationId);
   }
-  request(id) {
-    if (Object.keys(store.place).length !== 0) {
-      let url = 'http://windmama.fr:81/spot?station=' + id;
-      request(url, (z, x, a) => {
-        jsonParsePromise(a).then( value => {
-          Actions.loadActivity(false);
-          this.setState({
-            onePlace: store.place[id],
-            oneDetail: value.reverse()
-          });
-        }).catch( () => {
-          const txt = 'Patatra... ' +
-                      id.charAt(0).toUpperCase() +
-                      id.substring(1).toLowerCase() +
-                      ' does not exist.';
-          if(!alert(txt)) {
-            this.props.history.push('/');
-          }
+  request(type, id) {
+    let url = `http://${window.location.hostname}:81/v2/wind-observation/by-name/${type}/${id}/all`;
+    request(url, (z, x, a) => {
+      jsonParsePromise(a).then( value => {
+        Actions.loadActivity(false);
+        this.setState({
+          detail: value
         });
+      }).catch( () => {
+        const txt = `Patatra... This ${type} station does not exist.`;
+        if(!alert(txt)) {
+          this.props.history.push('/');
+          Actions.loadActivity(false);
+        }
       });
-    }
+    });
   }
   updateDetail() {
     const displayDetail = this.props.match.params.stationId;

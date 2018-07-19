@@ -1,10 +1,9 @@
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import { Actions } from './actions.js';
 import request from 'request';
 
 let init = {
-    detail: {},
-    place: {},
+    windObservation: {},
     loading: true,
     mobile: false,
     hoverId: false,
@@ -28,32 +27,17 @@ let init = {
         }
 };
 
-(()=>{
-  if(navigator.userAgent.match(/Android/i)
+if(navigator.userAgent.match(/Android/i)
   || navigator.userAgent.match(/webOS/i)
   || navigator.userAgent.match(/iPhone/i)
   || navigator.userAgent.match(/iPad/i)
   || navigator.userAgent.match(/iPod/i)
   || navigator.userAgent.match(/BlackBerry/i)
-  || navigator.userAgent.match(/Windows Phone/i))
-    init.mobile = true;
-  else
-    init.mobile = false;
-})();
-
-
-const socket= io.connect(
-  'http://windmama.fr:81',
-  {secure: true}
-);
-socket.on('connect', () => {
-  socket.emit('room', (init.settings.onlyMetar ? 'metar' : 'observation'));
-});
-socket.on('observationType', data => {
-  Actions.updateDetail(data);
-});
-
-
+  || navigator.userAgent.match(/Windows Phone/i)) {
+  init.mobile = true;
+} else {
+  init.mobile = false;
+}
 
 const jsonParsePromise = json => {
   return new Promise((resolve, reject) => {
@@ -66,28 +50,22 @@ const jsonParsePromise = json => {
   });
 };
 
-let urlDetails = 'http://windmama.fr:81/detail' + (init.settings.onlyMetar ? '?type=metar' : '');
-function reqDetail() {
-  request(urlDetails, (z, x, b) => {
-    jsonParsePromise(b).then( value => {
-      init.detail = value;
-      Actions.DataReceived();
-      Actions.loadActivity(false);
-    }).catch( () => {
-      Actions.loadActivity(false);
-      alert('Hum... There is a problem connecting to the Windmama API');
-    });
-  });
-}
 
-let urlLocations = 'http://windmama.fr:81/location' + (init.settings.onlyMetar ? '?type=metar' : '');
-request(urlLocations, (z, x, a) => {
-  jsonParsePromise(a).then( value => {
-    init.place = value;
-    reqDetail();
+let urlWindObservation = 'http://' + window.location.hostname + ':81/v2/wind-observation' + (init.settings.onlyMetar ? '/by-name/metar' : '');
+request(urlWindObservation, (z, x, b) => {
+  jsonParsePromise(b).then( value => {
+    value.forEach(e => {
+      if (e.items && e.items[0]) {
+        let name = e.type + '.' + e.id;
+        init.windObservation[name] = e;
+        init.windObservation[name].name = name;
+      }
+    });
+    Actions.DataReceived();
+    Actions.loadActivity(false);
   }).catch( () => {
     Actions.loadActivity(false);
-    alert('Hum... There is a problem connecting to the Windmama API');
+    alert('Hum... There is a problem connecting to the api of windmama.');
   });
 });
 

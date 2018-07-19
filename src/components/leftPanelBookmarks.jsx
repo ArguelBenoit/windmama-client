@@ -32,18 +32,20 @@ class LeftPanelBookmarks extends Component {
   initList() {
     let { bookmarks } = store;
     this.setState({ spots : [] });
-    const { detail } = store;
+    const { windObservation } = store;
     let spots = [];
     bookmarks.forEach( el => {
-      if (detail[el] && detail[el]) {
-        const detailById = detail[el];
-        const diff = moment().valueOf() - moment(detailById.date).valueOf();
+      if (windObservation[el]) {
+        const detailName = windObservation[el];
+        const diff = moment().valueOf() - moment(detailName.date).valueOf();
         const spot = {
-          id: el,
-          heading: detailById.heading,
-          avg: detailById.avg === '--' ? 0 : detailById.avg,
+          name: el,
+          type: detailName.type,
+          id: detailName.id,
+          heading: detailName.items[0].heading,
+          avg: detailName.items[0].avg,
           connected: diff < 3600000 ? true : false,
-          raw: detailById.raw ? detailById.raw : false
+          raw: detailName.items[0].raw ? detailName.items[0].raw : null
         };
         spots.push(spot);
       }
