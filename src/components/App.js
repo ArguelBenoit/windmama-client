@@ -14,7 +14,7 @@ import ContainerMap from './containerMap.jsx';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import './css/app.css';
 
 
@@ -62,26 +62,27 @@ class App extends Component {
     } = this.state;
 
     return <div id="ui" className="elements-ui-absolute">
-        {/* common for / and /station/@id */}
-        <Route path="/" render={routeProps => <ContainerMap {...routeProps}/>} />
-        {/* only for exact path / */}
-        {!store.mobile
-          ? <Route exact path="/" render={() => <Tooltip rightActive={rightActive} />}/>
-          : ''
-        }
-        {/* only for path /station/@type/@id */}
-        <Route path={'/station/:type/:id'} component={ContainerWidget} />
-        <Route exact path={'/station'} render={() => <Redirect to="/" />} />
-        {/* common for / and /station/@id */}
-        <Route path="/" render={() => <ColorLegend mobile={store.mobile} />} />
-        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-          <span>
-            <LeftPanel leftActive={leftActive} />
-            <RightPanel rightActive={rightActive} />
-            <Header leftActive={leftActive} rightActive={rightActive}/>
-          </span>
-        </MuiThemeProvider>
+
+      {/* common for all routes */}
+      <Route path="/" render={routeProps => <ContainerMap {...routeProps}/>} />
+
+      {/* only for path /station/@type/@id */}
+      <Route exact path={'/station/:type/:id'} component={ContainerWidget} />
+
+      {/* only for exact path / */}
+      {!store.mobile ? <Route exact path="/" render={() => <Tooltip rightActive={rightActive} />}/> : ''}
+
+      {/* common for all routes */}
+      <Route path="/" render={() => <ColorLegend mobile={store.mobile} />} />
+      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <span>
+          <LeftPanel leftActive={leftActive} />
+          <RightPanel rightActive={rightActive} />
+          <Header leftActive={leftActive} rightActive={rightActive}/>
+        </span>
+      </MuiThemeProvider>
       <Loader />
+
     </div>;
   }
 }

@@ -1,13 +1,16 @@
-// import io from 'socket.io-client';
+import io from 'socket.io-client';
 import { Actions } from './actions.js';
 import request from 'request';
 
 let init = {
+    apiUrl: `http://${window.location.hostname}:81/v2`,
+    socketUrl : `http://${window.location.hostname}:81/`,
     windObservation: {},
     loading: true,
     mobile: false,
     hoverId: false,
     idUpdate: false,
+    displayStation: false,
     bookmarks: localStorage.bookmarks
       ? localStorage.bookmarks.split(',')
       : [],
@@ -49,9 +52,7 @@ const jsonParsePromise = json => {
     }
   });
 };
-
-
-let urlWindObservation = 'http://' + window.location.hostname + ':81/v2/wind-observation' + (init.settings.onlyMetar ? '/by-name/metar' : '');
+let urlWindObservation = `${init.apiUrl}/wind-observation${init.settings.onlyMetar ? '/by-name/metar' : ''}`;
 request(urlWindObservation, (z, x, b) => {
   jsonParsePromise(b).then( value => {
     value.forEach(e => {
@@ -67,6 +68,19 @@ request(urlWindObservation, (z, x, b) => {
     Actions.loadActivity(false);
     alert('Hum... There is a problem connecting to the api of windmama.');
   });
+});
+
+
+const socket = io.connect(
+  init.socketUrl,
+  {secure: true}
+);
+socket.on('connect', () => {
+  socket.emit('room', (init.settings.onlyMetar ? 'metar' : 'windObservation'));
+});
+socket.on('windObservationType', data => {
+  data = JSON.parse(data);
+  Actions.updateDetail(data);
 });
 
 export default init;

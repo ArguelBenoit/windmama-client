@@ -55,9 +55,9 @@ class ContainerGraphArrayWidget extends Component {
           'max',
           'avg',
           'min',
-          'temperature',
           'rain',
           'humidity',
+          'temperature',
           'pressure'
         ],
         presentsKeys = [];

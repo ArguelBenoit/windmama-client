@@ -11,8 +11,10 @@ class ContainerMap extends Component {
     super(props);
     this._onChangeViewport = this._onChangeViewport.bind(this);
     this._resize = this._resize.bind(this);
+    this.blured = this.blured.bind(this);
     const { viewportWidth, viewportHeight } = store;
     this.state = {
+      blured: store.displayStation,
       viewport: {
         latitude: 48.86,
         longitude: 2.33,
@@ -29,6 +31,7 @@ class ContainerMap extends Component {
   }
   componentDidMount() {
     store.on(typeOfActions.CHANGE_VIEWPORT, this._resize);
+    store.on(typeOfActions.DISPLAY_STATION, this.blured);
     if (navigator.geolocation) { // if loc active
       navigator.geolocation.getCurrentPosition( position => {
         let viewport = this.state.viewport;
@@ -41,6 +44,10 @@ class ContainerMap extends Component {
   }
   componentWillUnmount() {
     store.removeListener(typeOfActions.CHANGE_VIEWPORT, this._resize);
+    store.removeListener(typeOfActions.DISPLAY_STATION, this.blured);
+  }
+  blured() {
+    this.setState({blured: store.displayStation});
   }
   _resize() {
     const { viewportWidth, viewportHeight } = store;
@@ -53,9 +60,8 @@ class ContainerMap extends Component {
     this.setState({viewport});
   }
   render() {
-    const displayDetail = window.location.pathname.search('station');
-    const { viewport, mapboxDepend } = this.state;
-    return <div id="map" style={{ filter: displayDetail > 0 ? 'blur(10px)' : 'blur(0px)'}}>
+    const { viewport, mapboxDepend, blured } = this.state;
+    return <div id="map" style={{ filter: blured ? 'blur(10px)' : 'blur(0px)'}}>
       <ReactMapGL style={{cursor: 'move'}}onViewportChange={this._onChangeViewport} {...viewport} {...mapboxDepend}>
         <WebglLayer history={this.props.history} viewport={viewport} />
       </ReactMapGL>

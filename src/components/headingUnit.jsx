@@ -19,7 +19,7 @@ class HeadingUnit extends Component {
   }
   canvasCreator() {
     let { max } = this.props;
-    const { headingUnit } = store.settings;
+    const headingUnit = this.props.type || store.settings.headingUnit;
     if(headingUnit === 'arrow') {
       const color = getColor(max);
       let canvas = ReactDOM.findDOMNode(this.canvas);
@@ -41,7 +41,7 @@ class HeadingUnit extends Component {
     }
   }
   clearCanvas() {
-    const { headingUnit } = store.settings;
+    const headingUnit = this.props.type || store.settings.headingUnit;
     if(headingUnit === 'arrow') {
       let canvas = ReactDOM.findDOMNode(this.canvas);
       let ctx = canvas.getContext('2d');
@@ -50,7 +50,7 @@ class HeadingUnit extends Component {
   }
   render () {
     let { heading } = this.props;
-    const { headingUnit } = store.settings;
+    const headingUnit = this.props.type || store.settings.headingUnit;
     if ( heading == null ) {
       return '--';
     } else if(headingUnit === 'arrow') {
@@ -81,7 +81,8 @@ class HeadingUnit extends Component {
 HeadingUnit.propTypes = {
   max: PropTypes.any,
   heading: PropTypes.any,
-  backgroundLighter: PropTypes.bool
+  backgroundLighter: PropTypes.bool,
+  type: PropTypes.string
 };
 
 export default HeadingUnit;

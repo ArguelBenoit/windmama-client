@@ -165,18 +165,18 @@ class WebglLayer extends Component {
   }
   updateSensor() {
     if (this.state.markerInit) {
-      var { detail, place, idUpdate } = store;
+      var { windObservation, idUpdate } = store;
       const idMarker = this.state.locations[idUpdate].webglRef;
       let tempState = this.state.locations;
-      if (place[idUpdate] && detail[idUpdate]) {
-        detail = detail[idUpdate];
-        const diff = moment().valueOf() - moment(detail.date).valueOf(); // Object Date instead moment.js
+      if (windObservation[idUpdate]) {
+        let detail = windObservation[idUpdate];
+        const diff = moment().valueOf() - moment(detail.items[0].date).valueOf();
         tempState[idUpdate] = {
-          longitude: place[idUpdate][1],
-          latitude: place[idUpdate][0],
-          heading: detail.heading,
-          max: detail.max,
-          avg: detail.avg,
+          longitude: detail.lng,
+          latitude: detail.lat,
+          heading: detail.items[0].heading,
+          max: detail.items[0].max,
+          avg: detail.items[0].avg,
           id: detail.id,
           type: detail.type,
           name: detail.name,

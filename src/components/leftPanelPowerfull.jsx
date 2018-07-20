@@ -59,7 +59,7 @@ class LeftPanelPowerfull extends Component {
     const { maxList } = this.state;
     const detailById = windObservation[idUpdate].items[0];
     maxList.forEach( el => {
-      if (idUpdate === el.id) {
+      if (idUpdate === el.name) {
         this.initList();
       } else if (detailById.avg > el.avg) {
         this.initList();
@@ -76,7 +76,7 @@ class LeftPanelPowerfull extends Component {
         <i className="ion-flash" />
         &nbsp;&nbsp;
         <span>
-          Most windy places
+          Most windy stations
         </span>
       </h1>
       {spots}

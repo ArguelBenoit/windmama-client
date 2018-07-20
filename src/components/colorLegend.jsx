@@ -6,7 +6,7 @@ import { windUnit } from '../filters';
 
 function ColorLegend() {
   const array = [];
-  for(let i = 0; i < 50; i++)
+  for(let i = 1; i <= 50; i++)
     array.push(i);
 
   return <div id="color-legend">

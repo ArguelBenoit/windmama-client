@@ -6,6 +6,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { Actions } from '../store/actions.js';
 import store from '../store/store.js';
 import request from 'request';
+import { typeOfActions } from '../store/actions.js';
 import './css/containerWidget.css';
 
 
@@ -25,27 +26,31 @@ class ContainerWidget extends Component {
   constructor(props) {
     super(props);
     this.request = this.request.bind(this);
-    // this.updateDetail = this.updateDetail.bind(this);
+    this.updateDetail = this.updateDetail.bind(this);
     this.state = {
       detail: null
     };
   }
   componentDidMount() {
     let { type, id } = this.props.match.params;
+    Actions.displayStation(true);
     this.request(type, id);
-    // store.on(typeOfActions.UPDATE_DETAIL, this.updateDetail);
+    store.on(typeOfActions.UPDATE_DETAIL, this.updateDetail);
   }
   componentWillReceiveProps(nextProps) {
     let { type, id } = nextProps.match.params;
     if (this.props.location.pathname !== nextProps.location.pathname) {
       this.request(type, id);
+    } else {
+      Actions.loadActivity(false);
     }
   }
   componentWillUnmount() {
-    // store.removeListener(typeOfActions.UPDATE_DETAIL, this.updateDetail);
+    store.removeListener(typeOfActions.UPDATE_DETAIL, this.updateDetail);
+    Actions.displayStation(false);
   }
   request(type, id) {
-    let url = `http://${window.location.hostname}:81/v2/wind-observation/by-name/${type}/${id}/all`;
+    let url = `${store.apiUrl}/wind-observation/by-name/${type}/${id}/all`;
     request(url, (z, x, a) => {
       jsonParsePromise(a).then( value => {
         Actions.loadActivity(false);
@@ -62,15 +67,15 @@ class ContainerWidget extends Component {
       });
     });
   }
-  // updateDetail() {
-  //   const displayDetail = this.props.match.params.stationId;
-  //   let { detail } = this.state;
-  //   let { idUpdate } = store;
-  //   if (idUpdate === displayDetail) {
-  //     detail.push(detail[idUpdate]);
-  //     this.setState({ detail });
-  //   }
-  // }
+  updateDetail() {
+    let { id, type } = this.props.match.params;
+    let { idUpdate } = store;
+    if (idUpdate === type + '.' + id) {
+      let { detail } = this.state;
+      detail.items.push(store.windObservation[idUpdate].items[0]);
+      this.setState({ detail });
+    }
+  }
   render() {
     let { type, id } = this.props.match.params;
     const displayDetail = type + '.' + id;

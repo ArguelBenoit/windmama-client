@@ -9,15 +9,21 @@ export var typeOfActions = {
   DATA_RECEIVED: 'DATA_RECEIVED',
   LOAD_ACTIVITY: 'LOAD_ACTIVITY',
   ADD_BOOKMARK: 'ADD_BOOKMARK',
-  CHANGE_SETTINGS: 'CHANGE_SETTINGS'
+  CHANGE_SETTINGS: 'CHANGE_SETTINGS',
+  DISPLAY_STATION: 'DISPLAY_STATION'
 };
 
 export var Actions = {
+  displayStation(val) {
+    AppDispatcher.dispatch({
+      actionType: typeOfActions.DISPLAY_STATION,
+      val
+    });
+  },
   updateDetail(update) {
     AppDispatcher.dispatch({
       actionType: typeOfActions.UPDATE_DETAIL,
-      update,
-      idUpdate: update.id
+      update
     });
   },
   loadActivity(value) {

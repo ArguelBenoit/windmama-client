@@ -8,6 +8,11 @@ AppDispatcher.register((action) => {
 
   switch (action.actionType) {
 
+    case typeOfActions.DISPLAY_STATION:
+      store.displayStation = action.val;
+      store.emit(typeOfActions.DISPLAY_STATION);
+      break;
+
     case typeOfActions.LOAD_ACTIVITY:
       store.loading = action.value;
       store.emit(typeOfActions.LOAD_ACTIVITY);
@@ -41,10 +46,10 @@ AppDispatcher.register((action) => {
       break;
 
     case typeOfActions.UPDATE_DETAIL:
-      var id = action.update.id;
-      if (store.detail[id] && store.place[id]) {
-        store.detail[id] = action.update;
-        store.idUpdate = id;
+      var name = action.update.name;
+      if (store.windObservation[name]) {
+        store.windObservation[name].items = [action.update.state];
+        store.idUpdate = name;
         store.emit(typeOfActions.UPDATE_DETAIL);
       }
       break;

@@ -56,7 +56,7 @@ class ArrayWidget extends Component {
       case 'max':
         var styleMax = {
           background: data.max == null
-            ? rgbaNc
+            ? '#eee'
             : getColor(data.max)
         };
         return <td style={styleMax} key={i}>
@@ -66,7 +66,7 @@ class ArrayWidget extends Component {
       case 'avg':
         var styleAvg = {
           background: data.avg == null
-            ? rgbaNc
+            ? '#eee'
             : getColor(data.avg)
         };
         return <td style={styleAvg} key={i}>
@@ -78,7 +78,7 @@ class ArrayWidget extends Component {
       case 'min':
         var styleMin = {
           background: data.min == null
-            ? rgbaNc
+            ? '#eee'
             : getColor(data.min)
         };
         return <td style={styleMin} key={i}>

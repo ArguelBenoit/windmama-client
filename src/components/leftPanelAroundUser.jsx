@@ -68,7 +68,7 @@ class LeftPanelAroundUser extends Component {
         else
           return -1;
       });
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < 6; i++) {
         const detailName = windObservation[allDistancesTemp[i].name].items[0];
         const infoName = windObservation[allDistancesTemp[i].name];
         const diff = moment().valueOf() - moment(infoName.date).valueOf();
@@ -97,10 +97,10 @@ class LeftPanelAroundUser extends Component {
   }
   updateDetail() {
     const { listName, list } = this.state;
-    const { detail, idUpdate } = store;
+    const { windObservation, idUpdate } = store;
     if (listName.indexOf(idUpdate) > -1) {
       list.forEach( e => {
-        const detailById = detail[e.id];
+        const detailById = windObservation[e.name].items[0];
         const diff = moment().valueOf() - moment(detailById.date).valueOf();
         e.heading = detailById.heading;
         e.avg = detailById.avg;
@@ -129,7 +129,7 @@ class LeftPanelAroundUser extends Component {
         <i className="ion-android-locate" />
         &nbsp;&nbsp;
         <span>
-          Spots around you
+          Stations around you
         </span>
       </h1>
       { list.length !== 0 ? spots : '' }

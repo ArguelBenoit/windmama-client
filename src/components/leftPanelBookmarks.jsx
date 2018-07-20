@@ -68,7 +68,7 @@ class LeftPanelBookmarks extends Component {
           <i className="fas fa-heart" />
           &nbsp;&nbsp;
           <span>
-            Favorites places
+            Favorite stations
           </span>
         </h1>
         {spots.map( spot => {

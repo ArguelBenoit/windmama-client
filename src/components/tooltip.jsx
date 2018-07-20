@@ -6,6 +6,7 @@ import { getColor } from '../filters';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import WindUnit from './windUnit.jsx';
+import HeadingUnit from './headingUnit.jsx';
 import './css/tooltip.css';
 
 class Tooltip extends Component {
@@ -45,7 +46,7 @@ class Tooltip extends Component {
         ? moment(oneDetail.date, moment.ISO_8601).utcOffset(+0).format('HH:mm')
         : moment(oneDetail.date, moment.ISO_8601).format('HH:mm');
 
-      info = <span>
+      info = <span style={{transform: 'translateY(4px)'}}>
          {hour + ' - '}
          <WindUnit value={oneDetail.avg}/>
          {oneDetail.max !== 0 && oneDetail.max != null
@@ -55,11 +56,9 @@ class Tooltip extends Component {
              </span>
            : ''
          }
-         {' ' + store.settings.windUnit}
-         {' - ' + oneDetail.heading + '°'}
+         {' ' + store.settings.windUnit + ' - '}
+         <HeadingUnit heading={oneDetail.heading} max={oneDetail.avg} type={'abbrev'}/>
        </span>;
-
-      // this.app.stage.children[0] ? this.app.stage.children = [] : '' ;
       if (this.app.stage.children[0]) {
         this.app.stage.children = [];
       }
