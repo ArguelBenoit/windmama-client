@@ -7,7 +7,8 @@ import { typeOfActions } from '../store/actions.js';
 // import WebMercatorViewport from 'viewport-mercator-project';
 // import { MapInteractionCSS } from 'react-map-interaction';
 // import ReactMapGL from 'react-map-gl';
-import DragAndZoom from './dragAndZoom.jsx';
+// import DragAndZoom from './dragAndZoom.jsx';
+
 
 class ContainerMap extends Component {
   constructor(props) {
@@ -15,12 +16,13 @@ class ContainerMap extends Component {
 
     this.resize = this.resize.bind(this);
     this.blured = this.blured.bind(this);
-    this.handleMouseDown = this.handleMouseDown.bind(this);
-    this.handleTouchStart = this.handleTouchStart.bind(this);
-    this.handleMouseUpTouchEnd = this.handleMouseUpTouchEnd.bind(this);
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    this.handleTouchMove = this.handleTouchMove.bind(this);
-    this.handleMouseWheel = this.handleMouseWheel.bind(this);
+    this.mouseDown = this.mouseDown.bind(this);
+    this.touchStart = this.touchStart.bind(this);
+    this.mouseUpTouchEnd = this.mouseUpTouchEnd.bind(this);
+    this.mouseMove = this.mouseMove.bind(this);
+    this.touchMove = this.touchMove.bind(this);
+    this.mouseWheel = this.mouseWheel.bind(this);
+    this.mouseWheelFirefox = this.mouseWheelFirefox.bind(this);
     this.isNegative = this.isNegative.bind(this);
 
     this.state = {
@@ -40,7 +42,15 @@ class ContainerMap extends Component {
     };
   }
   componentDidMount() {
-    document.addEventListener('mousemove', this.handleMouseMove, false);
+    document.addEventListener('mousedown', this.mouseDown, false);
+    document.addEventListener('touchstart', this.touchStart, false);
+    document.addEventListener('mouseup', this.mouseUpTouchEnd, false);
+    document.addEventListener('touchend', this.mouseUpTouchEnd, false);
+    document.addEventListener('mousemove', this.mouseMove, false);
+    document.addEventListener('touchmove', this.touchMove, false);
+
+    document.addEventListener('mousewheel', this.mouseWheel, false);
+    document.addEventListener('DOMMouseScroll', this.mouseWheelFirefox, false); // for firefox;
 
     store.on(typeOfActions.CHANGE_VIEWPORT, this.resize);
     store.on(typeOfActions.DISPLAY_STATION, this.blured);
@@ -56,35 +66,39 @@ class ContainerMap extends Component {
     }
   }
   componentWillUnmount() {
-    document.removeEventListener('mousemove', this.handleMouseMove, false);
+    // document.removeEventListener('mousemove', this.handleMouseMove, false);
 
     store.removeListener(typeOfActions.CHANGE_VIEWPORT, this.resize);
     store.removeListener(typeOfActions.DISPLAY_STATION, this.blured);
   }
 
-  handleMouseDown(e) {
+
+  mouseDown(e) {
     this.dragging = true;
     this.coords = {
       x: e.pageX,
       y: e.pageY
     };
   }
-  handleTouchStart(e) {
+  touchStart(e) {
     this.dragging = true;
     this.coords = {
       x: e.changedTouches[0].pageX,
       y: e.changedTouches[0].pageY
     };
+    if (e.touches.length === 2) {
+      this.touchScaling = true;
+    }
   }
 
-  handleMouseUpTouchEnd() {
+  mouseUpTouchEnd() {
     this.dragging = false;
+    this.touchScaling = false;
     this.coords = {};
   }
 
-  handleMouseMove(e) {
+  mouseMove(e) {
     if (this.dragging) {
-      e.preventDefault();
       var xDiff = this.coords.x - e.pageX,
           yDiff = this.coords.y - e.pageY;
       this.coords.x = e.pageX;
@@ -92,11 +106,12 @@ class ContainerMap extends Component {
       let x = this.state.x - xDiff,
           y = this.state.y - yDiff;
       this.setState({x, y});
+      console.log(e);
     }
   }
-  handleTouchMove(e) {
+
+  touchMove(e) {
     if (this.dragging) {
-      e.preventDefault();
       var xDiff = this.coords.x - e.changedTouches[0].pageX,
           yDiff = this.coords.y - e.changedTouches[0].pageY;
       this.coords.x = e.changedTouches[0].pageX;
@@ -104,28 +119,44 @@ class ContainerMap extends Component {
       let x = this.state.x - xDiff,
           y = this.state.y - yDiff;
       this.setState({x, y});
+
+      if(this.touchScaling) {
+        // let dist = Math.hypot(
+        //     e.touches[0].pageX - e.touches[1].pageX,
+        //     e.touches[0].pageY - e.touches[1].pageY);
+      }
     }
   }
 
   isNegative(n) {
     return ((n = +n) || 1 / n) < 0;
   }
-  handleMouseWheel(e) {
-    var ZOOM_STEP = .03;
-
-    e.preventDefault();
+  mouseWheel(e) {
+    var ZOOM_STEP = 0.04;
+    console.log('zoom');
     let direction = (this.isNegative(e.deltaX) && this.isNegative(e.deltaY) ) ? 'down' : 'up';
-
     let { scale } = this.state;
     if (direction === 'down') {
       scale += ZOOM_STEP;
     } else {
       scale -= ZOOM_STEP;
     }
-    // scale = this.state.scale < 0 ? 0 : this.state.scale;
     this.setState({scale});
-    console.log(scale);
   }
+  mouseWheelFirefox(e) {
+    var ZOOM_STEP = 0.04;
+    console.log('zoom');
+    let direction = (this.isNegative(e.deltaX) && this.isNegative(e.deltaY) ) ? 'up' : 'down';
+    let { scale } = this.state;
+    if (direction === 'down') {
+      scale += ZOOM_STEP;
+    } else {
+      scale -= ZOOM_STEP;
+    }
+    this.setState({scale});
+  }
+
+
   blured() {
     this.setState({blured: store.displayStation});
   }
@@ -141,17 +172,11 @@ class ContainerMap extends Component {
       id: 'map',
       style: {
         filter: blured ? 'blur(10px)' : 'blur(0px)',
-        height: '100%',
+        height: '200%',
         width: '100%'
       }
     };
     const propsChild = {
-      onMouseDown: this.handleMouseDown,
-      onTouchStart: this.handleTouchStart,
-      onMouseUp: this.handleMouseUpTouchEnd,
-      onTouchEnd: this.handleMouseUpTouchEnd,
-      onTouchMove: this.handleTouchMove,
-      onWheel: this.handleMouseWheel,
       style: {
         width: 300 * scale,
         height: 300 * scale,
@@ -160,7 +185,8 @@ class ContainerMap extends Component {
         left: x + 'px',
         top: y + 'px',
         cursor: 'move'
-      }
+      },
+      ref: 'dragChild'
     };
     return <div {...propsMap}>
       <div {...propsChild}/>
