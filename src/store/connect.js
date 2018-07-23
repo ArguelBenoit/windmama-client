@@ -3,8 +3,10 @@ import { Actions } from './actions.js';
 import request from 'request';
 
 let init = {
-    apiUrl: `http://${window.location.hostname}:81/v2`,
-    socketUrl : `http://${window.location.hostname}:81/`,
+    // apiUrl: `http://${window.location.hostname}:81/v2`,
+    // socketUrl : `http://${window.location.hostname}:81/`,
+    apiUrl: 'http://windmama.fr:81/v2',
+    socketUrl : 'http://windmama.fr:81',
     windObservation: {},
     loading: true,
     mobile: false,

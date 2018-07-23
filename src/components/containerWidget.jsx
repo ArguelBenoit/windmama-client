@@ -39,10 +39,9 @@ class ContainerWidget extends Component {
   }
   componentWillReceiveProps(nextProps) {
     let { type, id } = nextProps.match.params;
+    console.log('DataReceived');
     if (this.props.location.pathname !== nextProps.location.pathname) {
       this.request(type, id);
-    } else {
-      Actions.loadActivity(false);
     }
   }
   componentWillUnmount() {
@@ -52,12 +51,13 @@ class ContainerWidget extends Component {
   request(type, id) {
     let url = `${store.apiUrl}/wind-observation/by-name/${type}/${id}/all`;
     request(url, (z, x, a) => {
+      Actions.loadActivity(true);
       jsonParsePromise(a).then( value => {
-        Actions.loadActivity(false);
         value.name = value.type + '.' + value.id;
         this.setState({
           detail: value
         });
+        Actions.loadActivity(false);
       }).catch( () => {
         const txt = `Patatra... This ${type} station does not exist.`;
         if(!alert(txt)) {
