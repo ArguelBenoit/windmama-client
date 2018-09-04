@@ -31,6 +31,9 @@ class ContainerWidget extends Component {
       detail: null
     };
   }
+  componentWillMount() {
+    Actions.loadActivity(false);
+  }
   componentDidMount() {
     let { type, id } = this.props.match.params;
     Actions.displayStation(true);
@@ -41,8 +44,6 @@ class ContainerWidget extends Component {
     let { type, id } = nextProps.match.params;
     if (this.props.location.pathname !== nextProps.location.pathname) {
       this.request(type, id);
-    } else {
-      Actions.loadActivity(false);
     }
   }
   componentWillUnmount() {

@@ -34,11 +34,15 @@ class ContainerMap extends Component {
     store.on(typeOfActions.DISPLAY_STATION, this.blured);
     if (navigator.geolocation) { // if loc active
       navigator.geolocation.getCurrentPosition( position => {
-        let viewport = this.state.viewport;
-        viewport.latitude = position.coords.latitude;
-        viewport.longitude = position.coords.longitude;
-        viewport.zoom = 7;
-        this.setState({ viewport });
+        const { viewportWidth, viewportHeight } = store;
+        let viewport = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          zoom: 7,
+          width: viewportWidth,
+          height: viewportHeight
+        };
+        this._onChangeViewport(viewport);
       });
     }
   }
@@ -62,7 +66,7 @@ class ContainerMap extends Component {
   render() {
     const { viewport, mapboxDepend, blured } = this.state;
     return <div id="map" style={{ filter: blured ? 'blur(10px)' : 'blur(0px)'}}>
-      <ReactMapGL style={{cursor: 'move'}}onViewportChange={this._onChangeViewport} {...viewport} {...mapboxDepend}>
+      <ReactMapGL style={{cursor: 'move'}} onViewportChange={this._onChangeViewport} {...viewport} {...mapboxDepend}>
         <WebglLayer history={this.props.history} viewport={viewport} />
       </ReactMapGL>
     </div>;
