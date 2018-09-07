@@ -8,17 +8,22 @@ import store from '../store/store.js';
 import { Link } from 'react-router-dom';
 
 class PanelSpot extends Component {
-  sumFunc(spotName) {
-    let type = window.location.pathname.split('/')[2];
-    let id = window.location.pathname.split('/')[3];
+
+  sumFunc(spotName, pathname) {
+
+    let type = pathname.split('/')[2];
+    let id = pathname.split('/')[3];
     let name = `${type}.${id}`;
 
-    if (name !== spotName) {
-      Actions.loadActivity(true);
-    } if (store.mobile) {
+    Actions.loadActivity(true);
+
+    if (name === spotName)
+      Actions.loadActivity(false);
+    if (store.mobile)
       Actions.leftActivation();
-    }
+
   }
+
   render() {
     const { spot } = this.props;
     const { viewportWidth, windObservation } = store;
@@ -46,7 +51,7 @@ class PanelSpot extends Component {
           ? '8px 0px'
           : '8px 0px'
       },
-      onClick: () => this.sumFunc(spot.name),
+      onClick: () => this.sumFunc(spot.name, window.location.pathname),
       onMouseOver: () => Actions.hoverId(spot.name)
     };
 

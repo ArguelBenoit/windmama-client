@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Actions } from '../store/actions.js';
-import store from '../store/store.js';
-import { typeOfActions } from '../store/actions.js';
+import { Actions } from '../../store/actions.js';
+import store from '../../store/store.js';
+import { typeOfActions } from '../../store/actions.js';
 
 class FollowButton extends Component {
   constructor(props) {

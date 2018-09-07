@@ -4,13 +4,13 @@ import {
   getHumidityColor,
   getColorTemp,
   getColor
-} from '../filters';
+} from '../../filters';
 import moment from 'moment';
-import HeadingUnit from './headingUnit.jsx';
-import WindUnit from './windUnit.jsx';
-import TempUnit from './tempUnit.jsx';
-import RainUnit from './rainUnit.jsx';
-import store from '../store/store.js';
+import HeadingUnit from '../headingUnit.jsx';
+import WindUnit from '../windUnit.jsx';
+import TempUnit from '../tempUnit.jsx';
+import RainUnit from '../rainUnit.jsx';
+import store from '../../store/store.js';
 
 
 

@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import GraphWidget from './graphWidget.jsx';
-import GraphLegend from './graphLegend.jsx';
 import ArrayWidget from './arrayWidget.jsx';
 import ArrayLegend from './arrayLegend.jsx';
 import { Scrollbars } from 'react-custom-scrollbars';
-import store from '../store/store.js';
-import { typeOfActions } from '../store/actions.js';
+import store from '../../store/store.js';
+import { typeOfActions } from '../../store/actions.js';
 
 
-class ContainerGraphArrayWidget extends Component {
+
+class ObservationContainer extends Component {
   constructor(props) {
     super(props);
     this.scrollToRight = this.scrollToRight.bind(this);
@@ -23,9 +23,7 @@ class ContainerGraphArrayWidget extends Component {
   shouldComponentUpdate(prevProps) {
     if (prevProps.detail !== this.props.detail) {
       return true;
-    } else if (
-      store.idUpdate === prevProps.detail.name
-    ) {
+    } else if (store.idUpdate === prevProps.detail.name) {
       return true;
     } else {
       return false;
@@ -67,22 +65,37 @@ class ContainerGraphArrayWidget extends Component {
         presentsKeys.push(el);
     });
 
+    // --
+    let maxSize = 0;
+    detail.items.forEach( e => {
+      if (e.avg > maxSize)
+        maxSize = e.avg;
+      if (e.max > maxSize)
+        maxSize = e.max;
+    });
+    let max = maxSize;
+    maxSize = (maxSize/1.852) * 3 + 40;
+    //--
+
+    let heightGraph = maxSize + ( 30 * presentsKeys.length );
+
     return <div className="widget-wind-array" style={{display: 'flex'}} >
-      <div className="legend">
-        <GraphLegend />
-        <ArrayLegend presentsKeys={presentsKeys} />
-      </div>
-      <Scrollbars ref={el => { this.container = el; }} style={{ height: 200 + 30 * presentsKeys.length }}>
-        <GraphWidget detail={detail} />
+      <Scrollbars ref={el => { this.container = el; }} style={{ height: heightGraph }}>
+        <GraphWidget detail={detail} maxSize={maxSize} max={max} />
         <ArrayWidget presentsKeys={presentsKeys} detail={detail} />
       </Scrollbars>
+      <ArrayLegend presentsKeys={presentsKeys} margin={maxSize}/>
     </div>;
   }
 }
 
-ContainerGraphArrayWidget.propTypes = {
+// <div>
+//   <div style={{width: 200, height: 200, background: 'red'}} />
+// </div>
+
+ObservationContainer.propTypes = {
   detail: PropTypes.any,
   displayDetail: PropTypes.any
 };
 
-export default ContainerGraphArrayWidget;
+export default ObservationContainer;

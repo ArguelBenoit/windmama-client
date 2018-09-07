@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InfoWidget from './infoWidget.jsx';
-import ContainerGraphArrayWidget from './containerGraphArrayWidget.jsx';
+import ObservationContainer from './observationContainer.jsx';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Actions } from '../store/actions.js';
-import store from '../store/store.js';
+import { Actions } from '../../store/actions.js';
+import store from '../../store/store.js';
 import request from 'request';
-import { typeOfActions } from '../store/actions.js';
-import './css/containerWidget.css';
+import { typeOfActions } from '../../store/actions.js';
+import '../css/dashboard.css';
 
 
 const jsonParsePromise = json => {
@@ -22,7 +22,7 @@ const jsonParsePromise = json => {
 };
 
 
-class ContainerWidget extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.request = this.request.bind(this);
@@ -51,7 +51,7 @@ class ContainerWidget extends Component {
     Actions.displayStation(false);
   }
   request(type, id) {
-    let url = `${store.apiUrl}/wind-observation/by-name/${type}/${id}/all`;
+    let url = `${store.apiUrl}/wind-observation/by-name/${type}/${id}/80`;
     request(url, (z, x, a) => {
       jsonParsePromise(a).then( value => {
         Actions.loadActivity(false);
@@ -91,8 +91,8 @@ class ContainerWidget extends Component {
 
     let content = detail ? <div>
       <InfoWidget detail={detail} displayDetail={displayDetail} />
-      <ContainerGraphArrayWidget detail={detail} displayDetail={displayDetail} />
-    </div>: '';
+      <ObservationContainer detail={detail} displayDetail={displayDetail} />
+    </div> : '';
 
     let widthContainer;
     let marginLeftContainer;
@@ -123,7 +123,7 @@ class ContainerWidget extends Component {
   }
 }
 
-ContainerWidget.propTypes = {
+Dashboard.propTypes = {
   leftActive: PropTypes.bool,
   rightActive: PropTypes.bool,
   displayDetail: PropTypes.any,
@@ -132,4 +132,4 @@ ContainerWidget.propTypes = {
   history: PropTypes.object
 };
 
-export default ContainerWidget;
+export default Dashboard;

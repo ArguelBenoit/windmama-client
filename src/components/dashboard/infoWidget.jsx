@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FollowButton from './followButton.jsx';
 import InfoDate from './infoDate.jsx';
-import store from '../store/store.js';
+import store from '../../store/store.js';
 import { Link } from 'react-router-dom';
 
 class InfoWidget extends Component {

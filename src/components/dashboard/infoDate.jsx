@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import store from '../store/store.js';
-import { typeOfActions } from '../store/actions.js';
+import store from '../../store/store.js';
+import { typeOfActions } from '../../store/actions.js';
 
 class InfoDate extends Component {
   constructor(props) {

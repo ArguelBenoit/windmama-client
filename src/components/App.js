@@ -5,7 +5,7 @@ import debounce from 'debounce';
 import store from '../store/store.js';
 import LeftPanel from './leftPanel.jsx';
 import RightPanel from './rightPanel.jsx';
-import ContainerWidget from './containerWidget.jsx';
+import Dashboard from './dashboard/dashboard.jsx';
 import Header from './header.jsx';
 import Tooltip from './tooltip.jsx';
 import ColorLegend from './colorLegend.jsx';
@@ -67,7 +67,7 @@ class App extends Component {
       <Route path="/" render={routeProps => <ContainerMap {...routeProps}/>} />
 
       {/* only for path /station/@type/@id */}
-      <Route exact path={'/station/:type/:id'} component={ContainerWidget} />
+      <Route exact path={'/station/:type/:id'} component={Dashboard} />
 
       {/* only for exact path / */}
       {!store.mobile ? <Route exact path="/" render={() => <Tooltip rightActive={rightActive} />}/> : ''}
