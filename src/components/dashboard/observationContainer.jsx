@@ -7,6 +7,7 @@ import ArrayLegend from './arrayLegend.jsx';
 import { Scrollbars } from 'react-custom-scrollbars';
 import store from '../../store/store.js';
 import { typeOfActions } from '../../store/actions.js';
+import ArrowWidget from './arrowWidget.jsx';
 
 
 
@@ -66,32 +67,31 @@ class ObservationContainer extends Component {
     });
 
     // --
-    let maxSize = 0;
+    let max = 0;
     detail.items.forEach( e => {
-      if (e.avg > maxSize)
-        maxSize = e.avg;
-      if (e.max > maxSize)
-        maxSize = e.max;
+      if (e.avg > max)
+        max = e.avg;
+      if (e.max > max)
+        max = e.max;
     });
-    let max = maxSize;
-    maxSize = (maxSize/1.852) * 3 + 40;
+    max = (max/1.852);
+    let ratio = 110 / max;
     //--
 
-    let heightGraph = maxSize + ( 30 * presentsKeys.length );
-
     return <div className="widget-wind-array" style={{display: 'flex'}} >
-      <Scrollbars ref={el => { this.container = el; }} style={{ height: heightGraph }}>
-        <GraphWidget detail={detail} maxSize={maxSize} max={max} />
-        <ArrayWidget presentsKeys={presentsKeys} detail={detail} />
-      </Scrollbars>
-      <ArrayLegend presentsKeys={presentsKeys} margin={maxSize}/>
+      <div className="containerWindObservation">
+        <Scrollbars ref={el => { this.container = el; }} style={{ height: 140 + ( 30 * presentsKeys.length ) }}>
+          <GraphWidget detail={detail} ratio={ratio} max={max}/>
+          <ArrayWidget presentsKeys={presentsKeys} detail={detail} />
+        </Scrollbars>
+      </div>
+      <div>
+        <ArrowWidget detail={detail} height={140 + ( 30 * presentsKeys.length )} />
+      </div>
+      <ArrayLegend presentsKeys={presentsKeys} margin={140}/>
     </div>;
   }
 }
-
-// <div>
-//   <div style={{width: 200, height: 200, background: 'red'}} />
-// </div>
 
 ObservationContainer.propTypes = {
   detail: PropTypes.any,

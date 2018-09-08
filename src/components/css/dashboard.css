@@ -16,7 +16,7 @@
 }
 #cover-widgets .container-widgets .info-widget {
   padding: 10px 0;
-  background: rgba(75,75,75,0.45);
+  background: rgba(75,75,75,0.5);
   color: #fff;
 }
 #cover-widgets .container-widgets .info-widget .location-time-info {
@@ -49,7 +49,11 @@
   width: 100%;
   overflow: auto;
   margin-top: 10px;
-  background: rgba(60,60,60,0.4);
+}
+#cover-widgets .container-widgets .containerWindObservation {
+  background: rgba(60,60,60,0.5);
+  width: 100%;
+  margin-right: 10px;
 }
 #cover-widgets .container-widgets .widget-wind-array .widget-wind-graph {
   display: block;
