@@ -14,7 +14,8 @@ class LeftPanelAroundUser extends Component {
       lat1: false,
       lng1: false,
       list: [],
-      listName: []
+      listName: [],
+      dataReceived: false
     };
   }
   componentDidMount() {
@@ -94,6 +95,7 @@ class LeftPanelAroundUser extends Component {
       });
       this.setState({ list: allDistances, listName });
     }
+    this.setState({ dataReceived: true  });
   }
   updateDetail() {
     const { listName, list } = this.state;
@@ -115,28 +117,34 @@ class LeftPanelAroundUser extends Component {
         else
           return -1;
       });
-      this.setState({ list });
+      this.setState({ list, dataReceived: true  });
     }
   }
   render() {
-    const { list } = this.state;
+    const { list, dataReceived } = this.state;
     var spots = list.map( spot => {
       return <PanelSpot spot={spot} key={spot.id} />;
     });
 
-    return <div className="child-container">
-      <h1>
-        <i className="ion-android-locate" />
-        &nbsp;&nbsp;
-        <span>
-          Stations around you
-        </span>
-      </h1>
-      { list.length !== 0 ? spots : '' }
-      <p className="child-panel-info error" style={{ display: list.length !== 0 ? 'none' : 'inherit'}} >
-        Enable geolocation !
-      </p>
-    </div>;
+    if (dataReceived === true) {
+      return <div className="child-container">
+        <h1>
+          <i className="ion-android-locate" />
+          &nbsp;&nbsp;
+          <span>
+            Stations around you
+          </span>
+        </h1>
+        <div className="container-panelSpot">
+          { list.length !== 0 ? spots : '' }
+          <p className="child-panel-info error" style={{ display: list.length !== 0 ? 'none' : 'inherit'}} >
+            Enable geolocation !
+          </p>
+        </div>
+      </div>;
+    } else {
+      return <div />;
+    }
   }
 }
 

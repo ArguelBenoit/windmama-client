@@ -27,8 +27,24 @@
 #left-panel .child-panel:hover {
   padding-left: 4px;
 }
-
-
+#left-panel .child-container {
+  padding: 12px;
+}
+#left-panel .container-panelSpot {
+  background: #2f2f2f;
+  padding: 10px;
+  border-radius: 2px;
+  border-bottom: 1px solid #111;
+  border-right: 1px solid #111;
+}
+#left-panel.background-leftpanel {
+  animation: gradient 2s ease infinite;
+}
+@keyframes gradient {
+  0% { background: #202020 }
+	50% { background: #333 }
+	100% { background: #202020 }
+}
 
 @media only screen and (max-device-width: 1100px) {
   #left-panel {

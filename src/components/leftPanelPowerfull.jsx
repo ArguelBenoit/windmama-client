@@ -72,14 +72,20 @@ class LeftPanelPowerfull extends Component {
       return <PanelSpot spot={spot} key={spot.name} />;
     });
     return <div className="child-container last">
-      <h1>
-        <i className="ion-flash" />
-        &nbsp;&nbsp;
-        <span>
-          Most windy stations
-        </span>
-      </h1>
-      {spots}
+      {spots.length !== 0 ?
+        <div>
+          <h1>
+            <i className="ion-flash" />
+            &nbsp;&nbsp;
+            <span>
+              Most windy stations
+            </span>
+          </h1>
+          <div className="container-panelSpot">
+            {spots}
+          </div>
+        </div>
+      : ''}
     </div>;
   }
 }

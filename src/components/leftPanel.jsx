@@ -8,12 +8,31 @@ import store from '../store/store.js';
 import { Scrollbars } from 'react-custom-scrollbars';
 import './css/panel.css';
 import './css/leftPanel.css';
+import { typeOfActions } from '../store/actions.js';
 
 class LeftPanel extends Component {
+  constructor(props) {
+    super(props);
+    this.dataReceived = this.dataReceived.bind(this);
+    this.state = {
+      dataReceived: false
+    };
+  }
+  componentDidMount() {
+    store.on(typeOfActions.DATA_RECEIVED, this.dataReceived);
+  }
+  componentWillUnmount() {
+    store.removeListener(typeOfActions.DATA_RECEIVED, this.dataReceived);
+  }
+  dataReceived () {
+    this.setState({
+      dataReceived: true
+    });
+  }
   render() {
     const { leftActive } = this.props;
     const propsLeftPanel = {
-      className: leftActive ? ' ' : 'active',
+      className: (leftActive ? ' ' : 'active ') + (!this.state.dataReceived ? ' background-leftpanel' : ''),
       id: 'left-panel',
       style: {
         height: store.viewportHeight - 80 // viewport height - header height

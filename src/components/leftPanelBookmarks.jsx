@@ -11,7 +11,8 @@ class LeftPanelBookmarks extends Component {
     this.initList = this.initList.bind(this);
     this.updateSensor = this.updateSensor.bind(this);
     this.state = {
-      spots: []
+      spots: [],
+      dataReceived: false
     };
   }
   componentDidMount() {
@@ -58,11 +59,11 @@ class LeftPanelBookmarks extends Component {
       else
         return -1;
     });
-    this.setState({ spots });
+    this.setState({ spots, dataReceived: true });
   }
   render() {
-    const { spots } = this.state;
-    if (spots.length > 0) {
+    const { spots, dataReceived } = this.state;
+    if (dataReceived) {
       return <div className="child-container">
         <h1>
           <i className="fas fa-heart" />
@@ -71,12 +72,17 @@ class LeftPanelBookmarks extends Component {
             Favorite stations
           </span>
         </h1>
-        {spots.map( spot => {
-          return <PanelSpot spot={spot} key={spot.id} />;
-        })}
+        <div className="container-panelSpot">
+          {spots.map( spot => {
+            return <PanelSpot spot={spot} key={spot.id} />;
+          })}
+          <p className="child-panel-info error" style={{ display: spots.length !== 0 ? 'none' : 'inherit'}} >
+            You have no favorite stations
+          </p>
+        </div>
       </div>;
     } else {
-      return '';
+      return <div />;
     }
   }
 }

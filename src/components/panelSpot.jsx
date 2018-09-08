@@ -8,25 +8,37 @@ import store from '../store/store.js';
 import { Link } from 'react-router-dom';
 
 class PanelSpot extends Component {
-
+  constructor(props) {
+    super(props);
+    this.subString = this.subString.bind(this);
+  }
+  componentDidMount() {
+    this.subString();
+  }
+  componentDidUpdate() {
+    this.subString();
+  }
+  subString() {
+    if (this.city.getBoundingClientRect().width > (this.container.getBoundingClientRect().width - this.info.getBoundingClientRect().width - 20)) {
+      while (this.city.getBoundingClientRect().width > (this.container.getBoundingClientRect().width - this.info.getBoundingClientRect().width - 20)) {
+        this.city.textContent = this.city.textContent.substring(0, this.city.textContent.length -1);
+      }
+      this.city.textContent += '...';
+    }
+  }
   sumFunc(spotName, pathname) {
-
     let type = pathname.split('/')[2];
     let id = pathname.split('/')[3];
     let name = `${type}.${id}`;
-
     Actions.loadActivity(true);
-
     if (name === spotName)
       Actions.loadActivity(false);
     if (store.mobile)
       Actions.leftActivation();
-
   }
-
   render() {
     const { spot } = this.props;
-    const { viewportWidth, windObservation } = store;
+    const { windObservation } = store;
     const { idInsteadLoc } = store.settings;
     let name;
     if (idInsteadLoc) {
@@ -37,9 +49,6 @@ class PanelSpot extends Component {
     } else {
       name = windObservation[spot.name].address3 + ' - ' + windObservation[spot.name].lng + '  ' + windObservation[spot.name].lat ;
     }
-
-    if (name && name.length >= 22 && viewportWidth >= 480)
-      name = name.substring(0, 20) + '..';
 
     const spotProps = {
       className: 'child-panel button',
@@ -54,14 +63,13 @@ class PanelSpot extends Component {
       onClick: () => this.sumFunc(spot.name, window.location.pathname),
       onMouseOver: () => Actions.hoverId(spot.name)
     };
-
     return <Link to={`/station/${spot.type}/${spot.id}`} style={{color: '#e8e8e8'}}>
-      <div {...spotProps} >
+      <div {...spotProps} ref={container => this.container = container}>
         <div className="container-city-info">
-          <span className="city">
+          <span className="city" ref={city => this.city = city}>
             {name}
           </span>
-          <div className="info">
+          <div className="info" ref={info => this.info = info}>
             <div>
               <HeadingUnit heading={spot.heading} max={spot.avg} />
             </div>

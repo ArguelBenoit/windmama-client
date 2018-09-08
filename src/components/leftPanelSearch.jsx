@@ -11,7 +11,8 @@ class LeftPanelSearch extends Component {
     this.dataReceived = this.dataReceived.bind(this);
     this.state = {
       search: '',
-      nbrSpot: 0
+      nbrSpot: 0,
+      dataReceived: false
     };
   }
   componentDidMount() {
@@ -23,13 +24,13 @@ class LeftPanelSearch extends Component {
   dataReceived() {
     const { windObservation } = store;
     this.allName = Object.keys(windObservation);
-    this.setState({ nbrSpot: this.allName.length });
+    this.setState({ nbrSpot: this.allName.length, dataReceived: true });
   }
   handleChange(e) {
     this.setState({ search: e.target.value });
   }
   render() {
-    const { search, nbrSpot } = this.state;
+    const { search, nbrSpot, dataReceived } = this.state;
     const { windObservation } = store;
 
     let spotsList = [];
@@ -93,21 +94,27 @@ class LeftPanelSearch extends Component {
         left: '12px'
       }
     };
-    return <div>
-      <i {...propsIcon} /><input {...propsInput} />
-      <div className="child-container">
-        {search !== '' ? spotsList : ''}
-        <div style={{display: search !== '' ? 'none' : 'inherit'}}>
-          Find among {nbrSpot} stations with postal code, city, country code, type, id or name.
+    if (dataReceived) {
+      return <div>
+        <i {...propsIcon} /><input {...propsInput} />
+        <div className="child-container">
+          <div className="container-panelSpot">
+            {search !== '' ? spotsList : ''}
+            <div style={{display: search !== '' ? 'none' : 'inherit'}}>
+              Find among {nbrSpot} stations with postal code, city, country code, type, id or name.
+            </div>
+            <div className="error" style={{display: spotsList.length === 60 ? 'inherit' : 'none'}}>
+              Windmama show maximum 60 places, please refine your search
+            </div>
+            <div className="error" style={{display: search !== '' && spotsList.length === 0 ? 'inherit' : 'none'}}>
+              We have no results
+            </div>
+          </div>
         </div>
-        <div className="error" style={{display: spotsList.length === 60 ? 'inherit' : 'none'}}>
-          Windmama show maximum 60 places, please refine your search
-        </div>
-        <div className="error" style={{display: search !== '' && spotsList.length === 0 ? 'inherit' : 'none'}}>
-          We have no results
-        </div>
-      </div>
-    </div>;
+      </div>;
+    } else {
+      return <div />;
+    }
   }
 }
 

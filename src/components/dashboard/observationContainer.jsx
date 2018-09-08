@@ -78,17 +78,17 @@ class ObservationContainer extends Component {
     let ratio = 110 / max;
     //--
 
-    return <div className="widget-wind-array" style={{display: 'flex'}} >
+    return <div className="widget-wind-array">
+      <div className="containerArrowWidget">
+        <ArrowWidget detail={detail} height={140 + ( 30 * presentsKeys.length )} />
+      </div>
       <div className="containerWindObservation">
         <Scrollbars ref={el => { this.container = el; }} style={{ height: 140 + ( 30 * presentsKeys.length ) }}>
           <GraphWidget detail={detail} ratio={ratio} max={max}/>
           <ArrayWidget presentsKeys={presentsKeys} detail={detail} />
         </Scrollbars>
+        <ArrayLegend presentsKeys={presentsKeys} margin={- ( 30 * presentsKeys.length ) }/>
       </div>
-      <div>
-        <ArrowWidget detail={detail} height={140 + ( 30 * presentsKeys.length )} />
-      </div>
-      <ArrayLegend presentsKeys={presentsKeys} margin={140}/>
     </div>;
   }
 }
