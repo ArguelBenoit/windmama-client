@@ -87,7 +87,7 @@ class ObservationContainer extends Component {
           <GraphWidget detail={detail} ratio={ratio} max={max}/>
           <ArrayWidget presentsKeys={presentsKeys} detail={detail} />
         </Scrollbars>
-        <ArrayLegend presentsKeys={presentsKeys} margin={- ( 30 * presentsKeys.length ) }/>
+        <ArrayLegend presentsKeys={presentsKeys} margin={-(30*presentsKeys.length)} />
       </div>
     </div>;
   }
