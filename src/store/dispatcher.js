@@ -8,6 +8,11 @@ AppDispatcher.register((action) => {
 
   switch (action.actionType) {
 
+    case typeOfActions.SCROLL_GRAPH_OBSERVATION:
+      store.scrollGraphObservation = action.val;
+      store.emit(typeOfActions.SCROLL_GRAPH_OBSERVATION);
+      break;
+
     case typeOfActions.DISPLAY_STATION:
       store.displayStation = action.val;
       store.emit(typeOfActions.DISPLAY_STATION);

@@ -10,10 +10,17 @@ export var typeOfActions = {
   LOAD_ACTIVITY: 'LOAD_ACTIVITY',
   ADD_BOOKMARK: 'ADD_BOOKMARK',
   CHANGE_SETTINGS: 'CHANGE_SETTINGS',
-  DISPLAY_STATION: 'DISPLAY_STATION'
+  DISPLAY_STATION: 'DISPLAY_STATION',
+  SCROLL_GRAPH_OBSERVATION: 'SCROLL_GRAPH_OBSERVATION'
 };
 
 export var Actions = {
+  scrollGraphObservation(val) {
+    AppDispatcher.dispatch({
+      actionType: typeOfActions.SCROLL_GRAPH_OBSERVATION,
+      val
+    });
+  },
   displayStation(val) {
     AppDispatcher.dispatch({
       actionType: typeOfActions.DISPLAY_STATION,

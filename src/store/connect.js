@@ -11,6 +11,7 @@ let init = {
     hoverId: false,
     idUpdate: false,
     displayStation: false,
+    scrollGraphObservation: 0,
     bookmarks: localStorage.bookmarks
       ? localStorage.bookmarks.split(',')
       : [],

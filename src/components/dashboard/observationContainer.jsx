@@ -7,7 +7,9 @@ import ArrayLegend from './arrayLegend.jsx';
 import { Scrollbars } from 'react-custom-scrollbars';
 import store from '../../store/store.js';
 import { typeOfActions } from '../../store/actions.js';
+import { Actions } from '../../store/actions.js';
 import ArrowWidget from './arrowWidget.jsx';
+
 
 
 
@@ -20,6 +22,14 @@ class ObservationContainer extends Component {
   componentDidMount() {
     this.scrollToRight();
     store.on(typeOfActions.CHANGE_SETTINGS, this.mainUpdate);
+
+    let graphDOM = ReactDOM.findDOMNode(this.container).childNodes[0];
+    this.initScroll = graphDOM.scrollLeft;
+
+    graphDOM.addEventListener('scroll', () => {
+      let scroll = graphDOM.scrollLeft;
+      Actions.scrollGraphObservation( Math.round((this.initScroll - scroll)/50) );
+    });
   }
   shouldComponentUpdate(prevProps) {
     if (prevProps.detail !== this.props.detail) {
@@ -30,9 +40,8 @@ class ObservationContainer extends Component {
       return false;
     }
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.displayDetail !== prevProps.displayDetail)
-      this.scrollToRight(); // if new detail only scroll to right.
+  componentDidUpdate() {
+    this.scrollToRight(); // if new detail only scroll to right.
   }
   componentWillUnmount() {
     store.removeListener(typeOfActions.CHANGE_SETTINGS, this.mainUpdate);
