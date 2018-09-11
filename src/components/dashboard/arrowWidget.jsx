@@ -8,15 +8,19 @@ import { typeOfActions } from '../../store/actions.js';
 class ArrowWidget extends Component {
   constructor(props) {
     super(props);
+    this.changeSliceLevel = this.changeSliceLevel.bind(this);
     this.state = {
       sliceLevel: 0
     };
   }
   componentDidMount() {
-    store.on(
-      typeOfActions.SCROLL_GRAPH_OBSERVATION,
-      () => this.setState({ sliceLevel: store.scrollGraphObservation })
-    );
+    store.on(typeOfActions.SCROLL_GRAPH_OBSERVATION, this.changeSliceLevel);
+  }
+  componentWillUnmount() {
+    store.removeListener(typeOfActions.SCROLL_GRAPH_OBSERVATION, this.changeSliceLevel);
+  }
+  changeSliceLevel() {
+    this.setState({ sliceLevel: store.scrollGraphObservation });
   }
   render() {
     let { sliceLevel } = this.state;
