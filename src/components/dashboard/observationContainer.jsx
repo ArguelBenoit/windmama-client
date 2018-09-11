@@ -17,19 +17,17 @@ class ObservationContainer extends Component {
   constructor(props) {
     super(props);
     this.scrollToRight = this.scrollToRight.bind(this);
+    this.scrollToLeft = this.scrollToLeft.bind(this);
     this.mainUpdate = this.mainUpdate.bind(this);
   }
   componentDidMount() {
     this.scrollToRight();
     store.on(typeOfActions.CHANGE_SETTINGS, this.mainUpdate);
 
-    let graphDOM = ReactDOM.findDOMNode(this.container).childNodes[0];
-    this.initScroll = graphDOM.scrollLeft;
+    this.graphDOM = ReactDOM.findDOMNode(this.container).childNodes[0];
+    this.initScroll = this.graphDOM.scrollLeft;
 
-    graphDOM.addEventListener('scroll', () => {
-      let scroll = graphDOM.scrollLeft;
-      Actions.scrollGraphObservation( Math.round((this.initScroll - scroll)/50) );
-    });
+    this.graphDOM.addEventListener('scroll', this.scrollToLeft);
   }
   shouldComponentUpdate(prevProps) {
     if (prevProps.detail !== this.props.detail) {
@@ -41,10 +39,14 @@ class ObservationContainer extends Component {
     }
   }
   componentDidUpdate() {
+    this.graphDOM = ReactDOM.findDOMNode(this.container).childNodes[0];
+    this.initScroll = this.graphDOM.scrollLeft;
+
     this.scrollToRight(); // if new detail only scroll to right.
   }
   componentWillUnmount() {
     store.removeListener(typeOfActions.CHANGE_SETTINGS, this.mainUpdate);
+    this.graphDOM.removeEventListener('scroll', this.scrollToLeft, false);
   }
   mainUpdate() {
     this.forceUpdate();
@@ -52,6 +54,10 @@ class ObservationContainer extends Component {
   scrollToRight() {
     let scrollContainer = ReactDOM.findDOMNode(this.container).childNodes[0];
     scrollContainer.scrollLeft = scrollContainer.scrollWidth;
+  }
+  scrollToLeft() {
+    let scroll = this.graphDOM.scrollLeft;
+    Actions.scrollGraphObservation( Math.round((this.initScroll - scroll)/50) );
   }
   render() {
     let { detail } = this.props;

@@ -39,9 +39,9 @@ class ArrowWidget extends Component {
 
     let { items } = this.props.detail;
     let max = 0;
-    let itemNbr = 20;
+    let itemNbr = 18;
     items = items.slice(
-      items.length - sliceLevel - 1 - itemNbr, items.length - sliceLevel
+      items.length - sliceLevel - itemNbr, items.length - sliceLevel
     );
     items.forEach( e => {
       if (e.avg > max)
@@ -52,38 +52,54 @@ class ArrowWidget extends Component {
     let ratio = 1 / max;
     let path = items.map( (e, i) => {
       let headingLevel = Math.round(e.heading / 20);
-      console.log( 0.5 + ( i * (0.5 / itemNbr) ));
-      return <g key={i} style={{opacity: 0.5 + ( i++ * (itemNbr/0.5) )}}>
+      let styleG = {
+        opacity: 0.15 + ( i++ * (itemNbr/0.85) ),
+        transformOrigin: '120px 120px',
+        transform: `rotate(${headingLevel * 18}deg)`
+      };
+      let styleG2 = {
+        transformOrigin: '120px 120px',
+        transform: `scale(${e.max * ratio - 0.03})`
+      };
+      let styleG3 = {
+        transformOrigin: '120px 120px',
+        transform: `scale(${e.avg * ratio - 0.03})`
+      };
+      return <g
+        key={i}
+        style={styleG}>
         {e.max ?
-          <path
-            fill="#000"
-            transform-origin="120 120"
-            transform={`rotate(${headingLevel * 18}) scale(${e.max * ratio - 0.03})`}
-            d="M135.4,21.2c-5-0.8-10.2-1.2-15.4-1.2s-10.4,0.4-15.4,1.2l15.4,97.2L135.4,21.2z"
-          />
+          <g style={styleG2}>
+            <path
+              fill="#000"
+              d="M135.4,21.2c-5-0.8-10.2-1.2-15.4-1.2s-10.4,0.4-15.4,1.2l15.4,97.2L135.4,21.2z"
+              />
+          </g>
         : ''}
-        <path
-          fill={getColor(e.avg)}
-          transform-origin="120 120"
-          transform={`rotate(${headingLevel * 18}) scale(${e.avg * ratio - 0.03})`}
-          d="M135.4,21.2c-5-0.8-10.2-1.2-15.4-1.2s-10.4,0.4-15.4,1.2l15.4,97.2L135.4,21.2z"
-        />
+        <g style={styleG3}>
+          <path
+            fill={getColor(e.avg)}
+            d="M135.4,21.2c-5-0.8-10.2-1.2-15.4-1.2s-10.4,0.4-15.4,1.2l15.4,97.2L135.4,21.2z"
+            />
+        </g>
       </g>;
     });
 
     return <div style={styleContainer}>
       <svg style={styleSvg} width="240" height="240" fill="#fff">
         {path}
-        <rect x="119.8" y="15" transform="matrix(0.9877 -0.1564 0.1564 0.9877 -17.2947 20.2495)" width="0.5" height="210"/>
-        <rect x="119.8" y="15" transform="matrix(0.891 -0.454 0.454 0.891 -41.3996 67.5581)" width="0.5" height="210"/>
-        <rect x="119.8" y="15" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -49.7056 120)" width="0.5" height="210"/>
-        <rect x="119.8" y="15" transform="matrix(0.454 -0.891 0.891 0.454 -41.3996 172.4419)" width="0.5" height="210"/>
-        <rect x="119.8" y="15" transform="matrix(0.1564 -0.9877 0.9877 0.1564 -17.2947 219.7505)" width="0.5" height="210"/>
-        <rect x="15" y="119.8" transform="matrix(0.9877 -0.1564 0.1564 0.9877 -17.2947 20.2495)" width="210" height="0.5"/>
-        <rect x="15" y="119.8" transform="matrix(0.891 -0.454 0.454 0.891 -41.3996 67.5581)" width="210" height="0.5"/>
-        <rect x="15" y="119.8" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -49.7056 120)" width="210" height="0.5"/>
-        <rect x="15" y="119.8" transform="matrix(0.454 -0.891 0.891 0.454 -41.3996 172.4419)" width="210" height="0.5"/>
-        <rect x="15" y="119.8" transform="matrix(0.1564 -0.9877 0.9877 0.1564 -17.2947 219.7505)" width="210" height="0.5"/>
+        <g style={{opacity: 0.8}}>
+          <rect x="119.8" y="15" transform="matrix(0.9877 -0.1564 0.1564 0.9877 -17.2947 20.2495)" width="0.5" height="210"/>
+          <rect x="119.8" y="15" transform="matrix(0.891 -0.454 0.454 0.891 -41.3996 67.5581)" width="0.5" height="210"/>
+          <rect x="119.8" y="15" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -49.7056 120)" width="0.5" height="210"/>
+          <rect x="119.8" y="15" transform="matrix(0.454 -0.891 0.891 0.454 -41.3996 172.4419)" width="0.5" height="210"/>
+          <rect x="119.8" y="15" transform="matrix(0.1564 -0.9877 0.9877 0.1564 -17.2947 219.7505)" width="0.5" height="210"/>
+          <rect x="15" y="119.8" transform="matrix(0.9877 -0.1564 0.1564 0.9877 -17.2947 20.2495)" width="210" height="0.5"/>
+          <rect x="15" y="119.8" transform="matrix(0.891 -0.454 0.454 0.891 -41.3996 67.5581)" width="210" height="0.5"/>
+          <rect x="15" y="119.8" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -49.7056 120)" width="210" height="0.5"/>
+          <rect x="15" y="119.8" transform="matrix(0.454 -0.891 0.891 0.454 -41.3996 172.4419)" width="210" height="0.5"/>
+          <rect x="15" y="119.8" transform="matrix(0.1564 -0.9877 0.9877 0.1564 -17.2947 219.7505)" width="210" height="0.5"/>
+        </g>
         <path d="M117,20v-8.5h1.2l2.7,4.3c0.6,1,1.1,1.9,1.5,2.8l0,0c-0.1-1.1-0.1-2.2-0.1-3.5v-3.6h1V20h-1.1l-2.7-4.3
           c-0.6-0.9-1.2-1.9-1.6-2.8l0,0c0.1,1.1,0.1,2.1,0.1,3.5V20H117z"/>
         <path d="M12.4,124l-2-7.9h1.1l0.9,4c0.2,1,0.4,2,0.6,2.7h0c0.1-0.8,0.4-1.7,0.6-2.7l1-4h1.1l1,4c0.2,0.9,0.4,1.9,0.5,2.7h0
