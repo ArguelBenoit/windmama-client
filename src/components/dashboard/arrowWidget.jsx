@@ -67,11 +67,11 @@ class ArrowWidget extends Component {
       };
       let styleG2 = {
         transformOrigin: '120px 120px',
-        transform: `scale(${e.max * ratio - 0.03})`
+        transform: `scale(${e.max * ratio})`
       };
       let styleG3 = {
         transformOrigin: '120px 120px',
-        transform: `scale(${e.avg * ratio - 0.03})`
+        transform: `scale(${e.avg * ratio})`
       };
       return <g
         key={i}
@@ -79,7 +79,7 @@ class ArrowWidget extends Component {
         {e.max ?
           <g style={styleG2}>
             <path
-              fill="#000"
+              fill="#555"
               d="M138.3,26.8c-5.9-1.2-12-1.8-18.3-1.8s-12.4,0.6-18.3,1.8l18.3,91.9L138.3,26.8z"
             />
           </g>
