@@ -28,7 +28,8 @@ class InfoWidget extends Component {
         </Link>
       </div>
       <div className="location-time-info">
-        {detail.address3} {detail.address1} {detail.address2}&nbsp;
+        {detail.address3} {detail.address1} {detail.address2}
+        <br />
         <a href={url} target="_blank">Station {detail.type} {detail.id}</a>
       </div>
       <InfoDate date={lastDate} name={displayDetail}/>

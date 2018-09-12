@@ -54,6 +54,8 @@ class ObservationContainer extends Component {
   scrollToRight() {
     let scrollContainer = ReactDOM.findDOMNode(this.container).childNodes[0];
     scrollContainer.scrollLeft = scrollContainer.scrollWidth;
+    this.graphDOM = ReactDOM.findDOMNode(this.container).childNodes[0];
+    this.initScroll = this.graphDOM.scrollLeft;
   }
   scrollToLeft() {
     let scroll = this.graphDOM.scrollLeft;
