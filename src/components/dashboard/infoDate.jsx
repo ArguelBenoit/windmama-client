@@ -20,13 +20,12 @@ class InfoDate extends Component {
     this.updateTime();
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.name !== this.props.name) {
-      let { date } = this.props;
-      this.setState({
-        last: date,
-        diff: moment.utc(moment().diff(date))
-      });
-    }
+    // console.log('componentWillReceiveProps');
+    let { date } = nextProps;
+    this.setState({
+      last: date,
+      diff: moment.utc(moment().diff(date))
+    });
   }
   componentWillUnmount() {
     clearInterval(this.updateSeconds);

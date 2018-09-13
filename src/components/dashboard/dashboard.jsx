@@ -51,8 +51,8 @@ class Dashboard extends Component {
     Actions.displayStation(false);
   }
   request(type, id) {
-    let url = `${store.apiUrl}/wind-observation/by-name/${type}/${id}/80`;
-    request(url, (z, x, a) => {
+    let url1 = `${store.apiUrl}/wind-observation/by-name/${type}/${id}/80`;
+    request(url1, (z, x, a) => {
       jsonParsePromise(a).then( value => {
         Actions.loadActivity(false);
         value.name = value.type + '.' + value.id;
@@ -67,6 +67,16 @@ class Dashboard extends Component {
         }
       });
     });
+    // if (type === 'metar') {
+    //   let url2 = `${store.apiUrl}/taf-forecast/${id}`;
+    //   request(url2, (z, x, a) => {
+    //     jsonParsePromise(a).then( value => {
+    //       console.log(value);
+    //     }).catch( () => {
+    //       console.log('error');
+    //     });
+    //   });
+    // }
   }
   updateDetail() {
     let { id, type } = this.props.match.params;
