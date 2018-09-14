@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import store from '../store/store.js';
 import { typeOfActions } from '../store/actions.js';
 import './css/loader.css';
-import img from './img/solar.png';
 
 class Loader extends Component {
   constructor(props) {
@@ -23,8 +22,11 @@ class Loader extends Component {
     const { loadActivity } = this.state;
     const mainStyle = { display: loadActivity ? 'inherit' : 'none' };
     return <div id="loader" className="elements-ui-absolute" style={mainStyle}>
-      <img id="solar1" src={img} alt=""/>
+      <svg className="circular" width="100px" height="100px">
+        <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="4" strokeMiterlimit="10"/>
+      </svg>
     </div>;
+
   }
 }
 
