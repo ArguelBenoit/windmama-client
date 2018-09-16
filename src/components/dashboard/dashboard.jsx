@@ -28,7 +28,9 @@ class Dashboard extends Component {
     this.request = this.request.bind(this);
     this.updateDetail = this.updateDetail.bind(this);
     this.state = {
-      detail: null
+      detail: null,
+      tafPresence: false,
+      taf: null
     };
   }
   componentWillMount() {
@@ -72,8 +74,8 @@ class Dashboard extends Component {
     //   request(url2, (z, x, a) => {
     //     jsonParsePromise(a).then( value => {
     //       console.log(value);
-    //     }).catch( () => {
-    //       console.log('error');
+    //     }).catch( err => {
+    //       console.log(err);
     //     });
     //   });
     // }
