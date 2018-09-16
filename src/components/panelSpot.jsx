@@ -33,7 +33,7 @@ class PanelSpot extends Component {
     Actions.loadActivity(true);
     if (name === spotName)
       Actions.loadActivity(false);
-    if (store.mobile)
+    if (store.mobile || store.viewportWidth <= 700)
       Actions.leftActivation();
   }
   render() {

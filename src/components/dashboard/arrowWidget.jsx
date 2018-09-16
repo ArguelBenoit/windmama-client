@@ -25,14 +25,14 @@ class ArrowWidget extends Component {
   }
   render() {
     let { sliceLevel } = this.state;
-    let styleContainer = store.viewportWidth > 480 ? {
+    let styleContainer = store.viewportWidth > 700 ? {
       width: this.props.height,
       height: this.props.height
     } : {
       width: '100%',
       height: 260
     };
-    let styleSvg = store.viewportWidth > 480 ? {
+    let styleSvg = store.viewportWidth > 700 ? {
       marginLeft: ( this.props.height - 240 ) / 2,
       marginTop: ( this.props.height - 240 ) / 2,
       transform: `scale(${this.props.height / 280 + 0.1})`  // 240 + 40 for keep border

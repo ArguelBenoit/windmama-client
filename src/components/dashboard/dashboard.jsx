@@ -108,7 +108,10 @@ class Dashboard extends Component {
 
     let widthContainer;
     let marginLeftContainer;
-    if (!leftActive && !rightActive && !mobile) {
+    if (store.viewportWidth < 700) {
+      widthContainer = viewportWidth;
+      marginLeftContainer = 0;
+    } else if (!leftActive && !rightActive && !mobile) {
       widthContainer = viewportWidth;
       marginLeftContainer = 0;
     } else if (leftActive && !mobile) {

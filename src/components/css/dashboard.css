@@ -85,7 +85,7 @@
   background: rgba(0,0,0,0.9);
 }
 
-@media only screen and (max-device-width: 480px) {
+@media screen and (max-width: 700px) {
   #cover-widgets .container-widgets .widget-wind-array {
     display: inherit;
   }

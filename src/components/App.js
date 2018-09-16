@@ -70,7 +70,7 @@ class App extends Component {
       <Route exact path={'/station/:type/:id'} component={Dashboard} />
 
       {/* only for exact path / */}
-      {!store.mobile ? <Route exact path="/" render={() => <Tooltip rightActive={rightActive} />}/> : ''}
+      {!store.mobile && store.viewportWidth > 700? <Route exact path="/" render={() => <Tooltip rightActive={rightActive} />}/> : ''}
 
       {/* common for all routes */}
       <Route path="/" render={() => <ColorLegend mobile={store.mobile} />} />

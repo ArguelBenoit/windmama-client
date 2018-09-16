@@ -100,8 +100,8 @@ class ObservationContainer extends Component {
         <ArrowWidget detail={detail} height={140 + ( 30 * presentsKeys.length )} />
       </div>
       <div className="containerWindObservation">
-        <Scrollbars ref={el => { this.container = el; }} style={{ height: (store.viewportWidth < 480 ? 0 : 140) + ( 30 * presentsKeys.length ) }}>
-          {store.viewportWidth < 480 ?
+        <Scrollbars ref={el => { this.container = el; }} style={{ height: (store.viewportWidth < 700 ? 0 : 140) + ( 30 * presentsKeys.length ) }}>
+          {store.viewportWidth < 700 ?
             '' :
             <GraphWidget detail={detail} ratio={ratio} max={max}/>
           }
