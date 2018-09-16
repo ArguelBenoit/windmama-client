@@ -32,7 +32,6 @@ class App extends Component {
     store.on(typeOfActions.MARKER_CLICKED, this.mainUpdate);
     store.on(typeOfActions.LEFT_ACTIVATION, this.updatePanelActive);
     store.on(typeOfActions.RIGHT_ACTIVATION, this.updatePanelActive);
-    store.on(typeOfActions.CHANGE_VIEWPORT, this.mainUpdate);
     store.on(typeOfActions.CHANGE_SETTINGS, this.mainUpdate);
     var resize = debounce( () => {
       Actions.changeViewport([window.innerWidth, window.innerHeight]);
@@ -43,7 +42,6 @@ class App extends Component {
     store.removeListener(typeOfActions.MARKER_CLICKED, this.mainUpdate);
     store.removeListener(typeOfActions.LEFT_ACTIVATION, this.updatePanelActive);
     store.removeListener(typeOfActions.RIGHT_ACTIVATION, this.updatePanelActive);
-    store.removeListener(typeOfActions.CHANGE_VIEWPORT, this.mainUpdate);
     store.removeListener(typeOfActions.CHANGE_SETTINGS, this.mainUpdate);
   }
   mainUpdate() {

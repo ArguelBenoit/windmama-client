@@ -34,6 +34,8 @@ class ObservationContainer extends Component {
       return true;
     } else if (store.idUpdate === prevProps.detail.name) {
       return true;
+    } else if (prevProps.viewport !== this.props.viewport) {
+      return true;
     } else {
       return false;
     }
@@ -115,7 +117,8 @@ class ObservationContainer extends Component {
 
 ObservationContainer.propTypes = {
   detail: PropTypes.any,
-  displayDetail: PropTypes.any
+  displayDetail: PropTypes.any,
+  viewport: PropTypes.object
 };
 
 export default ObservationContainer;

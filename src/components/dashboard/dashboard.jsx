@@ -27,10 +27,13 @@ class Dashboard extends Component {
     super(props);
     this.request = this.request.bind(this);
     this.updateDetail = this.updateDetail.bind(this);
+    this.resizing = this.resizing.bind(this);
     this.state = {
       detail: null,
       tafPresence: false,
-      taf: null
+      taf: null,
+      height: store.viewportHeight,
+      width: store.viewportWidth
     };
   }
   componentWillMount() {
@@ -41,6 +44,7 @@ class Dashboard extends Component {
     Actions.displayStation(true);
     this.request(type, id);
     store.on(typeOfActions.UPDATE_DETAIL, this.updateDetail);
+    store.on(typeOfActions.CHANGE_VIEWPORT, this.resizing);
   }
   componentWillReceiveProps(nextProps) {
     let { type, id } = nextProps.match.params;
@@ -50,7 +54,14 @@ class Dashboard extends Component {
   }
   componentWillUnmount() {
     store.removeListener(typeOfActions.UPDATE_DETAIL, this.updateDetail);
+    store.removeListener(typeOfActions.CHANGE_VIEWPORT, this.resizing);
     Actions.displayStation(false);
+  }
+  resizing() {
+    this.setState({
+      height: store.viewportHeight,
+      width: store.viewportWidth
+    });
   }
   request(type, id) {
     let url1 = `${store.apiUrl}/wind-observation/by-name/${type}/${id}/80`;
@@ -101,9 +112,18 @@ class Dashboard extends Component {
     } = store;
     const { detail } = this.state;
 
+    let propsObsContainer = {
+      detail: detail,
+      viewport: {
+        width: this.state.width,
+        height: this.state.height
+      },
+      displayDetail
+    };
+
     let content = detail ? <div>
       <InfoWidget detail={detail} displayDetail={displayDetail} />
-      <ObservationContainer detail={detail} displayDetail={displayDetail} />
+      <ObservationContainer {...propsObsContainer} />
     </div> : '';
 
     let widthContainer;
