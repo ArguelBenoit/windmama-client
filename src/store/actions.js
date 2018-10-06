@@ -11,7 +11,8 @@ export var typeOfActions = {
   ADD_BOOKMARK: 'ADD_BOOKMARK',
   CHANGE_SETTINGS: 'CHANGE_SETTINGS',
   DISPLAY_STATION: 'DISPLAY_STATION',
-  SCROLL_GRAPH_OBSERVATION: 'SCROLL_GRAPH_OBSERVATION'
+  SCROLL_GRAPH_OBSERVATION: 'SCROLL_GRAPH_OBSERVATION',
+  LOCATION_DETECTED: 'LOCATION_DETECTED'
 };
 
 export var Actions = {
@@ -76,6 +77,12 @@ export var Actions = {
     AppDispatcher.dispatch({
       object,
       actionType: typeOfActions.CHANGE_SETTINGS
+    });
+  },
+  locationDetected(object) {
+    AppDispatcher.dispatch({
+      object,
+      actionType: typeOfActions.LOCATION_DETECTED
     });
   }
 };

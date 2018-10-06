@@ -12,6 +12,7 @@ class ContainerMap extends Component {
     this._onChangeViewport = this._onChangeViewport.bind(this);
     this._resize = this._resize.bind(this);
     this.blured = this.blured.bind(this);
+    this.geoPositionDetected = this.geoPositionDetected.bind(this);
     const { viewportWidth, viewportHeight } = store;
     this.state = {
       blured: store.displayStation,
@@ -32,23 +33,25 @@ class ContainerMap extends Component {
   componentDidMount() {
     store.on(typeOfActions.CHANGE_VIEWPORT, this._resize);
     store.on(typeOfActions.DISPLAY_STATION, this.blured);
-    if (navigator.geolocation) { // if loc active
-      navigator.geolocation.getCurrentPosition( position => {
-        const { viewportWidth, viewportHeight } = store;
-        let viewport = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          zoom: 7,
-          width: viewportWidth,
-          height: viewportHeight
-        };
-        this._onChangeViewport(viewport);
-      });
-    }
+    store.on(typeOfActions.LOCATION_DETECTED, this.geoPositionDetected);
   }
   componentWillUnmount() {
     store.removeListener(typeOfActions.CHANGE_VIEWPORT, this._resize);
     store.removeListener(typeOfActions.DISPLAY_STATION, this.blured);
+    store.removeListener(typeOfActions.LOCATION_DETECTED, this.geoPositionDetected);
+  }
+  geoPositionDetected() {
+    navigator.geolocation.getCurrentPosition( position => {
+      const { viewportWidth, viewportHeight } = store;
+      let viewport = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        zoom: 7,
+        width: viewportWidth,
+        height: viewportHeight
+      };
+      this._onChangeViewport(viewport);
+    }, () => {});
   }
   blured() {
     this.setState({blured: store.displayStation});

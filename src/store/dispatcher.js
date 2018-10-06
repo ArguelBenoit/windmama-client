@@ -78,6 +78,11 @@ AppDispatcher.register((action) => {
       store.emit(typeOfActions.CHANGE_SETTINGS);
       break;
 
+    case typeOfActions.LOCATION_DETECTED:
+      store.location = action.object;
+      store.emit(typeOfActions.LOCATION_DETECTED);
+      break;
+
     default:
       break;
   }

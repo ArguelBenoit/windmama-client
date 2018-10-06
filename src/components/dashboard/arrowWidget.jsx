@@ -129,7 +129,7 @@ class ArrowWidget extends Component {
           <text x="122" y="58"><WindUnit value={max*0.6} /></text>
           <text x="122" y="78"><WindUnit value={max*0.4} /></text>
           <text x="122" y="98"><WindUnit value={max*0.2} /></text>
-          <text x="122" y="118">00</text>
+          <text x="122" y="118">0</text>
         </g>
       </svg>
     </div>;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import InfoWidget from './infoWidget.jsx';
-import ObservationContainer from './observationContainer.jsx';
+import ContainerWidget from './containerWidget.jsx';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Actions } from '../../store/actions.js';
 import store from '../../store/store.js';
@@ -110,21 +109,7 @@ class Dashboard extends Component {
       viewportWidth,
       viewportHeight
     } = store;
-    const { detail } = this.state;
-
-    let propsObsContainer = {
-      detail: detail,
-      viewport: {
-        width: this.state.width,
-        height: this.state.height
-      },
-      displayDetail
-    };
-
-    let content = detail ? <div>
-      <InfoWidget detail={detail} displayDetail={displayDetail} />
-      <ObservationContainer {...propsObsContainer} />
-    </div> : '';
+    const { detail, width, height } = this.state;
 
     let widthContainer;
     let marginLeftContainer;
@@ -148,10 +133,23 @@ class Dashboard extends Component {
       marginLeft: marginLeftContainer
     };
 
+    const propsContainerWidget = {
+      detail,
+      displayDetail,
+      width,
+      height,
+      leftActive,
+      rightActive
+    };
+
     return <div id="cover-widgets" style={heightCoverWidget} className={'active'}>
       <Scrollbars style={{height: ( viewportHeight - 80 ) + 'px'}}>
         <div className="container-widgets" id="container-widgets" >
-          {displayDetail ? content : ''}
+          {displayDetail && detail ?
+            <div>
+              <ContainerWidget {...propsContainerWidget} />
+            </div>
+          : ''}
         </div>
       </Scrollbars>
     </div>;

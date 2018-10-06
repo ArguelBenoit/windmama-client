@@ -84,7 +84,11 @@
   color: #fff;
   background: rgba(0,0,0,0.9);
 }
-
+#cover-widgets .container-widgets .widget-taf-forecast {
+  margin-top: 10px;
+  background: rgba(60,60,60,0.5);
+  color: #fff;
+}
 @media screen and (max-width: 700px) {
   #cover-widgets .container-widgets .widget-wind-array {
     display: inherit;

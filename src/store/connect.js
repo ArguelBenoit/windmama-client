@@ -7,23 +7,27 @@ let init = {
     socketUrl : 'https://api.windmama.fr/',
     windObservation: {},
     loading: true,
-    mobile: false,
-    hoverId: false,
-    idUpdate: false,
-    displayStation: false,
+    mobile: null,
+    hoverId: null,
+    idUpdate: null,
+    displayStation: null,
     scrollGraphObservation: 0,
     bookmarks: localStorage.bookmarks
       ? localStorage.bookmarks.split(',')
       : [],
     viewportWidth: window.innerWidth,
     viewportHeight: window.innerHeight,
+    location: {
+      latitude: null,
+      longitude: null
+    },
     settings: localStorage.settings
       ? JSON.parse(localStorage.getItem('settings'))
       : {
           idInsteadLoc: false,
           onlyMetar: false,
           metarRaw: false,
-          universalTime: false, // local / utc
+          universalTime: null, // local / utc
           windUnit: 'kt', // 'km/h', 'kt', 'm/s'
           headingUnit: 'arrow', // 'arrow', 'abbrev', 'degrees'
           tempUnit: 'C', // 'C', 'F'
@@ -31,6 +35,7 @@ let init = {
         }
 };
 
+// detect if user use a mobile or a laptop
 if(navigator.userAgent.match(/Android/i)
   || navigator.userAgent.match(/webOS/i)
   || navigator.userAgent.match(/iPhone/i)
@@ -42,6 +47,34 @@ if(navigator.userAgent.match(/Android/i)
 } else {
   init.mobile = false;
 }
+
+
+// detect location user
+navigator.geolocation.getCurrentPosition( position => {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  Actions.locationDetected({
+    latitude,
+    longitude
+  });
+}, () => {
+  console.log(
+    '%cHey you ! Your geolocation is disabled. If you want to enjoy great functionality you have to activate it. <3',
+      'background: black;' +
+      'font-size:15px;' +
+      'color: yellow;' +
+      'padding: 7px 10px;' +
+      'border: 2px solid red;'
+    );
+});
+// --
+// example for component :
+// navigator.geolocation.getCurrentPosition( position => {
+//   console.log(position);
+// }, err => {
+//   console.log(err);
+// });
+
 
 const jsonParsePromise = json => {
   return new Promise((resolve, reject) => {
