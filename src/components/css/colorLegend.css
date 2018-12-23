@@ -1,37 +1,23 @@
 #color-legend {
   position: absolute;
-  width: 100%;
   bottom: 0px;
-  height: 20px;
-  color: #fff;
-  overflow: hidden;
-}
-#color-legend .legend-block {
-  float: left;
-  width: 2%;
-  height: 20px;
-}
-#color-legend .legend-block div {
   width: 100%;
-  text-align: center;
-  padding-top: 3px;
+  height: 20px;
   font-size: 12px;
+  text-shadow: 0 0 3px #aaa;
+  display: flex;
+  overflow: hidden;
+  color: #fff;
 }
-
-@media screen and (max-width: 1500px) {
-  #color-legend .legend-block div {
-    padding-top: 3px;
-    font-size: 10px;
-  }
+#color-legend div {
+  height: 20px;
+  padding: 3px 10px 0 10px;
 }
-@media screen and (max-width: 1000px) {
-  #color-legend .legend-block div {
-    padding-top: 5.5px;
-    font-size: 7.5px;
-  }
+#color-legend .unit {
+  background: white;
 }
-@media screen and (max-width: 650px) {
-  #color-legend .legend-block div {
-    display: none;
-  }
+#color-legend .value {
+  padding: 3px 6.5px 0 0;
+  flex: auto;
+  text-align: right;
 }

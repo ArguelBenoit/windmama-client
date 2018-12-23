@@ -79,16 +79,16 @@ class Dashboard extends Component {
         }
       });
     });
-    // if (type === 'metar') {
-    //   let url2 = `${store.apiUrl}/taf-forecast/${id}`;
-    //   request(url2, (z, x, a) => {
-    //     jsonParsePromise(a).then( value => {
-    //       console.log(value);
-    //     }).catch( err => {
-    //       console.log(err);
-    //     });
-    //   });
-    // }
+    if (type === 'metar') {
+      let url2 = `${store.apiUrl}/taf-forecast/${id}`;
+      request(url2, (z, x, a) => {
+        jsonParsePromise(a).then( value => {
+          console.log(value);
+        }).catch( err => {
+          console.log(err);
+        });
+      });
+    }
   }
   updateDetail() {
     let { id, type } = this.props.match.params;
