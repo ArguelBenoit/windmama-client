@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import debounce from 'debounce';
-import smartSearch from 'smart-search';
 import PanelSpot from './panelSpot.jsx';
 import moment from 'moment';
 import store from '../store/store.js';
@@ -12,12 +9,10 @@ class LeftPanelSearch extends Component {
   constructor(props) {
     super(props);
     this.dataReceived = this.dataReceived.bind(this);
-    this.updateSpotList = debounce(this.updateSpotList, 500);
     this.state = {
+      search: '',
       nbrSpot: 0,
-      dataReceived: false,
-      spotsList: [],
-      search: ''
+      dataReceived: false
     };
   }
   componentDidMount() {
@@ -31,66 +26,60 @@ class LeftPanelSearch extends Component {
     this.allName = Object.keys(windObservation);
     this.setState({ nbrSpot: this.allName.length, dataReceived: true });
   }
-  updateSpotList() {
+  handleChange(e) {
+    this.setState({ search: e.target.value });
+  }
+  render() {
+    const { search, nbrSpot, dataReceived } = this.state;
     const { windObservation } = store;
-    const search = this.refs.searchInput.value;
-    let newSpotsList;
-    if(search !== '') {
-      const windObservationInArray = _.values(windObservation);
-      const valuesSarch = {
-        address1: true,
-        address2: true,
-        address3: true,
-        name: true
-        // id, items, lat, lng, name, type
-      };
-      const arraySearch = search.split(' ');
-      newSpotsList = smartSearch(
-        windObservationInArray,
-        arraySearch,
-        valuesSarch
-      );
-      newSpotsList.sort((a, b) => {
-        if (a.entry.items[0].avg < b.entry.items[0].avg)
+
+    let spotsList = [];
+    if (this.allName && search !== '') {
+      this.allName.forEach( name => {
+        let nameDetail = windObservation[name].items[0];
+        let nameInfo = windObservation[name];
+
+        if (nameInfo.id.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            nameInfo.type.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            nameInfo.name.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            nameInfo.id.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            nameInfo.address1.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            nameInfo.address2.toLowerCase().indexOf(search.toLowerCase()) >= 0 ||
+            nameInfo.address3.toLowerCase().indexOf(search.toLowerCase()) >= 0)
+        {
+          let diff = moment().valueOf() - moment(nameDetail.date).valueOf();
+          spotsList.push({
+            name: nameInfo.name,
+            type: nameInfo.type,
+            id: nameInfo.id,
+            heading: nameDetail.heading,
+            avg: nameDetail.avg,
+            connected: diff < 3600000 ? true : false,
+            raw: nameDetail.raw ? nameDetail.raw : null
+          });
+        }
+      });
+
+      spotsList.sort((a, b) => {
+        if (a.avg < b.avg)
           return 1;
-        else if (a.entry.items[0].avg > b.entry.items[0].avg)
+        else if (a.avg > b.avg)
           return -1;
         else
           return -1;
       });
-      newSpotsList = newSpotsList.slice(0, 60).map(el => {
-        let diff = moment().valueOf() - moment(el.entry.items[0].date).valueOf();
-        return {
-          name: el.entry.name,
-          type: el.entry.type,
-          id: el.entry.id,
-          heading: el.entry.items[0].heading,
-          avg: el.entry.items[0].avg,
-          connected: diff < 3600000 ? true : false,
-          raw: el.entry.items[0].raw ? el.entry.items[0].raw : null
-        };
+
+      spotsList = spotsList.slice(0, 60).map((spot) => {
+        return <PanelSpot spot={spot} key={`${spot.type}.${spot.id}`} />;
       });
-    } else {
-      newSpotsList = [];
     }
-    this.setState({
-      spotsList: newSpotsList,
-      search
-    });
-  }
-  render() {
-    const {
-      search,
-      nbrSpot,
-      dataReceived,
-      spotsList
-    } = this.state;
+
     const propsInput = {
       id: 'research',
       type: 'text',
       placeholder: 'Search',
-      ref: 'searchInput',
-      onChange: this.updateSpotList.bind(this),
+      value: search,
+      onChange: this.handleChange.bind(this),
       style: {
         borderBottom: '2px solid #ff4081',
         padding: '13px 0 13px 40px'
@@ -110,16 +99,11 @@ class LeftPanelSearch extends Component {
         <i {...propsIcon} /><input {...propsInput} />
         <div className="child-container">
           <div className="container-panelSpot">
-            {search !== '' ?
-              spotsList.map( e => {
-                return <PanelSpot spot={e} key={e.name} />;
-              })
-              : ''
-            }
+            {search !== '' ? spotsList : ''}
             <div style={{display: search !== '' ? 'none' : 'inherit'}}>
               Find among {nbrSpot} stations with postal code, city, country code, type, id or name.
             </div>
-            <div className="error" style={{display: search !== '' && spotsList.length === 60 ? 'inherit' : 'none'}}>
+            <div className="error" style={{display: spotsList.length === 60 ? 'inherit' : 'none'}}>
               Windmama show maximum 60 places, please refine your search
             </div>
             <div className="error" style={{display: search !== '' && spotsList.length === 0 ? 'inherit' : 'none'}}>

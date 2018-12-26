@@ -20,7 +20,8 @@ function ColorLegend() {
         className: 'value',
         key: e,
         style: {
-          background: `linear-gradient(to right, ${getColor((e-5) * 1.853)}, ${getColor(e*1.853)})`
+          background:
+            `linear-gradient(to right, ${getColor((e-5) * 1.853)}, ${getColor(e*1.853)})`
         }
       };
       return <div {...propsBlock}>
