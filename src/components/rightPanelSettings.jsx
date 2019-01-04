@@ -79,7 +79,7 @@ const RightPanelSettings = () => {
       defaultSelected={localSettings.windUnit}
       onChange={(event, checked) => gloabalAction('windUnit', checked)}
       >
-      <RadioButton value="kt" label="knots" style={styles.radioButton} />
+      <RadioButton value="kts" label="knots" style={styles.radioButton} />
       <RadioButton value="km/h" label="kilometers per hour" style={styles.radioButton} />
       <RadioButton value="m/s" label="meters per second" style={styles.radioButton} />
     </RadioButtonGroup>

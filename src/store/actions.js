@@ -80,6 +80,14 @@ export var Actions = {
     });
   },
   locationDetected(object) {
+    console.log(
+        '%c♥ ♥ ♥ longitude = ' + object.longitude + ' | latitude = ' + object.latitude + ' ♥ ♥ ♥',
+        'background: black;' +
+        'font-size: 12px;' +
+        'color: pink;' +
+        'padding: 7px;' +
+        'border: 5px solid pink;'
+      );
     AppDispatcher.dispatch({
       object,
       actionType: typeOfActions.LOCATION_DETECTED

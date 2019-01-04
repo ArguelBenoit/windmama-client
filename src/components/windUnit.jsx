@@ -9,7 +9,7 @@ function WindUnit(props) {
   } else if(windUnit === 'km/h') {
     const valueInKM = Math.round(value);
     return valueInKM;
-  } else if (windUnit === 'kt') {
+  } else if (windUnit === 'kts') {
     const valueInKT = Math.round(value/1.852);
     return valueInKT;
   } else if (windUnit === 'm/s') {

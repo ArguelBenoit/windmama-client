@@ -28,7 +28,7 @@ let init = {
           onlyMetar: false,
           metarRaw: false,
           universalTime: null, // local / utc
-          windUnit: 'kt', // 'km/h', 'kt', 'm/s'
+          windUnit: 'kts', // 'km/h', 'kts', 'm/s'
           headingUnit: 'arrow', // 'arrow', 'abbrev', 'degrees'
           tempUnit: 'C', // 'C', 'F'
           rainUnit: 'picto' // 'picto', 'precip'
@@ -53,18 +53,20 @@ if(navigator.userAgent.match(/Android/i)
 navigator.geolocation.getCurrentPosition( position => {
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
+  init.location.latitude = position.coords.latitude;
+  init.location.longitude = position.coords.longitude;
   Actions.locationDetected({
     latitude,
     longitude
   });
 }, () => {
   console.log(
-    '%cHey you ! Your geolocation is disabled. If you want to enjoy great functionality you have to activate it. <3',
+    '%cHey you ! Your geolocation is disabled. If you want to enjoy great functionality you have to activate it. ♥ ♥ ♥',
       'background: black;' +
-      'font-size:15px;' +
-      'color: yellow;' +
-      'padding: 7px 10px;' +
-      'border: 2px solid red;'
+      'font-size: 12px;' +
+      'color: pink;' +
+      'padding: 7px;' +
+      'border: 5px solid pink;'
     );
 });
 // --
@@ -110,7 +112,7 @@ const socket = io.connect(
   {secure: true}
 );
 socket.on('connect', () => {
-  socket.emit('room', (init.settings.onlyMetar ? 'metar' : 'windObservation'));
+  socket.emit('room', (init.settings.onlyMetar ? 'metar' : 'windObservation/pioupiou'));
 });
 socket.on('windObservationType', data => {
   data = JSON.parse(data);
