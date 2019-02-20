@@ -112,7 +112,7 @@ const socket = io.connect(
   {secure: true}
 );
 socket.on('connect', () => {
-  socket.emit('room', (init.settings.onlyMetar ? 'metar' : 'windObservation/pioupiou'));
+  socket.emit('room', (init.settings.onlyMetar ? 'metar' : 'windObservation'));
 });
 socket.on('windObservationType', data => {
   data = JSON.parse(data);
