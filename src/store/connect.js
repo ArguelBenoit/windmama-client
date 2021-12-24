@@ -1,10 +1,11 @@
 import io from 'socket.io-client';
 import { Actions } from './actions.js';
 import request from 'request';
+import config from './config.js';
 
 let init = {
-    apiUrl: 'https://api.windmama.fr/v2',
-    socketUrl : 'https://api.windmama.fr/',
+    apiUrl: config.apiUrl,
+    socketUrl : config.socketUrl,
     windObservation: {},
     loading: true,
     mobile: null,
