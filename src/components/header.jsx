@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Actions } from '../store/actions.js';
 import { Link } from 'react-router-dom';
+import config from '../store/config.js';
 import './css/header.css';
 
 function Header(props) {
@@ -10,11 +11,19 @@ function Header(props) {
       <div className={props.leftActive ? 'container-left-menu button clicked' : 'container-left-menu button'} onClick={() => Actions.leftActivation()}>
         <i className="fas fa-angle-left" aria-hidden="true" />
       </div>
-      <Link to="/" style={{color: '#fff'}}>
-        <h1>
-          WindMama.fr
-        </h1>
-      </Link>
+      {config.source !== 'all'
+        ?
+        <Link to="/" className="title">
+          <h1>WindMama.fr</h1>
+          <div className="sub-title">{config.source}</div>
+        </Link>
+        :
+        <Link to="/" className="title">
+          <h1>
+            WindMama.fr
+          </h1>
+        </Link>
+      }
       <div className={props.rightActive ? 'container-right-menu button clicked' : 'container-right-menu button'} onClick={() => Actions.rightActivation()}>
         <div/>
         <div/>

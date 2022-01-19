@@ -89,7 +89,17 @@ const jsonParsePromise = json => {
     }
   });
 };
-let urlWindObservation = `${init.apiUrl}/wind-observation${init.settings.onlyMetar ? '/by-name/metar' : ''}`;
+
+
+let urlWindObservation = `${init.apiUrl}/wind-observation`;
+const { source } = config;
+if (source === 'all') {
+  urlWindObservation += init.settings.onlyMetar ? '/by-name/metar' : '';
+} else {
+  urlWindObservation += `/by-name/${source}`;
+}
+
+
 request(urlWindObservation, (z, x, b) => {
   jsonParsePromise(b).then( value => {
     value.forEach(e => {
@@ -108,16 +118,25 @@ request(urlWindObservation, (z, x, b) => {
 });
 
 
+
 const socket = io.connect(
   init.socketUrl,
-  {secure: true}
+  { secure: true }
 );
+
 socket.on('connect', () => {
-  socket.emit('room', (init.settings.onlyMetar ? 'metar' : 'windObservation'));
+  const { source } = config;
+  if (source === 'all') {
+    socket.emit('room', (init.settings.onlyMetar ? 'metar' : 'windObservation'));
+  } else {
+    socket.emit('room', source);
+  }
 });
+
 socket.on('windObservationType', data => {
   data = JSON.parse(data);
   Actions.updateDetail(data);
 });
+
 
 export default init;
